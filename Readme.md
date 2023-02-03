@@ -1,11 +1,10 @@
 <h4 align="center">
-	🚧 Promobit 🚀
+ 🚧 Promobit 🚀
 </h4>
 
 <p align="center" style="display: flex; align-items: flex-start; justify-content: center;">
-<img alt="promobit" title="#promobit" src="https://i.imgur.com/6q2AiRg.png" width="500">
+  <img alt="promobit" title="#promobit" src="https://i.imgur.com/6q2AiRg.png" width="500">
 </p>
-
 ### 💻 Sobre o desafio
 
 O objetivo do desafio proposto é permitir uma melhor avaliação das suas habilidades como candidato à vaga de frontend. Este desafio deve ser feito apenas por você. Sua implementação e escolha de ferramentas poderá ser questionada em outra etapa.
@@ -52,7 +51,7 @@ O objetivo do desafio proposto é permitir uma melhor avaliação das suas habil
 
 #### 📅 Entregas
 
-- [ ] Para realizar a entrega do desafio, você deverá enviar um email para devs@promobit.com.br com o título `[Frontend Challenge] Seu nome` com o link para o repositório com seu código. 
+- [ ] Para realizar a entrega do desafio, você deverá enviar um email para devs@promobit.com.br com o título `[Frontend Challenge] Seu nome` com o link para o repositório com seu código.
 
 - [ ] Não se esqueça de criar um arquivo `README.md` contendo as instruções para construir o app localmente.
 
