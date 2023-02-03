@@ -68,7 +68,7 @@ Projeto no github com documentação no readme e hospedagem.
 #### 📅 Tarefas
 
 - [x] iniciar o projeto reactjs: `npx create-react-app`
-- [x] organizando e limpando arquivos e códigos
+- [x] organizar e limpar arquivos e códigos
 - [ ] consumir api themoviedb v3
 - [ ] listar os filmes mais populares do dia com o endpoint `GET /movie/popular`
 - [ ] abrir outra página com os detalhes do filme escolhido ao clicar em um item dessa listagem 
