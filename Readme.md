@@ -39,7 +39,11 @@ Um projeto para consumir informações de uma api de filmes e exibir em um bonit
 - [ ] O usuário deve conseguir remover filtros e a listagem deve ser atualizada de acordo com o filtro removido
 - [ ] O usuário deve conseguir voltar para a página de listagem de filmes com os filtros ainda ativos
 
-### 📅 Critérios de avaliação
+### 📅 Entregas
+
+Projeto no github com documentação no readme e hospedagem.
+
+#### 📅 Critérios de avaliação
 
 - Boas práticas de desenvolvimento 
   - [ ] html semântico
@@ -48,7 +52,10 @@ Um projeto para consumir informações de uma api de filmes e exibir em um bonit
   - [ ] clean code
 
 - Domínio das ferramentas que compõe um app de frontend moderno
-  - [ ] 
+  - [x] VSCode
+  - [x] Git Bash
+  - [x] Github
+  - [x] Google Chrome modo Desenvolvedor
 
 - Linguagens que compõe um app de frontend moderno
   - [ ] 
@@ -58,9 +65,9 @@ Um projeto para consumir informações de uma api de filmes e exibir em um bonit
   - [ ] histórico
   - [ ] workflow de git
 
-#### 📅 Entregas
+#### 📅 Tarefas
 
-- [ ] Projeto no github com documentação no readme e hospedagem
+- [ ] iniciar o projeto reactjs
 
 ### 💡 Referências
 
