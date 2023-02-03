@@ -1,6 +1,12 @@
-<img src="https://i.imgur.com/6q2AiRg.png" width="500">
+<h4 align="center"> 
+	🚧 Promobit 🚀
+</h4>
 
-# Introdução
+<p align="center" style="display: flex; align-items: flex-start; justify-content: center;">
+  <img alt="promobit" title="#promobit" src="https://i.imgur.com/6q2AiRg.png" width="500">
+</p>         
+
+### Introdução
 
 Olá! Obrigado pelo interesse em participar do nosso processo seletivo para dev frontend no [Promobit](https://www.promobit.com.br/).
 
