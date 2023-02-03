@@ -1,0 +1,22 @@
+:root {
+    font-size: 62.5%; /* 62.5% = 10px >> 1.2rem .8rem; Que seriam 12px e 8px*/
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 9rem;
+}
+
+div { 
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', sans-serif;
+}
+
+h1 {
+    display: flex;
+    justify-content: center;
+}

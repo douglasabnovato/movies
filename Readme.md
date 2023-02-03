@@ -67,7 +67,22 @@ Projeto no github com documentação no readme e hospedagem.
 
 #### 📅 Tarefas
 
-- [ ] iniciar o projeto reactjs
+- [x] iniciar o projeto reactjs: `npx create-react-app`
+- [x] organizando e limpando arquivos e códigos
+- [ ] consumir api themoviedb v3
+- [ ] listar os filmes mais populares do dia com o endpoint `GET /movie/popular`
+- [ ] abrir outra página com os detalhes do filme escolhido ao clicar em um item dessa listagem 
+- [ ] acessar mais detalhes sobre o filme com o endpoint `GET /movie/{movie_id}`
+- [ ] essa lista deverá ser paginada
+- [ ] fazer o layout do [figma](https://www.figma.com/file/rM7WPqhLY9ObnGzSCeWLxB/Teste-Front-End?node-id=0%3A1&t=3soQNmbQBSGQraj3-0) pixel perfect, respeitando a composição, fontes e cores
+- [ ] possuir uma rota própria para a página com detalhes de um filme
+- [ ] a página com detalhes de um filme deve estar preparada para ser indexada em mecanismos de pesquisa
+- [ ] responsividade
+- [ ] criar um filtro de filmes usando seus gêneros favoritos nessa listagem
+- [ ] novo endpoint `GET /genre/movie/list` deverá ser consultado para obter a lista dos possíveis gêneros filtrados
+- [ ] filtrar os filmes listados por gênero, com a possibilidade de usar mais de um gênero
+- [ ] remover filtros e a listagem deve ser atualizada de acordo com o filtro removido
+- [ ] conseguir voltar para a página de listagem de filmes com os filtros ainda ativos
 
 ### 💡 Referências
 
