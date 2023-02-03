@@ -72,7 +72,7 @@ Projeto no github com documentação no readme e hospedagem.
 - [x] favicon
 - [x] componente navbar: mobile e desktop
 - [x] componente top: slogan, filter
-- [ ] componente films: lista de filmes
+- [ ] componente films: filme, lista de filmes
 - [ ] consumir api themoviedb v3
 - [ ] listar os filmes mais populares do dia com o endpoint `GET /movie/popular`
 - [ ] abrir outra página com os detalhes do filme escolhido ao clicar em um item dessa listagem 
