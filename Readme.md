@@ -1,18 +1,18 @@
-<h4 align="center"> 
+<h4 align="center">
 	🚧 Promobit 🚀
 </h4>
 
 <p align="center" style="display: flex; align-items: flex-start; justify-content: center;">
-  <img alt="promobit" title="#promobit" src="https://i.imgur.com/6q2AiRg.png" width="500">
-</p>         
+<img alt="promobit" title="#promobit" src="https://i.imgur.com/6q2AiRg.png" width="500">
+</p>
 
-### 💻 Sobre o desafio 
+### 💻 Sobre o desafio
 
 O objetivo do desafio proposto é permitir uma melhor avaliação das suas habilidades como candidato à vaga de frontend. Este desafio deve ser feito apenas por você. Sua implementação e escolha de ferramentas poderá ser questionada em outra etapa.
 
 ### ✅ Requisitos
 
-- [ ] Usando a API de filmes gratuita [themoviedb](https://developers.themoviedb.org/3/getting-started/introduction) em sua versão 3, você será responsável por criar uma listagem dos filmes mais populares do dia, consultando o endpoint  [`GET /movie/popular`](https://developers.themoviedb.org/3/movies/get-popular-movies) para realizar a listagem. 
+- [ ] Usando a API de filmes gratuita [themoviedb](https://developers.themoviedb.org/3/getting-started/introduction) em sua versão 3, você será responsável por criar uma listagem dos filmes mais populares do dia, consultando o endpoint[`GET /movie/popular`](https://developers.themoviedb.org/3/movies/get-popular-movies) para realizar a listagem.
 
 - [ ] Ao clicar em um item dessa listagem, outra página com os detalhes do filme escolhido deve ser exibida. Para acessar mais detalhes sobre o filme, você pode consultar o endpoint [`GET /movie/{movie_id}`](https://developers.themoviedb.org/3/movies/get-movie-details).
 
@@ -55,15 +55,15 @@ O objetivo do desafio proposto é permitir uma melhor avaliação das suas habil
 - [ ] Para realizar a entrega do desafio, você deverá enviar um email para devs@promobit.com.br com o título `[Frontend Challenge] Seu nome` com o link para o repositório com seu código. 
 
 - [ ] Não se esqueça de criar um arquivo `README.md` contendo as instruções para construir o app localmente.
- 
+
 ### 💡 Referências
 
 - [ ] [front-end-challenge](https://github.com/seu-nome/front-end-challenge.git)
- 
+
 ### 🚀 Conclusão
 
 Obrigado e bom desafio!
 
 Feito com ❤️ por Douglas A B Novato. 👋🏽 [Entre em contato!](https://www.linkedin.com/in/douglasabnovato/)
- 
-Fonte do projeto na [promobit](https://www.promobit.com.br/) 👋  
+
+Fonte do projeto na [promobit](https://www.promobit.com.br/) 👋
