@@ -63,7 +63,7 @@ Projeto no github com documentação no readme e hospedagem.
 - Documentação
   - [ ] explicação para construir o app localmente
   - [ ] histórico
-  - [ ] workflow de git
+  - [ ] workflow de git: main, developer e nome_tarerfa
 
 #### 📅 Tarefas
 
