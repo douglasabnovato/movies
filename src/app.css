@@ -1,22 +1,132 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200;300;400;600;700;800;900&family=Roboto:wght@100;300;400;500;700;900&display=swap");
+
 :root {
-    font-size: 62.5%; /* 62.5% = 10px >> 1.2rem .8rem; Que seriam 12px e 8px*/
+  font-size: 62.5%; /* 62.5% = 10px >> 1.2rem .8rem; Que seriam 12px e 8px*/
 }
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 html {
-    font-size: 9rem;
+  font-size: 9rem;
 }
 
-div { 
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', sans-serif;
+.top {
+  background: #2d0c5e;
 }
 
-h1 {
-    display: flex;
-    justify-content: center;
+.navbar {
+  background: #5c16c5;
+}
+
+.title-site {
+  width: 184.74px;
+  padding-block: 16px;
+}
+
+.title-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 24px;
+  font-family: "Nunito", sans-serif;
+  letter-spacing: 0.2rem;
+  color: #ffffff;
+}
+
+.title-obj {
+  width: 54px;
+  height: 18px;
+
+  margin-left: 4px;
+
+  background: #ffffff;
+  border-radius: 10px;
+}
+
+.slogan {
+  height: 38vh;
+  width: 100vw;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.slogan-text {
+  width: 58vw;
+
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 56px;
+  text-align: center;
+  letter-spacing: -0.005em;
+  color: #ffffff;
+}
+
+.filter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+}
+
+.filter-container {
+  margin-block-end: 84px;
+}
+
+.filter-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 20px;
+
+  color: #ffffff;
+
+  padding: 10px 25px;
+}
+
+.filter-box {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(19em, 1fr));
+  gap: 0.3rem;
+
+  width: 80vw;
+}
+
+.filter-tag {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: #ffffff;
+  border-radius: 4px;
+
+  padding: 8px 36px;
+  margin-block: 3px;
+  margin-inline: 2px;
+}
+
+.filter-tag h1 {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+
+  display: flex;
+  align-items: center;
+  text-align: center;
+
+  color: #242424;
 }

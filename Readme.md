@@ -58,7 +58,7 @@ Projeto no github com documentação no readme e hospedagem.
   - [x] Google Chrome modo Desenvolvedor
 
 - Linguagens que compõe um app de frontend moderno
-  - [ ] 
+  - [ ] react para o frontend
 
 - Documentação
   - [ ] explicação para construir o app localmente
@@ -68,6 +68,9 @@ Projeto no github com documentação no readme e hospedagem.
 #### 📅 Tarefas
 
 - [x] iniciar o projeto reactjs: `npx create-react-app`
+- [x] componente navbar: mobile e desktop
+- [x] componente top: slogan, filter
+- [ ] componente films: lista de filmes
 - [x] organizar e limpar arquivos e códigos
 - [ ] consumir api themoviedb v3
 - [ ] listar os filmes mais populares do dia com o endpoint `GET /movie/popular`
