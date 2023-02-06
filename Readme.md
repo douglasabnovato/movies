@@ -3,7 +3,7 @@
 </h4>
 
 <p align="center" style="display: flex; align-items: flex-start; justify-content: center;">
-  <img alt="promobit" title="#promobit" src="https://i.imgur.com/6q2AiRg.png" width="500">
+  <img alt="tmdb" title="#tmdb" src="./.github/api-tmdb.jpg" >
 </p>
 
 ### 💻 Sobre o desafio
@@ -100,7 +100,7 @@ Projeto no github com documentação no readme e hospedagem.
 - Mobile
 
 <p align="center" style="display: flex; align-items: flex-start; justify-content: center;">
-  <img alt="tmdb" title="#tmdb" src="./.github/api-tmdb.jpg" height="400px">
+  <img alt="tmdb" title="#tmdb" src="./.github/mobile-tmdb.jpg" height="400px">
 </p>  
 
 ### 💡 Referências
