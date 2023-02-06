@@ -67,8 +67,9 @@ Projeto no github com documentação no readme e hospedagem.
   - [ ] GitHub Wiki
   - [ ] GitHub Issues
   - [ ] GitHub Project Boards
-  - [ ] GitHub Readme 
+  - [ ] GitHub Readme: Titulo (Badges), Status, Tabela de Conteúdos, Descrição (Emojis), Objetivos (o que o app pode fazer), Layout da aplicação, Deploy da aplicação, Pré-requisitos, Tecnologias, Dependências Instaladas, Libs Instaladas, Como rodar a aplicação, Como rodar os testes, Database, Solução de problemas, Tarefas em aberto, Licença
   - [ ] GitHub Discussions 
+  - [ ] GitHub Pages
 
 #### 📅 Tarefas
 
