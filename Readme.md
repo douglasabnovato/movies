@@ -120,6 +120,9 @@ Projeto no github com documentação no readme e hospedagem.
 - [x] [auto-sizing-columns-css](https://css-tricks.com/auto-sizing-columns-css-grid-auto-fill-vs-auto-fit/)
 - [x] [sass](https://www.npmjs.com/package/sass)
 - [x] [classnames](https://www.npmjs.com/package/classnames)
+- [x] [paginacao](https://www.freecodecamp.org/portuguese/news/como-criar-uma-paginacao-personalizada-em-react/)
+- [x] [projeto 1](https://github.com/matheusmhq/tmdb-react-js)
+- [x] [projeto 2](https://github.com/charleseduardome/TheMovieDB)
 
 ### 🚀 Conclusão
 
