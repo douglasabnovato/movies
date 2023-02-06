@@ -87,7 +87,7 @@ Projeto no github com documentação no readme e hospedagem.
 - [ ] novo endpoint `GET /genre/movie/list` deverá ser consultado para obter a lista dos possíveis gêneros filtrados
 - [ ] filtrar os filmes listados por gênero, com a possibilidade de usar mais de um gênero
 - [ ] remover filtros e a listagem deve ser atualizada de acordo com o filtro removido
-- [ ] conseguir voltar para a página de listagem de filmes com os filtros ainda ativos
+- [ ] conseguir voltar para a página de listagem de filmes com os filtros ainda ativos 
 
 #### 📅 Telas
 
@@ -112,6 +112,8 @@ Projeto no github com documentação no readme e hospedagem.
 - [x] [grid-auto-flow](https://developer.mozilla.org/en-US/docs/Web/CSS/grid-auto-flow)
 - [x] [grid-template-columns](https://css-tricks.com/almanac/properties/g/grid-template-columns/)
 - [x] [auto-sizing-columns-css](https://css-tricks.com/auto-sizing-columns-css-grid-auto-fill-vs-auto-fit/)
+- [x] [sass](https://www.npmjs.com/package/sass)
+- [x] [classnames](https://www.npmjs.com/package/classnames)
 
 ### 🚀 Conclusão
 
