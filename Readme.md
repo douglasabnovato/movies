@@ -47,7 +47,7 @@ Projeto no github com documentação no readme e hospedagem.
 
 - Boas práticas de desenvolvimento 
   - [ ] html semântico
-  - [ ] componentização
+  - [ ] componentização: pages, components
   - [ ] design patterns
   - [ ] clean code
 
@@ -80,13 +80,13 @@ Projeto no github com documentação no readme e hospedagem.
 - [x] componente top: slogan, filter
 - [ ] componente filter: botões em duas linhas, ajustados
 - [x] componente films: filme, lista de filmes
-- [x] consumir api themoviedb v3: https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=1 usando fetch then. Cada requisição retorna 20 elementos
+- [x] consumir [api-themoviedb-v3](https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=1) usando fetch then. Cada requisição retorna 20 elementos. [themoviedb-v3-docs](https://developers.themoviedb.org/3/movies/get-movie-details). [themoviedb-v3-api_key](https://api.themoviedb.org/3/movie/550?api_key=0e3950318bf412e11272f2f58c14e062). [themoviedb-v3-api_key](https://api.themoviedb.org/3/movie/758009?api_key=0e3950318bf412e11272f2f58c14e062&language=en-US&page=1) 
 - [ ] listar os filmes mais populares do dia com o endpoint `GET /movie/popular`
-- [ ] abrir outra página com os detalhes do filme escolhido ao clicar em um item dessa listagem 
+- [x] abrir outra página com os detalhes do filme escolhido ao clicar em um item dessa listagem 
 - [ ] acessar mais detalhes sobre o filme com o endpoint `GET /movie/{movie_id}`
-- [ ] essa lista deverá ser paginada: react-router-dom com `npm install react-router-dom@6`
+- [x] essa lista deverá ser paginada: react-router-dom com `npm install react-router-dom@6`
 - [x] fazer o layout do [figma](https://www.figma.com/file/rM7WPqhLY9ObnGzSCeWLxB/Teste-Front-End?node-id=0%3A1&t=3soQNmbQBSGQraj3-0) pixel perfect, respeitando a composição, fontes e cores
-- [ ] possuir uma rota própria para a página com detalhes de um filme 
+- [x] possuir uma rota própria para a página com detalhes de um filme 
 - [ ] a página com detalhes de um filme deve estar preparada para ser indexada em mecanismos de pesquisa
 - [ ] responsividade: mobile, tablet, desktop
 - [ ] criar um filtro de filmes usando seus gêneros favoritos nessa listagem
@@ -123,14 +123,15 @@ Projeto no github com documentação no readme e hospedagem.
 - [x] [sass](https://www.npmjs.com/package/sass)
 - [x] [classnames](https://www.npmjs.com/package/classnames)
 - [x] [paginacao](https://www.freecodecamp.org/portuguese/news/como-criar-uma-paginacao-personalizada-em-react/)
-- [x] [projeto 1](https://github.com/matheusmhq/tmdb-react-js)
-- [x] [projeto 2](https://github.com/charleseduardome/TheMovieDB)
-- [x] [projeto 3](https://www.youtube.com/watch?v=b6N29J_utw4&list=PLOzZAH_pgb_QGWVmQwkRFTYhHuG1qKHIR&index=1)
-- [x] [projeto 4](https://www.youtube.com/watch?v=XqxUHVVO7-U)
-- [x] [projeto 5](https://www.youtube.com/watch?v=KveKdXSEV7A)
-- [x] [projeto 6](https://www.youtube.com/watch?v=I2ibI7MycUw&list=PL_kAgwZgMfWyZ6m8fDwdiwEarr_g6nFxz&index=7)
-- [x] [projeto 7](https://www.youtube.com/watch?v=YSlzQlEqTBg)
+- [x] [github matheusmhq](https://github.com/matheusmhq/tmdb-react-js)
+- [x] [github charleseduardome](https://github.com/charleseduardome/TheMovieDB)
+- [x] [consumir API em reactjs](https://www.youtube.com/watch?v=b6N29J_utw4&list=PLOzZAH_pgb_QGWVmQwkRFTYhHuG1qKHIR&index=1)
+- [x] [API DO TMDB](https://www.youtube.com/watch?v=XqxUHVVO7-U)
+- [x] [Fetch Data from an API](https://www.youtube.com/watch?v=KveKdXSEV7A)
+- [x] [React MovieDB API](https://www.youtube.com/watch?v=I2ibI7MycUw&list=PL_kAgwZgMfWyZ6m8fDwdiwEarr_g6nFxz&index=7)
+- [x] [Paginação com Hooks](https://www.youtube.com/watch?v=YSlzQlEqTBg)
 - [x] [how-to-use-react-router](https://www.freecodecamp.org/news/how-to-use-react-router-version-6)
+- [x] [themoviedb](https://developers.themoviedb.org/3/movies/get-movie-lists)
 
 ### 🚀 Conclusão
 

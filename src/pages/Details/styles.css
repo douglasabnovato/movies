@@ -1,0 +1,159 @@
+.top {
+  height: 600px;
+}
+
+.film-detail {
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  width: 1100px;
+}
+
+.film-banner {
+  margin-block-start: 40px;
+  margin-inline: 25px;
+}
+
+.film-banner img {
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  border-radius: 8px;
+  width: 383px;
+  height: 574px;
+}
+
+.film-infos {
+  width: 696px;
+  margin-block-start: 40px;
+}
+
+.info-datasheet {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  grid-auto-rows: minmax(100px, auto);
+  margin-block-start: 29px;
+}
+
+.info-title .title-name {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 40px;
+
+  display: flex;
+  align-items: center;
+
+  color: #ffffff;
+}
+
+.info-title .title-head {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 24px;
+  /* identical to box height, or 133% */
+
+  display: flex;
+  align-items: center;
+
+  color: #ffffff;
+}
+
+.info-evaluation {
+  display: flex;
+}
+
+.info-evaluation .evaluation-loading {
+  width: 61.4px;
+  height: 61.4px;
+  background: rgba(255, 255, 255, 0.1);
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  letter-spacing: -0.005em;
+  color: #14ff00;
+  border-radius: 50%;
+  margin: 15px;
+}
+ 
+
+.info-evaluation .evaluation-evaluation {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+  /* or 125% */
+
+  display: flex;
+  align-items: center;
+
+  color: #ffffff;
+}
+
+.info-sinopse .sinopse-title {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  /* identical to box height, or 120% */
+
+  display: flex;
+  align-items: center;
+
+  color: #ffffff;
+}
+
+.info-sinopse .sinopse-text {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  /* or 150% */
+
+  display: flex;
+  align-items: center;
+  letter-spacing: -0.005em;
+
+  /* Neutral Colors / Gray / Gray 300 */
+
+  color: #dddddd;
+}
+
+.info-datasheet .datasheet-1 .datasheet-title {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+  /* identical to box height, or 150% */
+
+  display: flex;
+  align-items: center;
+
+  color: #ffffff;
+}
+
+.info-datasheet .datasheet-1 .datasheet-text {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  /* identical to box height, or 143% */
+
+  display: flex;
+  align-items: center;
+
+  color: #ffffff;
+}
