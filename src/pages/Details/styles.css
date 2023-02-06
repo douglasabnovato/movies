@@ -1,3 +1,7 @@
+.top {
+    height: 600px;
+}
+
 .film-detail {
   display: flex;
   justify-content: center;
