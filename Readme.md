@@ -89,6 +89,20 @@ Projeto no github com documentação no readme e hospedagem.
 - [ ] remover filtros e a listagem deve ser atualizada de acordo com o filtro removido
 - [ ] conseguir voltar para a página de listagem de filmes com os filtros ainda ativos
 
+#### 📅 Telas
+
+- Desktop
+
+<p align="center" style="display: flex; align-items: flex-start; justify-content: center;">
+  <img alt="tmdb" title="#tmdb" src="./.github/api-tmdb.jpg" width="400px">
+</p>  
+
+- Mobile
+
+<p align="center" style="display: flex; align-items: flex-start; justify-content: center;">
+  <img alt="tmdb" title="#tmdb" src="./.github/api-tmdb.jpg" height="400px">
+</p>  
+
 ### 💡 Referências
 
 - [x] [create-a-new-react-app](https://pt-br.reactjs.org/docs/create-a-new-react-app.html)
