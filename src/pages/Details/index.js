@@ -32,9 +32,7 @@ function Details() {
 
   return (
     <div className="main">
-      
       <div className="top">
-        
         <div className="navbar">
           <div className="title-site">
             <div className="title-text">
@@ -45,13 +43,11 @@ function Details() {
         </div>
 
         <div className="film-detail">
-
           <div className="film-banner">
             <img src={image}></img>
           </div>
 
           <div className="film-infos">
-
             <div className="info-title">
               <p className="title-name">Deadpool (2016)</p>
               <p className="title-head">
@@ -61,7 +57,11 @@ function Details() {
             </div>
 
             <div className="info-evaluation">
-              <p className="evaluation-loading">76%</p>
+              <div className="evaluation-loading">
+                <div className="loading-circle">
+                  <div className="loading">76%</div>
+                </div>
+              </div>
               <p className="evaluation-evaluation">Avaliação dos usuários</p>
             </div>
             <div className="info-sinopse">
@@ -100,7 +100,6 @@ function Details() {
             </div>
           </div>
         </div>
-        
       </div>
 
       <div className="cast">

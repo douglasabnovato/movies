@@ -1,5 +1,5 @@
 .top {
-    height: 600px;
+  height: 600px;
 }
 
 .film-detail {
@@ -10,8 +10,8 @@
 }
 
 .film-banner {
-    margin-block-start: 40px;
-    margin-inline: 25px;
+  margin-block-start: 40px;
+  margin-inline: 25px;
 }
 
 .film-banner img {
@@ -21,17 +21,17 @@
   height: 574px;
 }
 
-.film-infos{
-    width: 696px;
-    margin-block-start: 40px;
+.film-infos {
+  width: 696px;
+  margin-block-start: 40px;
 }
 
-.info-datasheet{
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-    grid-auto-rows: minmax(100px, auto);
-    margin-block-start: 29px;
+.info-datasheet {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  grid-auto-rows: minmax(100px, auto);
+  margin-block-start: 29px;
 }
 
 .info-title .title-name {
@@ -61,10 +61,29 @@
   color: #ffffff;
 }
 
+.info-evaluation {
+  display: flex;
+}
+
 .info-evaluation .evaluation-loading {
   width: 61.4px;
   height: 61.4px;
+  background: rgba(255, 255, 255, 0.1);
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  letter-spacing: -0.005em;
+  color: #14ff00;
+  border-radius: 50%;
+  margin: 15px;
 }
+ 
 
 .info-evaluation .evaluation-evaluation {
   font-family: "Roboto";
