@@ -64,6 +64,11 @@ Projeto no github com documentação no readme e hospedagem.
   - [ ] explicação para construir o app localmente
   - [ ] histórico
   - [ ] workflow de git: branches main, developer e nome_tarerfa. Abrir pull request da nome_tarefa para a developer, após aprovado pr na developer, mergear da developer na main.
+  - [ ] GitHub Wiki
+  - [ ] GitHub Issues
+  - [ ] GitHub Project Boards
+  - [ ] GitHub Readme 
+  - [ ] GitHub Discussions 
 
 #### 📅 Tarefas
 
