@@ -1,5 +1,5 @@
-import React, { useState, useMemo } from 'react';
-import Pagination from './Pagination';
+import React, { useState, useEffect, useMemo } from "react";
+import Pagination from "./Pagination";
 
 import data from "./mock-data.json";
 
@@ -60,6 +60,22 @@ function TabelaDados() {
 }
 
 function App() {
+  const API_KEY = "0e3950318bf412e11272f2f58c14e062";
+  const [movies, setMovies] = useState([]);
+  const [pages, setPages] = useState([]);
+  const [imagePath, setImagePath] = useState(`https://image.tmdb.org/t/p/w500`)
+
+  useEffect(() => {
+    fetch(
+      `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=${pages}`
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        setMovies(data.results);
+        setPages(data.pages);
+      });
+  }, []);
+
   return (
     <div className="main">
       <div className="top">
@@ -147,170 +163,25 @@ function App() {
       </div>
 
       <div className="films">
-        <div className="film">
-          <div className="card">
-            <img src={MovFinch}></img>
-            <div className="title-movie">Deadpool</div>
-            <div className="title-date">12 NOV 2021</div>
-          </div>
-        </div>
-
-        <div className="film">
-          <div className="card">
-            <img src={MovVenom}></img>
-            <div className="title-movie">Deadpool</div>
-            <div className="title-date">12 NOV 2021</div>
-          </div>
-        </div>
-
-        <div className="film">
-          <div className="card">
-            <img src={MovSpiderMan}></img>
-            <div className="title-movie">Deadpool</div>
-            <div className="title-date">12 NOV 2021</div>
-          </div>
-        </div>
-
-        <div className="film">
-          <div className="card">
-            <img src={MovTheWitcher}></img>
-            <div className="title-movie">Deadpool</div>
-            <div className="title-date">12 NOV 2021</div>
-          </div>
-        </div>
-
-        <div className="film">
-          <div className="card">
-            <img src={MovDeadpool}></img>
-            <div className="title-movie">Deadpool</div>
-            <div className="title-date">12 NOV 2021</div>
-          </div>
-        </div>
-
-        <div className="film">
-          <div className="card">
-            <img src={MovFinch}></img>
-            <div className="title-movie">Deadpool</div>
-            <div className="title-date">12 NOV 2021</div>
-          </div>
-        </div>
-
-        <div className="film">
-          <div className="card">
-            <img src={MovVenom}></img>
-            <div className="title-movie">Deadpool</div>
-            <div className="title-date">12 NOV 2021</div>
-          </div>
-        </div>
-
-        <div className="film">
-          <div className="card">
-            <img src={MovSpiderMan}></img>
-            <div className="title-movie">Deadpool</div>
-            <div className="title-date">12 NOV 2021</div>
-          </div>
-        </div>
-
-        <div className="film">
-          <div className="card">
-            <img src={MovTheWitcher}></img>
-            <div className="title-movie">Deadpool</div>
-            <div className="title-date">12 NOV 2021</div>
-          </div>
-        </div>
-
-        <div className="film">
-          <div className="card">
-            <img src={MovDeadpool}></img>
-            <div className="title-movie">Deadpool</div>
-            <div className="title-date">12 NOV 2021</div>
-          </div>
-        </div>
-
-        <div className="film">
-          <div className="card">
-            <img src={MovFinch}></img>
-            <div className="title-movie">Deadpool</div>
-            <div className="title-date">12 NOV 2021</div>
-          </div>
-        </div>
-
-        <div className="film">
-          <div className="card">
-            <img src={MovVenom}></img>
-            <div className="title-movie">Deadpool</div>
-            <div className="title-date">12 NOV 2021</div>
-          </div>
-        </div>
-
-        <div className="film">
-          <div className="card">
-            <img src={MovSpiderMan}></img>
-            <div className="title-movie">Deadpool</div>
-            <div className="title-date">12 NOV 2021</div>
-          </div>
-        </div>
-
-        <div className="film">
-          <div className="card">
-            <img src={MovTheWitcher}></img>
-            <div className="title-movie">Deadpool</div>
-            <div className="title-date">12 NOV 2021</div>
-          </div>
-        </div>
-
-        <div className="film">
-          <div className="card">
-            <img src={MovDeadpool}></img>
-            <div className="title-movie">Deadpool</div>
-            <div className="title-date">12 NOV 2021</div>
-          </div>
-        </div>
-
-        <div className="film">
-          <div className="card">
-            <img src={MovFinch}></img>
-            <div className="title-movie">Deadpool</div>
-            <div className="title-date">12 NOV 2021</div>
-          </div>
-        </div>
-
-        <div className="film">
-          <div className="card">
-            <img src={MovVenom}></img>
-            <div className="title-movie">Deadpool</div>
-            <div className="title-date">12 NOV 2021</div>
-          </div>
-        </div>
-
-        <div className="film">
-          <div className="card">
-            <img src={MovSpiderMan}></img>
-            <div className="title-movie">Deadpool</div>
-            <div className="title-date">12 NOV 2021</div>
-          </div>
-        </div>
-
-        <div className="film">
-          <div className="card">
-            <img src={MovTheWitcher}></img>
-            <div className="title-movie">Deadpool</div>
-            <div className="title-date">12 NOV 2021</div>
-          </div>
-        </div>
-
-        <div className="film">
-          <div className="card">
-            <img src={MovDeadpool}></img>
-            <div className="title-movie">Deadpool</div>
-            <div className="title-date">12 NOV 2021</div>
-          </div>
-        </div>
+        {movies.map((movie) => {
+          return (
+            <div key={movie.id} className="film">
+              <div className="card">
+                <img src={`${imagePath}${movie.poster_path}`}></img>
+                <div className="title-movie">{movie.original_title}</div>
+                <div className="title-date">{movie.release_date}</div>
+              </div>
+            </div>
+          );
+        })}
       </div>
 
       <div className="pagination">
-        <div className="contagem">1 2 3 4 5 > Última</div>
-        <TabelaDados />
+        <div className="contagem">
+          <span className="numeros"> 1 2 3 4 5 </span>
+          <span className="seta"> > </span>
+          <span className="posicao">Última</span>
+        </div>
       </div>
     </div>
   );
