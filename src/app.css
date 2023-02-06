@@ -25,6 +25,7 @@ html {
 .title-site {
   width: 184.74px;
   padding-block: 16px;
+  margin-inline-start: 5vw;
 }
 
 .title-text {
@@ -34,6 +35,7 @@ html {
 
   font-size: 24px;
   font-family: "Nunito", sans-serif;
+  font-weight: 900;
   letter-spacing: 0.2rem;
   color: #ffffff;
 }
@@ -49,7 +51,7 @@ html {
 }
 
 .slogan {
-  height: 38vh;
+  height: 28vh;
   width: 100vw;
 
   display: flex;
@@ -78,7 +80,7 @@ html {
 }
 
 .filter-container {
-  margin-block-end: 84px;
+  margin-block-end: 64px;
 }
 
 .filter-text {
@@ -98,8 +100,9 @@ html {
 
 .filter-box {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(19em, 1fr));
-  gap: 0.3rem;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 2fr));
+  grid-auto-rows: 50px;
+  grid-gap: 2px;
 
   width: 80vw;
 }
@@ -129,4 +132,76 @@ html {
   text-align: center;
 
   color: #242424;
+}
+
+.films {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  justify-content: center;
+  align-items: center;
+  gap: 0.05rem;
+  width: 100vw;
+  padding-block: 29px;
+  padding-inline: 112px;
+}
+
+.film {
+  padding: 1px;
+}
+
+.card {
+  padding: 1px;
+}
+
+.card img {
+  padding: 1px;
+}
+
+.title-movie {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+
+  display: flex;
+  align-items: center;
+
+  color: #000000;
+}
+
+.title-date {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 24px;
+
+  display: flex;
+  align-items: center;
+
+  color: #646464;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.contagem {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+
+  color: #5c16c5;
+
+  flex: none;
+  order: 0;
+  flex-grow: 0;
 }

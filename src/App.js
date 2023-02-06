@@ -1,4 +1,9 @@
 import "./app.css";
+import MovFinch from "./films/finch.png";
+import MovVenom from "./films/venom.png";
+import MovSpiderMan from "./films/spider-man.png";
+import MovTheWitcher from "./films/the-witcher.png";
+import MovDeadpool from "./films/deadpool.png";
 
 function App() {
   return (
@@ -20,7 +25,6 @@ function App() {
         </div>
 
         <div className="filter">
-          
           <div className="filter-container">
             <div className="filter-text">FILTER POR:</div>
 
@@ -56,7 +60,6 @@ function App() {
                 <h1>História</h1>
               </div>
 
-              
               <div className="filter-tag">
                 <h1>Terror</h1>
               </div>
@@ -83,27 +86,177 @@ function App() {
               </div>
               <div className="filter-tag">
                 <h1>Faroeste</h1>
-              </div> 
+              </div>
             </div>
-
           </div>
-
         </div>
       </div>
 
       <div className="films">
-
         <div className="film">
-          <div>
-            <h1>Ação</h1>
-            <h1>Ação</h1>
-            <h1>Ação</h1>
-            <h1>Ação</h1>
-          </div> 
+          <div className="card">
+            <img src={MovFinch}></img>
+            <div className="title-movie">Deadpool</div>
+            <div className="title-date">12 NOV 2021</div>
+          </div>
         </div>
 
+        <div className="film">
+          <div className="card">
+            <img src={MovVenom}></img>
+            <div className="title-movie">Deadpool</div>
+            <div className="title-date">12 NOV 2021</div>
+          </div>
+        </div>
+
+        <div className="film">
+          <div className="card">
+            <img src={MovSpiderMan}></img>
+            <div className="title-movie">Deadpool</div>
+            <div className="title-date">12 NOV 2021</div>
+          </div>
+        </div>
+
+        <div className="film">
+          <div className="card">
+            <img src={MovTheWitcher}></img>
+            <div className="title-movie">Deadpool</div>
+            <div className="title-date">12 NOV 2021</div>
+          </div>
+        </div>
+
+        <div className="film">
+          <div className="card">
+            <img src={MovDeadpool}></img>
+            <div className="title-movie">Deadpool</div>
+            <div className="title-date">12 NOV 2021</div>
+          </div>
+        </div>
+
+        <div className="film">
+          <div className="card">
+            <img src={MovFinch}></img>
+            <div className="title-movie">Deadpool</div>
+            <div className="title-date">12 NOV 2021</div>
+          </div>
+        </div>
+
+        <div className="film">
+          <div className="card">
+            <img src={MovVenom}></img>
+            <div className="title-movie">Deadpool</div>
+            <div className="title-date">12 NOV 2021</div>
+          </div>
+        </div>
+
+        <div className="film">
+          <div className="card">
+            <img src={MovSpiderMan}></img>
+            <div className="title-movie">Deadpool</div>
+            <div className="title-date">12 NOV 2021</div>
+          </div>
+        </div>
+
+        <div className="film">
+          <div className="card">
+            <img src={MovTheWitcher}></img>
+            <div className="title-movie">Deadpool</div>
+            <div className="title-date">12 NOV 2021</div>
+          </div>
+        </div>
+
+        <div className="film">
+          <div className="card">
+            <img src={MovDeadpool}></img>
+            <div className="title-movie">Deadpool</div>
+            <div className="title-date">12 NOV 2021</div>
+          </div>
+        </div>
+
+        <div className="film">
+          <div className="card">
+            <img src={MovFinch}></img>
+            <div className="title-movie">Deadpool</div>
+            <div className="title-date">12 NOV 2021</div>
+          </div>
+        </div>
+
+        <div className="film">
+          <div className="card">
+            <img src={MovVenom}></img>
+            <div className="title-movie">Deadpool</div>
+            <div className="title-date">12 NOV 2021</div>
+          </div>
+        </div>
+
+        <div className="film">
+          <div className="card">
+            <img src={MovSpiderMan}></img>
+            <div className="title-movie">Deadpool</div>
+            <div className="title-date">12 NOV 2021</div>
+          </div>
+        </div>
+
+        <div className="film">
+          <div className="card">
+            <img src={MovTheWitcher}></img>
+            <div className="title-movie">Deadpool</div>
+            <div className="title-date">12 NOV 2021</div>
+          </div>
+        </div>
+
+        <div className="film">
+          <div className="card">
+            <img src={MovDeadpool}></img>
+            <div className="title-movie">Deadpool</div>
+            <div className="title-date">12 NOV 2021</div>
+          </div>
+        </div>
+
+        <div className="film">
+          <div className="card">
+            <img src={MovFinch}></img>
+            <div className="title-movie">Deadpool</div>
+            <div className="title-date">12 NOV 2021</div>
+          </div>
+        </div>
+
+        <div className="film">
+          <div className="card">
+            <img src={MovVenom}></img>
+            <div className="title-movie">Deadpool</div>
+            <div className="title-date">12 NOV 2021</div>
+          </div>
+        </div>
+
+        <div className="film">
+          <div className="card">
+            <img src={MovSpiderMan}></img>
+            <div className="title-movie">Deadpool</div>
+            <div className="title-date">12 NOV 2021</div>
+          </div>
+        </div>
+
+        <div className="film">
+          <div className="card">
+            <img src={MovTheWitcher}></img>
+            <div className="title-movie">Deadpool</div>
+            <div className="title-date">12 NOV 2021</div>
+          </div>
+        </div>
+
+        <div className="film">
+          <div className="card">
+            <img src={MovDeadpool}></img>
+            <div className="title-movie">Deadpool</div>
+            <div className="title-date">12 NOV 2021</div>
+          </div>
+        </div>
       </div>
 
+      <div className="pagination">
+        <div className="contagem">1 2 3 4 5 > Última</div>
+      </div>
     </div>
   );
 }
