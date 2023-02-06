@@ -80,13 +80,13 @@ Projeto no github com documentação no readme e hospedagem.
 - [x] componente top: slogan, filter
 - [ ] componente filter: botões em duas linhas, ajustados
 - [x] componente films: filme, lista de filmes
-- [x] consumir api themoviedb v3: https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=1 usando fetch then. Cada requisição retorna 20 elementos
+- [x] consumir [api-themoviedb-v3](https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=1) usando fetch then. Cada requisição retorna 20 elementos. [themoviedb-v3-docs](https://developers.themoviedb.org/3/movies/get-movie-details). [themoviedb-v3-api_key](https://api.themoviedb.org/3/movie/550?api_key=0e3950318bf412e11272f2f58c14e062). [themoviedb-v3-api_key](https://api.themoviedb.org/3/movie/758009?api_key=0e3950318bf412e11272f2f58c14e062&language=en-US&page=1) 
 - [ ] listar os filmes mais populares do dia com o endpoint `GET /movie/popular`
-- [ ] abrir outra página com os detalhes do filme escolhido ao clicar em um item dessa listagem 
+- [x] abrir outra página com os detalhes do filme escolhido ao clicar em um item dessa listagem 
 - [ ] acessar mais detalhes sobre o filme com o endpoint `GET /movie/{movie_id}`
-- [ ] essa lista deverá ser paginada: react-router-dom com `npm install react-router-dom@6`
+- [x] essa lista deverá ser paginada: react-router-dom com `npm install react-router-dom@6`
 - [x] fazer o layout do [figma](https://www.figma.com/file/rM7WPqhLY9ObnGzSCeWLxB/Teste-Front-End?node-id=0%3A1&t=3soQNmbQBSGQraj3-0) pixel perfect, respeitando a composição, fontes e cores
-- [ ] possuir uma rota própria para a página com detalhes de um filme 
+- [x] possuir uma rota própria para a página com detalhes de um filme 
 - [ ] a página com detalhes de um filme deve estar preparada para ser indexada em mecanismos de pesquisa
 - [ ] responsividade: mobile, tablet, desktop
 - [ ] criar um filtro de filmes usando seus gêneros favoritos nessa listagem
