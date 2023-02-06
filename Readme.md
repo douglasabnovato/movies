@@ -47,7 +47,7 @@ Projeto no github com documentação no readme e hospedagem.
 
 - Boas práticas de desenvolvimento 
   - [ ] html semântico
-  - [ ] componentização
+  - [ ] componentização: pages, components
   - [ ] design patterns
   - [ ] clean code
 
@@ -131,6 +131,7 @@ Projeto no github com documentação no readme e hospedagem.
 - [x] [projeto 6](https://www.youtube.com/watch?v=I2ibI7MycUw&list=PL_kAgwZgMfWyZ6m8fDwdiwEarr_g6nFxz&index=7)
 - [x] [projeto 7](https://www.youtube.com/watch?v=YSlzQlEqTBg)
 - [x] [how-to-use-react-router](https://www.freecodecamp.org/news/how-to-use-react-router-version-6)
+- [x] [themoviedb](https://developers.themoviedb.org/3/movies/get-movie-lists)
 
 ### 🚀 Conclusão
 
