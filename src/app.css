@@ -130,3 +130,51 @@ html {
 
   color: #242424;
 }
+
+.films {
+  display: grid;
+  grid-template-columns: 185px 185px  185px 185px  185px 185px  185px 185px  185px ;
+  justify-content: center;
+  align-items: center;
+  gap: 0.05rem;
+  width: 100vw;
+ 
+}
+
+.film {
+  padding: 1px; 
+}
+
+.card {
+  padding: 1px;
+}
+
+.card img {
+  padding: 1px;
+}
+
+.title-movie {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+
+  display: flex;
+  align-items: center;
+
+  color: #000000;
+}
+
+.title-date {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 24px;
+
+  display: flex;
+  align-items: center;
+
+  color: #646464;
+}
