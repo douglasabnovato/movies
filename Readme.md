@@ -72,6 +72,7 @@ Projeto no github com documentação no readme e hospedagem.
 - [x] favicon
 - [x] componente navbar: mobile e desktop
 - [x] componente top: slogan, filter
+- [ ] componente filter: botões em duas linhas, ajustados
 - [x] componente films: filme, lista de filmes
 - [ ] consumir api themoviedb v3
 - [ ] listar os filmes mais populares do dia com o endpoint `GET /movie/popular`
@@ -90,7 +91,13 @@ Projeto no github com documentação no readme e hospedagem.
 
 ### 💡 Referências
 
-- [ ] [front-end-challenge](https://github.com/seu-nome/front-end-challenge.git)
+- [x] [create-a-new-react-app](https://pt-br.reactjs.org/docs/create-a-new-react-app.html)
+- [x] [flaticon](https://www.flaticon.com/free-icon/movie_2798007?term=movie&page=1&position=14&origin=tag&related_id=2798007)
+- [x] [de-pixels-px-para-rem](https://dev.to/gabrlcj/tecnica-para-voce-mudar-de-pixels-px-para-rem-2626)
+- [x] [letter-spacing](https://developer.mozilla.org/en-US/docs/Web/CSS/letter-spacing)
+- [x] [grid-auto-flow](https://developer.mozilla.org/en-US/docs/Web/CSS/grid-auto-flow)
+- [x] [grid-template-columns](https://css-tricks.com/almanac/properties/g/grid-template-columns/)
+- [x] [auto-sizing-columns-css](https://css-tricks.com/auto-sizing-columns-css-grid-auto-fill-vs-auto-fit/)
 
 ### 🚀 Conclusão
 

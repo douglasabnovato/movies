@@ -253,6 +253,10 @@ function App() {
           </div>
         </div>
       </div>
+
+      <div className="pagination">
+        <div className="contagem">1 2 3 4 5 > Última</div>
+      </div>
     </div>
   );
 }
