@@ -3,7 +3,7 @@
 </h4>
 
 <p align="center" style="display: flex; align-items: flex-start; justify-content: center;">
-  <img alt="promobit" title="#promobit" src="https://i.imgur.com/6q2AiRg.png" width="500">
+  <img alt="tmdb" title="#tmdb" src="./.github/api-tmdb.jpg" >
 </p>
 
 ### 💻 Sobre o desafio
@@ -64,6 +64,12 @@ Projeto no github com documentação no readme e hospedagem.
   - [ ] explicação para construir o app localmente
   - [ ] histórico
   - [ ] workflow de git: branches main, developer e nome_tarerfa. Abrir pull request da nome_tarefa para a developer, após aprovado pr na developer, mergear da developer na main.
+  - [ ] GitHub Wiki
+  - [ ] GitHub Issues
+  - [ ] GitHub Project Boards
+  - [ ] GitHub Readme: Titulo (Badges), Status, Tabela de Conteúdos, Descrição (Emojis), Objetivos (o que o app pode fazer), Layout da aplicação, Deploy da aplicação, Pré-requisitos, Tecnologias, Dependências Instaladas, Libs Instaladas, Como rodar a aplicação, Como rodar os testes, Database, Solução de problemas, Tarefas em aberto, Licença
+  - [ ] GitHub Discussions 
+  - [ ] GitHub Pages
 
 #### 📅 Tarefas
 
@@ -74,20 +80,36 @@ Projeto no github com documentação no readme e hospedagem.
 - [x] componente top: slogan, filter
 - [ ] componente filter: botões em duas linhas, ajustados
 - [x] componente films: filme, lista de filmes
-- [ ] consumir api themoviedb v3
+- [x] consumir api themoviedb v3: https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=1 usando fetch then. Cada requisição retorna 20 elementos
 - [ ] listar os filmes mais populares do dia com o endpoint `GET /movie/popular`
 - [ ] abrir outra página com os detalhes do filme escolhido ao clicar em um item dessa listagem 
 - [ ] acessar mais detalhes sobre o filme com o endpoint `GET /movie/{movie_id}`
-- [ ] essa lista deverá ser paginada
-- [ ] fazer o layout do [figma](https://www.figma.com/file/rM7WPqhLY9ObnGzSCeWLxB/Teste-Front-End?node-id=0%3A1&t=3soQNmbQBSGQraj3-0) pixel perfect, respeitando a composição, fontes e cores
-- [ ] possuir uma rota própria para a página com detalhes de um filme
+- [ ] essa lista deverá ser paginada: react-router-dom com `npm install react-router-dom@6`
+- [x] fazer o layout do [figma](https://www.figma.com/file/rM7WPqhLY9ObnGzSCeWLxB/Teste-Front-End?node-id=0%3A1&t=3soQNmbQBSGQraj3-0) pixel perfect, respeitando a composição, fontes e cores
+- [ ] possuir uma rota própria para a página com detalhes de um filme 
 - [ ] a página com detalhes de um filme deve estar preparada para ser indexada em mecanismos de pesquisa
 - [ ] responsividade: mobile, tablet, desktop
 - [ ] criar um filtro de filmes usando seus gêneros favoritos nessa listagem
 - [ ] novo endpoint `GET /genre/movie/list` deverá ser consultado para obter a lista dos possíveis gêneros filtrados
 - [ ] filtrar os filmes listados por gênero, com a possibilidade de usar mais de um gênero
 - [ ] remover filtros e a listagem deve ser atualizada de acordo com o filtro removido
-- [ ] conseguir voltar para a página de listagem de filmes com os filtros ainda ativos
+- [ ] conseguir voltar para a página de listagem de filmes com os filtros ainda ativos 
+- [ ] tratar a data e exibir conforme design
+- [ ] fazer um componente de carregando para a requisição
+
+#### 📅 Telas
+
+- Desktop
+
+<p align="center" style="display: flex; align-items: flex-start; justify-content: center;">
+  <img alt="tmdb" title="#tmdb" src="./.github/api-tmdb.jpg" width="400px">
+</p>  
+
+- Mobile
+
+<p align="center" style="display: flex; align-items: flex-start; justify-content: center;">
+  <img alt="tmdb" title="#tmdb" src="./.github/mobile-tmdb.jpg" height="400px">
+</p>  
 
 ### 💡 Referências
 
@@ -98,6 +120,17 @@ Projeto no github com documentação no readme e hospedagem.
 - [x] [grid-auto-flow](https://developer.mozilla.org/en-US/docs/Web/CSS/grid-auto-flow)
 - [x] [grid-template-columns](https://css-tricks.com/almanac/properties/g/grid-template-columns/)
 - [x] [auto-sizing-columns-css](https://css-tricks.com/auto-sizing-columns-css-grid-auto-fill-vs-auto-fit/)
+- [x] [sass](https://www.npmjs.com/package/sass)
+- [x] [classnames](https://www.npmjs.com/package/classnames)
+- [x] [paginacao](https://www.freecodecamp.org/portuguese/news/como-criar-uma-paginacao-personalizada-em-react/)
+- [x] [projeto 1](https://github.com/matheusmhq/tmdb-react-js)
+- [x] [projeto 2](https://github.com/charleseduardome/TheMovieDB)
+- [x] [projeto 3](https://www.youtube.com/watch?v=b6N29J_utw4&list=PLOzZAH_pgb_QGWVmQwkRFTYhHuG1qKHIR&index=1)
+- [x] [projeto 4](https://www.youtube.com/watch?v=XqxUHVVO7-U)
+- [x] [projeto 5](https://www.youtube.com/watch?v=KveKdXSEV7A)
+- [x] [projeto 6](https://www.youtube.com/watch?v=I2ibI7MycUw&list=PL_kAgwZgMfWyZ6m8fDwdiwEarr_g6nFxz&index=7)
+- [x] [projeto 7](https://www.youtube.com/watch?v=YSlzQlEqTBg)
+- [x] [how-to-use-react-router](https://www.freecodecamp.org/news/how-to-use-react-router-version-6)
 
 ### 🚀 Conclusão
 
