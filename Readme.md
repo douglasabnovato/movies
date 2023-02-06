@@ -72,7 +72,7 @@ Projeto no github com documentação no readme e hospedagem.
 - [x] favicon
 - [x] componente navbar: mobile e desktop
 - [x] componente top: slogan, filter
-- [ ] componente films: filme, lista de filmes
+- [x] componente films: filme, lista de filmes
 - [ ] consumir api themoviedb v3
 - [ ] listar os filmes mais populares do dia com o endpoint `GET /movie/popular`
 - [ ] abrir outra página com os detalhes do filme escolhido ao clicar em um item dessa listagem 
@@ -81,7 +81,7 @@ Projeto no github com documentação no readme e hospedagem.
 - [ ] fazer o layout do [figma](https://www.figma.com/file/rM7WPqhLY9ObnGzSCeWLxB/Teste-Front-End?node-id=0%3A1&t=3soQNmbQBSGQraj3-0) pixel perfect, respeitando a composição, fontes e cores
 - [ ] possuir uma rota própria para a página com detalhes de um filme
 - [ ] a página com detalhes de um filme deve estar preparada para ser indexada em mecanismos de pesquisa
-- [ ] responsividade
+- [ ] responsividade: mobile, tablet, desktop
 - [ ] criar um filtro de filmes usando seus gêneros favoritos nessa listagem
 - [ ] novo endpoint `GET /genre/movie/list` deverá ser consultado para obter a lista dos possíveis gêneros filtrados
 - [ ] filtrar os filmes listados por gênero, com a possibilidade de usar mais de um gênero

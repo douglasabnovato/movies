@@ -49,7 +49,7 @@ html {
 }
 
 .slogan {
-  height: 38vh;
+  height: 28vh;
   width: 100vw;
 
   display: flex;
@@ -78,7 +78,7 @@ html {
 }
 
 .filter-container {
-  margin-block-end: 84px;
+  margin-block-end: 64px;
 }
 
 .filter-text {
@@ -98,8 +98,9 @@ html {
 
 .filter-box {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(19em, 1fr));
-  gap: 0.3rem;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 2fr));
+  grid-auto-rows: 50px;
+  grid-gap: 2px;
 
   width: 80vw;
 }
@@ -133,16 +134,17 @@ html {
 
 .films {
   display: grid;
-  grid-template-columns: 185px 185px  185px 185px  185px 185px  185px 185px  185px ;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   justify-content: center;
   align-items: center;
   gap: 0.05rem;
   width: 100vw;
- 
+  padding-block: 29px;
+  padding-inline: 112px;
 }
 
 .film {
-  padding: 1px; 
+  padding: 1px;
 }
 
 .card {
