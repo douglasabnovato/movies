@@ -83,6 +83,7 @@ Projeto no github com documentação no readme e hospedagem.
 - [ ] componente elenco em details
 - [ ] componente trailer em details
 - [ ] componente recommendations em details
+- [ ] componente go back em details
 - [x] consumir [api-themoviedb-v3](https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=1) usando fetch then. Cada requisição retorna 20 elementos. [themoviedb-v3-docs](https://developers.themoviedb.org/3/movies/get-movie-details). [themoviedb-v3-api_key](https://api.themoviedb.org/3/movie/550?api_key=0e3950318bf412e11272f2f58c14e062). [themoviedb-v3-api_key](https://api.themoviedb.org/3/movie/758009?api_key=0e3950318bf412e11272f2f58c14e062&language=en-US&page=1) 
 - [ ] listar os filmes mais populares do dia com o endpoint `GET /movie/popular`
 - [x] abrir outra página com os detalhes do filme escolhido ao clicar em um item dessa listagem 

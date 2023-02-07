@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import "./styles.css";
+import image20 from "../../assets/image20.png";
 import image28 from "../../assets/image28.png";
 import image37 from "../../assets/image37.png";
 
@@ -207,49 +208,49 @@ function Details() {
         <div className="title-recommendations">Recomendações</div>
         <div className="list-recommendations">
           <div className="item-recommendation">
-            <img src={image28}></img>
+            <img src={image20}></img>
             <div className="details-recommendation">
               <div className="name-recommendation">Ryan Reynolds</div>
               <div className="paper-recommendation">Wade Wilson / Deadpool</div>
             </div>
           </div>
           <div className="item-recommendation">
-            <img src={image28}></img>
+            <img src={image20}></img>
             <div className="details-recommendation">
               <div className="name-recommendation">Ryan Reynolds</div>
               <div className="paper-recommendation">Wade Wilson / Deadpool</div>
             </div>
           </div>
           <div className="item-recommendation">
-            <img src={image28}></img>
+            <img src={image20}></img>
             <div className="details-recommendation">
               <div className="name-recommendation">Ryan Reynolds</div>
               <div className="paper-recommendation">Wade Wilson / Deadpool</div>
             </div>
           </div>
           <div className="item-recommendation">
-            <img src={image28}></img>
+            <img src={image20}></img>
             <div className="details-recommendation">
               <div className="name-recommendation">Ryan Reynolds</div>
               <div className="paper-recommendation">Wade Wilson / Deadpool</div>
             </div>
           </div>
           <div className="item-recommendation">
-            <img src={image28}></img>
+            <img src={image20}></img>
             <div className="details-recommendation">
               <div className="name-recommendation">Ryan Reynolds</div>
               <div className="paper-recommendation">Wade Wilson / Deadpool</div>
             </div>
           </div>
           <div className="item-recommendation">
-            <img src={image28}></img>
+            <img src={image20}></img>
             <div className="details-recommendation">
               <div className="name-recommendation">Ryan Reynolds</div>
               <div className="paper-recommendation">Wade Wilson / Deadpool</div>
             </div>
           </div>
           <div className="item-recommendation">
-            <img src={image28}></img>
+            <img src={image20}></img>
             <div className="details-recommendation">
               <div className="name-recommendation">Ryan Reynolds</div>
               <div className="paper-recommendation">Wade Wilson / Deadpool</div>
