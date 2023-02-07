@@ -95,8 +95,10 @@ Projeto no github com documentação no readme e hospedagem.
 - [ ] remover filtros e a listagem deve ser atualizada de acordo com o filtro removido
 - [ ] conseguir voltar para a página de listagem de filmes com os filtros ainda ativos 
 - [ ] tratar a data e exibir conforme design
+- [ ] tratar a duração e exibir conforme design
 - [x] fazer um componente de carregando para a requisição
 - [ ] atributo rate do filme para o loader
+- [ ] requisição async await no fetch e usar try catch
 
 #### 📅 Telas
 

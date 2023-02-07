@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import "./styles.css";
-import image from "../../assets/image26.png";
 
 function loader(rating) {
   let circularProgress = document.querySelector(".circular-progress"),
@@ -40,17 +39,19 @@ function Details() {
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
-        const { title, poster_path, overview, release_date } = data;
+        const { title, poster_path, overview, release_date, genres, runtime } = data;
         const movie = {
           id,
           title: title,
           sinopse: overview,
           image: `${image_path}${poster_path}`,
           releaseDate: release_date,
+          genres: genres,
+          runtime: runtime,
         };
         setMovie(movie);
       });
-    loader(82);
+    loader(74);
   }, []);
 
   return (
@@ -67,15 +68,14 @@ function Details() {
 
         <div className="film-detail">
           <div className="film-banner">
-            <img src={image}></img>
+            <img src={movie.image}></img>
           </div>
 
           <div className="film-infos">
             <div className="info-title">
-              <p className="title-name">Deadpool (2016)</p>
+              <p className="title-name">{movie.title}</p>
               <p className="title-head">
-                16 anos • 11/02/2016 (BR) • Ação, Aventura, Comédia, Ficção
-                científica • 1h 47m
+                16 anos • {movie.releaseDate} (BR) • Ação, Aventura, Comédia, Ficção científica • {movie.runtime}min
               </p>
             </div>
 
@@ -90,15 +90,7 @@ function Details() {
             </div>
             <div className="info-sinopse">
               <p className="sinopse-title">Sinopse</p>
-              <p className="sinopse-text">
-                Baseado no anti-herói não convencional da Marvel Comics,
-                Deadpool conta a história da origem do ex-agente das Forças
-                Especiais que se tornou o mercenário Wade Wilson. Depois de ser
-                submetido a um desonesto experimento que o deixa com poderes de
-                cura acelerada, Wade adota o alter ego de Deadpool. Armado com
-                suas novas habilidades e um senso de humor negro e distorcido,
-                Deadpool persegue o homem que quase destruiu sua vida.
-              </p>
+              <p className="sinopse-text">{movie.sinopse}</p>
             </div>
             <div className="info-datasheet">
               <div className="datasheet-1">

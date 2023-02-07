@@ -109,7 +109,7 @@ function App() {
         {movies.map((movie) => {
           return (
             <div key={movie.id} className="film">
-              <Link to={`/details/${movie.id}`}>
+              <Link to={`/movie/${movie.id}`}>
                 <div className="card">
                   <img src={`${imagePath}${movie.poster_path}`}></img>
                   <div className="title-movie">{movie.original_title}</div>
