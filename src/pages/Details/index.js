@@ -2,7 +2,31 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import "./styles.css";
-import image from "../../assets/image26.png";
+import image20 from "../../assets/image20.png";
+import image28 from "../../assets/image28.png";
+import image37 from "../../assets/image37.png";
+
+function loader(rating) {
+  let circularProgress = document.querySelector(".circular-progress"),
+    progressValue = document.querySelector(".progress-value");
+
+  let progressStartValue = 0,
+    progressEndValue = rating,
+    speed = 100;
+
+  let progress = setInterval(() => {
+    progressStartValue++;
+
+    progressValue.textContent = `${progressStartValue}%`;
+    circularProgress.style.background = `conic-gradient(#14ff00 ${
+      progressStartValue * 3.6
+    }deg, rgba(255, 255, 255, 0.1) 0deg)`;
+
+    if (progressStartValue == progressEndValue) {
+      clearInterval(progress);
+    }
+  }, speed);
+}
 
 function Details() {
   const API_KEY = "0e3950318bf412e11272f2f58c14e062";
@@ -18,16 +42,20 @@ function Details() {
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
-        const { title, poster_path, overview, release_date } = data;
+        const { title, poster_path, overview, release_date, genres, runtime } =
+          data;
         const movie = {
           id,
           title: title,
           sinopse: overview,
           image: `${image_path}${poster_path}`,
           releaseDate: release_date,
+          genres: genres,
+          runtime: runtime,
         };
         setMovie(movie);
       });
+    loader(74);
   }, []);
 
   return (
@@ -35,46 +63,39 @@ function Details() {
       <div className="top">
         <div className="navbar">
           <div className="title-site">
-            <div className="title-text">
+            <Link to="/" className="title-text">
               TMDB
               <span className="title-obj"></span>
-            </div>
+            </Link>
           </div>
         </div>
 
         <div className="film-detail">
           <div className="film-banner">
-            <img src={image}></img>
+            <img src={movie.image}></img>
           </div>
 
           <div className="film-infos">
             <div className="info-title">
-              <p className="title-name">Deadpool (2016)</p>
+              <p className="title-name">{movie.title}</p>
               <p className="title-head">
-                16 anos • 11/02/2016 (BR) • Ação, Aventura, Comédia, Ficção
-                científica • 1h 47m
+                16 anos • {movie.releaseDate} (BR) • Ação, Aventura, Comédia,
+                Ficção científica • {movie.runtime}min
               </p>
             </div>
 
             <div className="info-evaluation">
               <div className="evaluation-loading">
-                <div className="loading-circle">
-                  <div className="loading">76%</div>
+                <div class="circular-progress">
+                  <span class="progress-value">0%</span>
                 </div>
               </div>
+
               <p className="evaluation-evaluation">Avaliação dos usuários</p>
             </div>
             <div className="info-sinopse">
               <p className="sinopse-title">Sinopse</p>
-              <p className="sinopse-text">
-                Baseado no anti-herói não convencional da Marvel Comics,
-                Deadpool conta a história da origem do ex-agente das Forças
-                Especiais que se tornou o mercenário Wade Wilson. Depois de ser
-                submetido a um desonesto experimento que o deixa com poderes de
-                cura acelerada, Wade adota o alter ego de Deadpool. Armado com
-                suas novas habilidades e um senso de humor negro e distorcido,
-                Deadpool persegue o homem que quase destruiu sua vida.
-              </p>
+              <p className="sinopse-text">{movie.sinopse}</p>
             </div>
             <div className="info-datasheet">
               <div className="datasheet-1">
@@ -102,46 +123,145 @@ function Details() {
         </div>
       </div>
 
-      <div className="cast">
-        <p>id: {movie.id}</p>
-        <p>title: {movie.title}</p>
-        <p>sinopse: {movie.sinopse}</p>
-        <p>image: {movie.image}</p>
-        <p>releaseDate: {movie.releaseDate}</p>
-      </div>
-
-      <div className="bar">
-        <p> vvvvv </p>
+      <div className="casts">
+        <div className="title-casts">Elenco Original</div>
+        <div className="list-casts">
+          <div className="item-cast">
+            <img src={image28}></img>
+            <div className="details-cast">
+              <div className="name-cast">Ryan Reynolds</div>
+              <div className="paper-cast">Wade Wilson / Deadpool</div>
+            </div>
+          </div>
+          <div className="item-cast">
+            <img src={image28}></img>
+            <div className="details-cast">
+              <div className="name-cast">Ryan Reynolds</div>
+              <div className="paper-cast">Wade Wilson / Deadpool</div>
+            </div>
+          </div>
+          <div className="item-cast">
+            <img src={image28}></img>
+            <div className="details-cast">
+              <div className="name-cast">Ryan Reynolds</div>
+              <div className="paper-cast">Wade Wilson / Deadpool</div>
+            </div>
+          </div>
+          <div className="item-cast">
+            <img src={image28}></img>
+            <div className="details-cast">
+              <div className="name-cast">Ryan Reynolds</div>
+              <div className="paper-cast">Wade Wilson / Deadpool</div>
+            </div>
+          </div>
+          <div className="item-cast">
+            <img src={image28}></img>
+            <div className="details-cast">
+              <div className="name-cast">Ryan Reynolds</div>
+              <div className="paper-cast">Wade Wilson / Deadpool</div>
+            </div>
+          </div>
+          <div className="item-cast">
+            <img src={image28}></img>
+            <div className="details-cast">
+              <div className="name-cast">Ryan Reynolds</div>
+              <div className="paper-cast">Wade Wilson / Deadpool</div>
+            </div>
+          </div>
+          <div className="item-cast">
+            <img src={image28}></img>
+            <div className="details-cast">
+              <div className="name-cast">Ryan Reynolds</div>
+              <div className="paper-cast">Wade Wilson / Deadpool</div>
+            </div>
+          </div>
+          <div className="item-cast">
+            <img src={image28}></img>
+            <div className="details-cast">
+              <div className="name-cast">Ryan Reynolds</div>
+              <div className="paper-cast">Wade Wilson / Deadpool</div>
+            </div>
+          </div>
+          <div className="item-cast">
+            <img src={image28}></img>
+            <div className="details-cast">
+              <div className="name-cast">Ryan Reynolds</div>
+              <div className="paper-cast">Wade Wilson / Deadpool</div>
+            </div>
+          </div>
+          <div className="item-cast">
+            <img src={image28}></img>
+            <div className="details-cast">
+              <div className="name-cast">Ryan Reynolds</div>
+              <div className="paper-cast">Wade Wilson / Deadpool</div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div className="trailer">
-        <p>id: {movie.id}</p>
-        <p>title: {movie.title}</p>
-        <p>sinopse: {movie.sinopse}</p>
-        <p>image: {movie.image}</p>
-        <p>releaseDate: {movie.releaseDate}</p>
+        <div className="title-trailer">Trailer</div>
+        <img src={image37}></img>
       </div>
 
       <div className="recommendations">
-        <p>id: {movie.id}</p>
-        <p>title: {movie.title}</p>
-        <p>sinopse: {movie.sinopse}</p>
-        <p>image: {movie.image}</p>
-        <p>releaseDate: {movie.releaseDate}</p>
+        <div className="title-recommendations">Recomendações</div>
+        <div className="list-recommendations">
+          <div className="item-recommendation">
+            <img src={image20}></img>
+            <div className="details-recommendation">
+              <div className="name-recommendation">Ryan Reynolds</div>
+              <div className="paper-recommendation">Wade Wilson / Deadpool</div>
+            </div>
+          </div>
+          <div className="item-recommendation">
+            <img src={image20}></img>
+            <div className="details-recommendation">
+              <div className="name-recommendation">Ryan Reynolds</div>
+              <div className="paper-recommendation">Wade Wilson / Deadpool</div>
+            </div>
+          </div>
+          <div className="item-recommendation">
+            <img src={image20}></img>
+            <div className="details-recommendation">
+              <div className="name-recommendation">Ryan Reynolds</div>
+              <div className="paper-recommendation">Wade Wilson / Deadpool</div>
+            </div>
+          </div>
+          <div className="item-recommendation">
+            <img src={image20}></img>
+            <div className="details-recommendation">
+              <div className="name-recommendation">Ryan Reynolds</div>
+              <div className="paper-recommendation">Wade Wilson / Deadpool</div>
+            </div>
+          </div>
+          <div className="item-recommendation">
+            <img src={image20}></img>
+            <div className="details-recommendation">
+              <div className="name-recommendation">Ryan Reynolds</div>
+              <div className="paper-recommendation">Wade Wilson / Deadpool</div>
+            </div>
+          </div>
+          <div className="item-recommendation">
+            <img src={image20}></img>
+            <div className="details-recommendation">
+              <div className="name-recommendation">Ryan Reynolds</div>
+              <div className="paper-recommendation">Wade Wilson / Deadpool</div>
+            </div>
+          </div>
+          <div className="item-recommendation">
+            <img src={image20}></img>
+            <div className="details-recommendation">
+              <div className="name-recommendation">Ryan Reynolds</div>
+              <div className="paper-recommendation">Wade Wilson / Deadpool</div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div className="pagination">
-        <div className="contagem">
-          <span className="numeros"> 1 2 3 4 5 </span>
-          <span className="seta"> &gt; </span>
-          <span className="posicao">Última</span>
-        </div>
-        <p>
-          <Link to="/">
-            <button>Go Back</button>
-          </Link>
-        </p>
-      </div>
+      <Link to="/">
+        <button>Go Back</button>
+      </Link>
     </div>
   );
 }

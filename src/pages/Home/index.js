@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { Link } from "react-router-dom"; 
-import "./styles.css"; 
+import { Link } from "react-router-dom";
+import "./styles.css";
 
 function App() {
   const API_KEY = "0e3950318bf412e11272f2f58c14e062";
@@ -109,7 +109,7 @@ function App() {
         {movies.map((movie) => {
           return (
             <div key={movie.id} className="film">
-              <Link to={`/details/${movie.id}`}>
+              <Link to={`/movie/${movie.id}`}>
                 <div className="card">
                   <img src={`${imagePath}${movie.poster_path}`}></img>
                   <div className="title-movie">{movie.original_title}</div>

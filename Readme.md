@@ -79,7 +79,11 @@ Projeto no github com documentação no readme e hospedagem.
 - [x] componente navbar: mobile e desktop
 - [x] componente top: slogan, filter
 - [ ] componente filter: botões em duas linhas, ajustados
-- [x] componente films: filme, lista de filmes
+- [ ] componente films: filme, lista de filmes
+- [ ] componente elenco em details
+- [ ] componente trailer em details
+- [ ] componente recommendations em details
+- [ ] componente go back em details
 - [x] consumir [api-themoviedb-v3](https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=1) usando fetch then. Cada requisição retorna 20 elementos. [themoviedb-v3-docs](https://developers.themoviedb.org/3/movies/get-movie-details). [themoviedb-v3-api_key](https://api.themoviedb.org/3/movie/550?api_key=0e3950318bf412e11272f2f58c14e062). [themoviedb-v3-api_key](https://api.themoviedb.org/3/movie/758009?api_key=0e3950318bf412e11272f2f58c14e062&language=en-US&page=1) 
 - [ ] listar os filmes mais populares do dia com o endpoint `GET /movie/popular`
 - [x] abrir outra página com os detalhes do filme escolhido ao clicar em um item dessa listagem 
@@ -95,7 +99,10 @@ Projeto no github com documentação no readme e hospedagem.
 - [ ] remover filtros e a listagem deve ser atualizada de acordo com o filtro removido
 - [ ] conseguir voltar para a página de listagem de filmes com os filtros ainda ativos 
 - [ ] tratar a data e exibir conforme design
-- [ ] fazer um componente de carregando para a requisição
+- [ ] tratar a duração e exibir conforme design
+- [x] fazer um componente de carregando para a requisição
+- [ ] atributo rate do filme para o loader
+- [ ] requisição async await no fetch e usar try catch
 
 #### 📅 Telas
 
@@ -132,6 +139,12 @@ Projeto no github com documentação no readme e hospedagem.
 - [x] [Paginação com Hooks](https://www.youtube.com/watch?v=YSlzQlEqTBg)
 - [x] [how-to-use-react-router](https://www.freecodecamp.org/news/how-to-use-react-router-version-6)
 - [x] [themoviedb](https://developers.themoviedb.org/3/movies/get-movie-lists)
+- [x] [Circular Progress Bar](https://www.youtube.com/watch?v=SKU2gExpkPI)
+- [x] [Grid_Layout](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout)
+- [x] [guide-grid](https://css-tricks.com/snippets/css/complete-guide-grid/)
+- [x] [horizontal_scroll](https://www.w3schools.com/howto/howto_css_menu_horizontal_scroll.asp)
+- [x] [custom_scrollbar](https://www.w3schools.com/howto/howto_css_custom_scrollbar.asp)
+- [x] [Circular Progress Bar](https://www.youtube.com/watch?v=SKU2gExpkPI)
 
 ### 🚀 Conclusão
 
