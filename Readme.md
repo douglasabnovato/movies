@@ -140,6 +140,11 @@ Projeto no github com documentação no readme e hospedagem.
 - [x] [how-to-use-react-router](https://www.freecodecamp.org/news/how-to-use-react-router-version-6)
 - [x] [themoviedb](https://developers.themoviedb.org/3/movies/get-movie-lists)
 - [x] [Circular Progress Bar](https://www.youtube.com/watch?v=SKU2gExpkPI)
+- [x] [Grid_Layout](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout)
+- [x] [guide-grid](https://css-tricks.com/snippets/css/complete-guide-grid/)
+- [x] [horizontal_scroll](https://www.w3schools.com/howto/howto_css_menu_horizontal_scroll.asp)
+- [x] [custom_scrollbar](https://www.w3schools.com/howto/howto_css_custom_scrollbar.asp)
+- [x] [Circular Progress Bar](https://www.youtube.com/watch?v=SKU2gExpkPI)
 
 ### 🚀 Conclusão
 
