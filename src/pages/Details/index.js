@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import "./styles.css";
+import image28 from "../../assets/image28.png";
+import image37 from "../../assets/image37.png";
 
 function loader(rating) {
   let circularProgress = document.querySelector(".circular-progress"),
@@ -39,7 +41,8 @@ function Details() {
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
-        const { title, poster_path, overview, release_date, genres, runtime } = data;
+        const { title, poster_path, overview, release_date, genres, runtime } =
+          data;
         const movie = {
           id,
           title: title,
@@ -75,7 +78,8 @@ function Details() {
             <div className="info-title">
               <p className="title-name">{movie.title}</p>
               <p className="title-head">
-                16 anos • {movie.releaseDate} (BR) • Ação, Aventura, Comédia, Ficção científica • {movie.runtime}min
+                16 anos • {movie.releaseDate} (BR) • Ação, Aventura, Comédia,
+                Ficção científica • {movie.runtime}min
               </p>
             </div>
 
@@ -118,46 +122,145 @@ function Details() {
         </div>
       </div>
 
-      <div className="cast">
-        <p>id: {movie.id}</p>
-        <p>title: {movie.title}</p>
-        <p>sinopse: {movie.sinopse}</p>
-        <p>image: {movie.image}</p>
-        <p>releaseDate: {movie.releaseDate}</p>
-      </div>
-
-      <div className="bar">
-        <p> vvvvv </p>
+      <div className="casts">
+        <div className="title-casts">Elenco Original</div>
+        <div className="list-casts">
+          <div className="item-cast">
+            <img src={image28}></img>
+            <div className="details-cast">
+              <div className="name-cast">Ryan Reynolds</div>
+              <div className="paper-cast">Wade Wilson / Deadpool</div>
+            </div>
+          </div>
+          <div className="item-cast">
+            <img src={image28}></img>
+            <div className="details-cast">
+              <div className="name-cast">Ryan Reynolds</div>
+              <div className="paper-cast">Wade Wilson / Deadpool</div>
+            </div>
+          </div>
+          <div className="item-cast">
+            <img src={image28}></img>
+            <div className="details-cast">
+              <div className="name-cast">Ryan Reynolds</div>
+              <div className="paper-cast">Wade Wilson / Deadpool</div>
+            </div>
+          </div>
+          <div className="item-cast">
+            <img src={image28}></img>
+            <div className="details-cast">
+              <div className="name-cast">Ryan Reynolds</div>
+              <div className="paper-cast">Wade Wilson / Deadpool</div>
+            </div>
+          </div>
+          <div className="item-cast">
+            <img src={image28}></img>
+            <div className="details-cast">
+              <div className="name-cast">Ryan Reynolds</div>
+              <div className="paper-cast">Wade Wilson / Deadpool</div>
+            </div>
+          </div>
+          <div className="item-cast">
+            <img src={image28}></img>
+            <div className="details-cast">
+              <div className="name-cast">Ryan Reynolds</div>
+              <div className="paper-cast">Wade Wilson / Deadpool</div>
+            </div>
+          </div>
+          <div className="item-cast">
+            <img src={image28}></img>
+            <div className="details-cast">
+              <div className="name-cast">Ryan Reynolds</div>
+              <div className="paper-cast">Wade Wilson / Deadpool</div>
+            </div>
+          </div>
+          <div className="item-cast">
+            <img src={image28}></img>
+            <div className="details-cast">
+              <div className="name-cast">Ryan Reynolds</div>
+              <div className="paper-cast">Wade Wilson / Deadpool</div>
+            </div>
+          </div>
+          <div className="item-cast">
+            <img src={image28}></img>
+            <div className="details-cast">
+              <div className="name-cast">Ryan Reynolds</div>
+              <div className="paper-cast">Wade Wilson / Deadpool</div>
+            </div>
+          </div>
+          <div className="item-cast">
+            <img src={image28}></img>
+            <div className="details-cast">
+              <div className="name-cast">Ryan Reynolds</div>
+              <div className="paper-cast">Wade Wilson / Deadpool</div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div className="trailer">
-        <p>id: {movie.id}</p>
-        <p>title: {movie.title}</p>
-        <p>sinopse: {movie.sinopse}</p>
-        <p>image: {movie.image}</p>
-        <p>releaseDate: {movie.releaseDate}</p>
+        <div className="title-trailer">Trailer</div>
+        <img src={image37}></img>
       </div>
 
       <div className="recommendations">
-        <p>id: {movie.id}</p>
-        <p>title: {movie.title}</p>
-        <p>sinopse: {movie.sinopse}</p>
-        <p>image: {movie.image}</p>
-        <p>releaseDate: {movie.releaseDate}</p>
+        <div className="title-recommendations">Recomendações</div>
+        <div className="list-recommendations">
+          <div className="item-recommendation">
+            <img src={image28}></img>
+            <div className="details-recommendation">
+              <div className="name-recommendation">Ryan Reynolds</div>
+              <div className="paper-recommendation">Wade Wilson / Deadpool</div>
+            </div>
+          </div>
+          <div className="item-recommendation">
+            <img src={image28}></img>
+            <div className="details-recommendation">
+              <div className="name-recommendation">Ryan Reynolds</div>
+              <div className="paper-recommendation">Wade Wilson / Deadpool</div>
+            </div>
+          </div>
+          <div className="item-recommendation">
+            <img src={image28}></img>
+            <div className="details-recommendation">
+              <div className="name-recommendation">Ryan Reynolds</div>
+              <div className="paper-recommendation">Wade Wilson / Deadpool</div>
+            </div>
+          </div>
+          <div className="item-recommendation">
+            <img src={image28}></img>
+            <div className="details-recommendation">
+              <div className="name-recommendation">Ryan Reynolds</div>
+              <div className="paper-recommendation">Wade Wilson / Deadpool</div>
+            </div>
+          </div>
+          <div className="item-recommendation">
+            <img src={image28}></img>
+            <div className="details-recommendation">
+              <div className="name-recommendation">Ryan Reynolds</div>
+              <div className="paper-recommendation">Wade Wilson / Deadpool</div>
+            </div>
+          </div>
+          <div className="item-recommendation">
+            <img src={image28}></img>
+            <div className="details-recommendation">
+              <div className="name-recommendation">Ryan Reynolds</div>
+              <div className="paper-recommendation">Wade Wilson / Deadpool</div>
+            </div>
+          </div>
+          <div className="item-recommendation">
+            <img src={image28}></img>
+            <div className="details-recommendation">
+              <div className="name-recommendation">Ryan Reynolds</div>
+              <div className="paper-recommendation">Wade Wilson / Deadpool</div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div className="pagination">
-        <div className="contagem">
-          <span className="numeros"> 1 2 3 4 5 </span>
-          <span className="seta"> &gt; </span>
-          <span className="posicao">Última</span>
-        </div>
-        <p>
-          <Link to="/">
-            <button>Go Back</button>
-          </Link>
-        </p>
-      </div>
+      <Link to="/">
+        <button>Go Back</button>
+      </Link>
     </div>
   );
 }
