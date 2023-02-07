@@ -1,3 +1,19 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200;300;400;600;700;800;900&family=Roboto:wght@100;300;400;500;700;900&display=swap");
+
+:root {
+  font-size: 62.5%; /* 62.5% = 10px >> 1.2rem .8rem; Que seriam 12px e 8px*/
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 9rem;
+}
+
 .top {
   height: 600px;
 }
@@ -53,7 +69,6 @@
   font-weight: 400;
   font-size: 18px;
   line-height: 24px;
-  /* identical to box height, or 133% */
 
   display: flex;
   align-items: center;
@@ -68,22 +83,50 @@
 .info-evaluation .evaluation-loading {
   width: 61.4px;
   height: 61.4px;
-  background: rgba(255, 255, 255, 0.1);
-  font-family: "Roboto";
-  font-style: normal;
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 38px;
+
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  letter-spacing: -0.005em;
-  color: #14ff00;
+
   border-radius: 50%;
   margin: 15px;
 }
- 
+
+.circular-progress {
+  width: 61.4px;
+  height: 61.4px;
+
+  border-radius: 50%;
+  background: conic-gradient(#14ff00 3.6deg, rgba(255, 255, 255, 0.1) 0deg);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.circular-progress::before {
+  content: "";
+  position: absolute;
+  width: 51.4px;
+  height: 51.4px;
+  border-radius: 50%;
+  background-color: #2D0C5E;
+}
+
+.progress-value {
+  position: relative;
+
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 38px;
+  letter-spacing: -0.005em;
+
+  color: #14ff00;
+}
 
 .info-evaluation .evaluation-evaluation {
   font-family: "Roboto";
@@ -91,8 +134,6 @@
   font-weight: 400;
   font-size: 16px;
   line-height: 20px;
-  /* or 125% */
-
   display: flex;
   align-items: center;
 
@@ -105,7 +146,6 @@
   font-weight: 700;
   font-size: 20px;
   line-height: 24px;
-  /* identical to box height, or 120% */
 
   display: flex;
   align-items: center;
@@ -119,13 +159,10 @@
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
-  /* or 150% */
 
   display: flex;
   align-items: center;
   letter-spacing: -0.005em;
-
-  /* Neutral Colors / Gray / Gray 300 */
 
   color: #dddddd;
 }
@@ -136,7 +173,6 @@
   font-weight: 700;
   font-size: 16px;
   line-height: 24px;
-  /* identical to box height, or 150% */
 
   display: flex;
   align-items: center;
@@ -150,7 +186,6 @@
   font-weight: 400;
   font-size: 14px;
   line-height: 20px;
-  /* identical to box height, or 143% */
 
   display: flex;
   align-items: center;

@@ -4,6 +4,28 @@ import { useParams } from "react-router-dom";
 import "./styles.css";
 import image from "../../assets/image26.png";
 
+function loader(rating) {
+  let circularProgress = document.querySelector(".circular-progress"),
+    progressValue = document.querySelector(".progress-value");
+
+  let progressStartValue = 0,
+    progressEndValue = rating,
+    speed = 100;
+
+  let progress = setInterval(() => {
+    progressStartValue++;
+
+    progressValue.textContent = `${progressStartValue}%`;
+    circularProgress.style.background = `conic-gradient(#14ff00 ${
+      progressStartValue * 3.6
+    }deg, rgba(255, 255, 255, 0.1) 0deg)`;
+
+    if (progressStartValue == progressEndValue) {
+      clearInterval(progress);
+    }
+  }, speed);
+}
+
 function Details() {
   const API_KEY = "0e3950318bf412e11272f2f58c14e062";
   const { id } = useParams();
@@ -28,6 +50,7 @@ function Details() {
         };
         setMovie(movie);
       });
+    loader(82);
   }, []);
 
   return (
@@ -35,10 +58,10 @@ function Details() {
       <div className="top">
         <div className="navbar">
           <div className="title-site">
-            <div className="title-text">
+            <Link to="/" className="title-text">
               TMDB
               <span className="title-obj"></span>
-            </div>
+            </Link>
           </div>
         </div>
 
@@ -58,10 +81,11 @@ function Details() {
 
             <div className="info-evaluation">
               <div className="evaluation-loading">
-                <div className="loading-circle">
-                  <div className="loading">76%</div>
+                <div class="circular-progress">
+                  <span class="progress-value">0%</span>
                 </div>
               </div>
+
               <p className="evaluation-evaluation">Avaliação dos usuários</p>
             </div>
             <div className="info-sinopse">
