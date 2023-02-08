@@ -156,13 +156,19 @@ Projeto no github com documentação no readme e hospedagem.
 - [x] [React MovieDB API](https://www.youtube.com/watch?v=I2ibI7MycUw&list=PL_kAgwZgMfWyZ6m8fDwdiwEarr_g6nFxz&index=7)
 - [x] [Paginação com Hooks](https://www.youtube.com/watch?v=YSlzQlEqTBg)
 - [x] [how-to-use-react-router](https://www.freecodecamp.org/news/how-to-use-react-router-version-6)
-- [x] [themoviedb](https://developers.themoviedb.org/3/movies/get-movie-lists)
+- [x] [themoviedb developers](https://developers.themoviedb.org/3/movies/get-movie-lists)
+- [x] [themoviedb](https://www.themoviedb.org/) 
 - [x] [Circular Progress Bar](https://www.youtube.com/watch?v=SKU2gExpkPI)
 - [x] [Grid_Layout](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout)
 - [x] [guide-grid](https://css-tricks.com/snippets/css/complete-guide-grid/)
 - [x] [horizontal_scroll](https://www.w3schools.com/howto/howto_css_menu_horizontal_scroll.asp)
 - [x] [custom_scrollbar](https://www.w3schools.com/howto/howto_css_custom_scrollbar.asp)
 - [x] [Circular Progress Bar](https://www.youtube.com/watch?v=SKU2gExpkPI)
+- [x] [Array map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map)
+- [x] [typeerror-data-map](https://onecompiler.com/questions/3w48395w3/typeerror-data-map-is-not-a-function-in-react-js)
+- [x] [conditional-rendering](https://pt-br.reactjs.org/docs/conditional-rendering.html)
+- [x] [Math round]https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Math/round)
+- [x] [typeof](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Operators/typeof)
 
 ### 🚀 Conclusão
 
