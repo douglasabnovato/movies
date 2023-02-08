@@ -114,6 +114,14 @@ Projeto no github com documentação no readme e hospedagem.
 - [ ] remover filtros e a listagem deve ser atualizada de acordo com o filtro removido
 - [ ] conseguir voltar para a página de listagem de filmes com os filtros ainda ativos
 
+#### 📅 Performance
+
+Para aperfeiçoar meu processo de desenvolver software e solucionar os desafios, acredito que anotar e analisar o período produtivo pode colaborar para percebermos avanços.
+ - 08/02 - 07:00/11:44
+ - 07/02 - 07:00/12:40 - 13:40/18:05
+ - 06/02 - 07:30/12:35 - 13:20/19:40
+ - 03/02 - 10:50/17:30
+
 #### 📅 Melhorias
 
 - [ ] Analisar o projeto e listar melhorias a serem feitas
