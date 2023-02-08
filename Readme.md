@@ -12,16 +12,16 @@ Um projeto para consumir informações de uma api de filmes e exibir em um bonit
 
 ### ✅ Requisitos
 
-- [ ] Usando a API de filmes gratuita [themoviedb](https://developers.themoviedb.org/3/getting-started/introduction) em sua versão 3, você será responsável por criar uma listagem dos filmes mais populares do dia, consultando o endpoint[`GET /movie/popular`](https://developers.themoviedb.org/3/movies/get-popular-movies) para realizar a listagem.
-- [ ] Ao clicar em um item dessa listagem, outra página com os detalhes do filme escolhido deve ser exibida. Para acessar mais detalhes sobre o filme, você pode consultar o endpoint [`GET /movie/{movie_id}`](https://developers.themoviedb.org/3/movies/get-movie-details).
+- [x] Usando a API de filmes gratuita [themoviedb](https://developers.themoviedb.org/3/getting-started/introduction) em sua versão 3, você será responsável por criar uma listagem dos filmes mais populares do dia, consultando o endpoint[`GET /movie/popular`](https://developers.themoviedb.org/3/movies/get-popular-movies) para realizar a listagem.
+- [x] Ao clicar em um item dessa listagem, outra página com os detalhes do filme escolhido deve ser exibida. Para acessar mais detalhes sobre o filme, você pode consultar o endpoint [`GET /movie/{movie_id}`](https://developers.themoviedb.org/3/movies/get-movie-details).
+- [x] Siga o [layout do figma](https://www.figma.com/file/rM7WPqhLY9ObnGzSCeWLxB/Teste-Front-End) sugerido. Não há necessidade de ser **pixel perfect** mas respeite a composição, fontes e cores.
 - [ ] Para garantir que o usuário encontre o filme que está procurando, essa lista deverá ser paginada.
-- [ ] Siga o [layout do figma](https://www.figma.com/file/rM7WPqhLY9ObnGzSCeWLxB/Teste-Front-End) sugerido. Não há necessidade de ser **pixel perfect** mas respeite a composição, fontes e cores.
 
 #### ✅ Requisitos funcionais
 
-- [ ] O usuário deve ter acesso a uma listagem dos filmes mais populares do dia
+- [x] O usuário deve ter acesso a uma listagem dos filmes mais populares do dia
+- [x] O usuário deve ter acesso a uma outra página com detalhes sobre o filme, ao clicar em um item na listagem
 - [ ] O usuário deve conseguir paginar a lista para encontrar novos filmes
-- [ ] O usuário deve ter acesso a uma outra página com detalhes sobre o filme, ao clicar em um item na listagem
 - [ ] A página com detalhes de um filme deve possuir uma rota própria e estar preparada para ser indexada em mecanismos de pesquisa
 
 #### ✅ Requisitos não funcionais
@@ -58,54 +58,60 @@ Projeto no github com documentação no readme e hospedagem.
   - [x] Google Chrome modo Desenvolvedor
 
 - Linguagens que compõe um app de frontend moderno
-  - [ ] react para o frontend
+  - [x] react para o frontend
+  - [x] API com fetch
 
 - Documentação
-  - [ ] explicação para construir o app localmente
-  - [ ] histórico
-  - [ ] workflow de git: branches main, developer e nome_tarerfa. Abrir pull request da nome_tarefa para a developer, após aprovado pr na developer, mergear da developer na main.
-  - [ ] GitHub Wiki
-  - [ ] GitHub Issues
-  - [ ] GitHub Project Boards
-  - [ ] GitHub Readme: Titulo (Badges), Status, Tabela de Conteúdos, Descrição (Emojis), Objetivos (o que o app pode fazer), Layout da aplicação, Deploy da aplicação, Pré-requisitos, Tecnologias, Dependências Instaladas, Libs Instaladas, Como rodar a aplicação, Como rodar os testes, Database, Solução de problemas, Tarefas em aberto, Licença
-  - [ ] GitHub Discussions 
-  - [ ] GitHub Pages
+  - [x] explicação para construir o app localmente
+  - [x] histórico de tarefas
+  - [x] workflow de git: branches main, developer e nome_tarerfa. Abrir pull request da nome_tarefa para a developer, após aprovado pr na developer, mergear da developer na main.
+  - [x] GitHub Wiki
+  - [x] GitHub Issues
+  - [x] GitHub Project Boards
+  - [x] GitHub Readme: Titulo (Badges), Status, Tabela de Conteúdos, Descrição (Emojis), Objetivos (o que o app pode fazer), Layout da aplicação, Deploy da aplicação, Pré-requisitos, Tecnologias, Dependências Instaladas, Libs Instaladas, Como rodar a aplicação, Como rodar os testes, Database, Solução de problemas, Tarefas em aberto, Licença
+  - [x] GitHub Discussions 
+  - [ ] GitHub Pages ou hospedar em outro servidor
 
-#### 📅 Tarefas
+🚀 Executar esse app na sua máquina
+
+- `git clone url_repos` + `npm install` + `cd promobit` + `npm start`
+
+#### 📅 Histórico de Tarefas
 
 - [x] iniciar o projeto reactjs: `npx create-react-app`
 - [x] organizar e limpar arquivos e códigos
 - [x] favicon
 - [x] componente navbar: mobile e desktop
-- [x] componente top: slogan, filter
-- [ ] componente filter: botões em duas linhas, ajustados
-- [x] componente filter: botões em um objeto
-- [x] componente films: filme, lista de filmes
-- [ ] componente elenco em details
-- [ ] componente trailer em details
-- [ ] componente recommendations em details
-- [ ] componente go back em details
-- [x] componente logo em details
-- [x] componente informações em details, listagem dos gêneros
+- [x] componente em films top: slogan, filter
+- [x] componente em films filter: botões de mesma dimensão
+- [x] componente em films filter: títulos de botões em um objeto
+- [x] componente em films: filme, lista de filmes
+- [x] componente em details informações técnicas: estáticos. buscar o endpoint
+- [x] componente em details elenco: estáticos. buscar o endpoint
+- [x] componente em details trailer: estático. buscar o endpoint
+- [x] componente em details recommendations: estático. buscar o endpoint
+- [x] componente em details back to 
+- [x] componente em details logo 
+- [x] componente em details informações listagem dos gêneros
 - [x] consumir [api-themoviedb-v3](https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=1) usando fetch then. Cada requisição retorna 20 elementos. [themoviedb-v3-docs](https://developers.themoviedb.org/3/movies/get-movie-details). [themoviedb-v3-api_key](https://api.themoviedb.org/3/movie/550?api_key=0e3950318bf412e11272f2f58c14e062). [themoviedb-v3-api_key](https://api.themoviedb.org/3/movie/758009?api_key=0e3950318bf412e11272f2f58c14e062&language=en-US&page=1) 
 - [x] listar os filmes mais populares do dia com o endpoint `GET /movie/popular`
 - [x] abrir outra página com os detalhes do filme escolhido ao clicar em um item dessa listagem 
 - [x] acessar mais detalhes sobre o filme com o endpoint `GET /movie/{movie_id}`
 - [x] essa lista deverá ser paginada: react-router-dom com `npm install react-router-dom@6`
 - [x] fazer o layout do [figma](https://www.figma.com/file/rM7WPqhLY9ObnGzSCeWLxB/Teste-Front-End?node-id=0%3A1&t=3soQNmbQBSGQraj3-0) pixel perfect, respeitando a composição, fontes e cores
-- [x] possuir uma rota própria para a página com detalhes de um filme 
-- [ ] a página com detalhes de um filme deve estar preparada para ser indexada em mecanismos de pesquisa
+- [x] possuir uma rota própria para a página com detalhes de um filme   
+- [x] fazer um componente de carregando avaliação 
+- [x] atributo rate do filme para o loader
+- [ ] tratar a data e exibir conforme design
+- [ ] tratar a duração e exibir conforme design
+- [ ] requisição async await no fetch e usar try catch
 - [ ] responsividade: mobile, tablet, desktop
+- [ ] a página com detalhes de um filme deve estar preparada para ser indexada em mecanismos de pesquisa
 - [ ] criar um filtro de filmes usando seus gêneros favoritos nessa listagem
 - [ ] novo endpoint `GET /genre/movie/list` deverá ser consultado para obter a lista dos possíveis gêneros filtrados
 - [ ] filtrar os filmes listados por gênero, com a possibilidade de usar mais de um gênero
 - [ ] remover filtros e a listagem deve ser atualizada de acordo com o filtro removido
-- [ ] conseguir voltar para a página de listagem de filmes com os filtros ainda ativos  
-- [ ] tratar a data e exibir conforme design
-- [ ] tratar a duração e exibir conforme design
-- [x] fazer um componente de carregando avaliação 
-- [x] atributo rate do filme para o loader
-- [ ] requisição async await no fetch e usar try catch
+- [ ] conseguir voltar para a página de listagem de filmes com os filtros ainda ativos
 
 #### 📅 Telas
 

@@ -2,13 +2,24 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import "./styles.css";
+import image19 from "../../assets/image19.png";
 import image20 from "../../assets/image20.png";
+import image21 from "../../assets/image21.png";
+import image22 from "../../assets/image22.png";
+import image23 from "../../assets/image23.png";
+import image24 from "../../assets/image24.png";
+import image26 from "../../assets/image26.png";
 import image28 from "../../assets/image28.png";
+import image29 from "../../assets/image29.png";
+import image30 from "../../assets/image30.png";
+import image31 from "../../assets/image31.png";
+import image32 from "../../assets/image32.png";
+import image33 from "../../assets/image33.png";
+import image35 from "../../assets/image35.png";
+import image36 from "../../assets/image36.png";
 import image37 from "../../assets/image37.png";
 
 async function loader(rating) {
-  console.log("rating", rating);
-
   let circularProgress = document.querySelector(".circular-progress"),
     progressValue = document.querySelector(".progress-value");
 
@@ -30,7 +41,7 @@ async function loader(rating) {
     }
   }, speed);
 }
- 
+
 function Details() {
   const API_KEY = "0e3950318bf412e11272f2f58c14e062";
   const { id } = useParams();
@@ -46,7 +57,7 @@ function Details() {
       .then((response) => response.json())
       .then((data) => {
         console.log("details", data);
-        
+
         const {
           title,
           poster_path,
@@ -71,14 +82,13 @@ function Details() {
         setMovie(movie);
         setGenres(movie.genres);
         loader(movie.valuation);
-        
       });
   }, []);
 
   return (
     <div className="main">
       <div className="top">
-        <div className="navbar">
+        <div id="toper" className="navbar">
           <div className="title-site">
             <Link to="/" className="title-text">
               TMDB
@@ -163,66 +173,52 @@ function Details() {
             </div>
           </div>
           <div className="item-cast">
-            <img src={image28}></img>
+            <img src={image29}></img>
             <div className="details-cast">
-              <div className="name-cast">Ryan Reynolds</div>
-              <div className="paper-cast">Wade Wilson / Deadpool</div>
+              <div className="name-cast">Morena Baccarin</div>
+              <div className="paper-cast">Vanessa</div>
             </div>
           </div>
           <div className="item-cast">
-            <img src={image28}></img>
+            <img src={image30}></img>
             <div className="details-cast">
-              <div className="name-cast">Ryan Reynolds</div>
-              <div className="paper-cast">Wade Wilson / Deadpool</div>
+              <div className="name-cast">Ed Skrein</div>
+              <div className="paper-cast">Ajax</div>
             </div>
           </div>
           <div className="item-cast">
-            <img src={image28}></img>
+            <img src={image31}></img>
             <div className="details-cast">
-              <div className="name-cast">Ryan Reynolds</div>
-              <div className="paper-cast">Wade Wilson / Deadpool</div>
+              <div className="name-cast">T. J. Miller</div>
+              <div className="paper-cast">Weasel</div>
             </div>
           </div>
           <div className="item-cast">
-            <img src={image28}></img>
+            <img src={image32}></img>
             <div className="details-cast">
-              <div className="name-cast">Ryan Reynolds</div>
-              <div className="paper-cast">Wade Wilson / Deadpool</div>
+              <div className="name-cast">Gina Carano</div>
+              <div className="paper-cast">Angel Dust</div>
             </div>
           </div>
           <div className="item-cast">
-            <img src={image28}></img>
+            <img src={image33}></img>
             <div className="details-cast">
-              <div className="name-cast">Ryan Reynolds</div>
-              <div className="paper-cast">Wade Wilson / Deadpool</div>
+              <div className="name-cast">Leslie Uggams</div>
+              <div className="paper-cast">Blind Al</div>
             </div>
           </div>
           <div className="item-cast">
-            <img src={image28}></img>
+            <img src={image35}></img>
             <div className="details-cast">
-              <div className="name-cast">Ryan Reynolds</div>
-              <div className="paper-cast">Wade Wilson / Deadpool</div>
+              <div className="name-cast">Karan Soni</div>
+              <div className="paper-cast">Dopinder</div>
             </div>
           </div>
           <div className="item-cast">
-            <img src={image28}></img>
+            <img src={image36}></img>
             <div className="details-cast">
-              <div className="name-cast">Ryan Reynolds</div>
-              <div className="paper-cast">Wade Wilson / Deadpool</div>
-            </div>
-          </div>
-          <div className="item-cast">
-            <img src={image28}></img>
-            <div className="details-cast">
-              <div className="name-cast">Ryan Reynolds</div>
-              <div className="paper-cast">Wade Wilson / Deadpool</div>
-            </div>
-          </div>
-          <div className="item-cast">
-            <img src={image28}></img>
-            <div className="details-cast">
-              <div className="name-cast">Ryan Reynolds</div>
-              <div className="paper-cast">Wade Wilson / Deadpool</div>
+              <div className="name-cast">Jed Rees</div>
+              <div className="paper-cast">Recruiter</div>
             </div>
           </div>
         </div>
@@ -237,60 +233,51 @@ function Details() {
         <div className="title-recommendations">Recomendações</div>
         <div className="list-recommendations">
           <div className="item-recommendation">
-            <img src={image20}></img>
+            <img src={image19}></img>
             <div className="details-recommendation">
-              <div className="name-recommendation">Ryan Reynolds</div>
-              <div className="paper-recommendation">Wade Wilson / Deadpool</div>
+              <div className="name-recommendation">Clifford</div>
+              <div className="paper-recommendation">12 NOV 2021</div>
             </div>
           </div>
           <div className="item-recommendation">
             <img src={image20}></img>
             <div className="details-recommendation">
-              <div className="name-recommendation">Ryan Reynolds</div>
-              <div className="paper-recommendation">Wade Wilson / Deadpool</div>
+              <div className="name-recommendation">7 Prisioneiros</div>
+              <div className="paper-recommendation">22 JAN 2021</div>
             </div>
           </div>
           <div className="item-recommendation">
-            <img src={image20}></img>
+            <img src={image21}></img>
             <div className="details-recommendation">
-              <div className="name-recommendation">Ryan Reynolds</div>
-              <div className="paper-recommendation">Wade Wilson / Deadpool</div>
+              <div className="name-recommendation">Resident Evil</div>
+              <div className="paper-recommendation">02 MAI 2021</div>
             </div>
           </div>
           <div className="item-recommendation">
-            <img src={image20}></img>
+            <img src={image22}></img>
             <div className="details-recommendation">
-              <div className="name-recommendation">Ryan Reynolds</div>
-              <div className="paper-recommendation">Wade Wilson / Deadpool</div>
+              <div className="name-recommendation">Ghostbusters</div>
+              <div className="paper-recommendation">24 DEZ 2021</div>
             </div>
           </div>
           <div className="item-recommendation">
-            <img src={image20}></img>
+            <img src={image23}></img>
             <div className="details-recommendation">
-              <div className="name-recommendation">Ryan Reynolds</div>
-              <div className="paper-recommendation">Wade Wilson / Deadpool</div>
+              <div className="name-recommendation">A Protegida</div>
+              <div className="paper-recommendation">19 FEV 2022</div>
             </div>
           </div>
           <div className="item-recommendation">
-            <img src={image20}></img>
+            <img src={image24}></img>
             <div className="details-recommendation">
-              <div className="name-recommendation">Ryan Reynolds</div>
-              <div className="paper-recommendation">Wade Wilson / Deadpool</div>
-            </div>
-          </div>
-          <div className="item-recommendation">
-            <img src={image20}></img>
-            <div className="details-recommendation">
-              <div className="name-recommendation">Ryan Reynolds</div>
-              <div className="paper-recommendation">Wade Wilson / Deadpool</div>
+              <div className="name-recommendation">Casa Gucci</div>
+              <div className="paper-recommendation">27 SET 2020</div>
             </div>
           </div>
         </div>
       </div>
 
-      <Link to="/">
-        <button>Go Back</button>
-      </Link>
+      <Link to="/" class="back-to"></Link>
     </div>
   );
 }
