@@ -6,13 +6,16 @@ import image20 from "../../assets/image20.png";
 import image28 from "../../assets/image28.png";
 import image37 from "../../assets/image37.png";
 
-function loader(rating) {
+async function loader(rating) {
+  console.log("rating", rating);
+
   let circularProgress = document.querySelector(".circular-progress"),
     progressValue = document.querySelector(".progress-value");
 
   let progressStartValue = 0,
-    progressEndValue = rating,
     speed = 100;
+
+  let progressEndValue = Math.round(rating * 10);
 
   let progress = setInterval(() => {
     progressStartValue++;
@@ -27,11 +30,12 @@ function loader(rating) {
     }
   }, speed);
 }
-
+ 
 function Details() {
   const API_KEY = "0e3950318bf412e11272f2f58c14e062";
   const { id } = useParams();
   const [movie, setMovie] = useState({});
+  const [genres, setGenres] = useState({});
   const image_path = `https://image.tmdb.org/t/p/w500`;
   const [pages, setPages] = useState(1);
 
@@ -41,9 +45,18 @@ function Details() {
     )
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
-        const { title, poster_path, overview, release_date, genres, runtime } =
-          data;
+        console.log("details", data);
+        
+        const {
+          title,
+          poster_path,
+          overview,
+          release_date,
+          genres,
+          runtime,
+          vote_average,
+        } = data;
+
         const movie = {
           id,
           title: title,
@@ -52,10 +65,14 @@ function Details() {
           releaseDate: release_date,
           genres: genres,
           runtime: runtime,
+          valuation: vote_average,
         };
+
         setMovie(movie);
+        setGenres(movie.genres);
+        loader(movie.valuation);
+        
       });
-    loader(74);
   }, []);
 
   return (
@@ -79,8 +96,20 @@ function Details() {
             <div className="info-title">
               <p className="title-name">{movie.title}</p>
               <p className="title-head">
-                16 anos • {movie.releaseDate} (BR) • Ação, Aventura, Comédia,
-                Ficção científica • {movie.runtime}min
+                16 anos • {movie.releaseDate} (BR) •
+                {genres.length > 0 ? (
+                  genres.map((genre) => {
+                    return (
+                      <span key={genre.id}>
+                        {genre.name}
+                        {"•"}
+                      </span>
+                    );
+                  })
+                ) : (
+                  <span>Livre</span>
+                )}
+                {movie.runtime}min
               </p>
             </div>
 

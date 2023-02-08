@@ -79,15 +79,18 @@ Projeto no github com documentação no readme e hospedagem.
 - [x] componente navbar: mobile e desktop
 - [x] componente top: slogan, filter
 - [ ] componente filter: botões em duas linhas, ajustados
-- [ ] componente films: filme, lista de filmes
+- [x] componente filter: botões em um objeto
+- [x] componente films: filme, lista de filmes
 - [ ] componente elenco em details
 - [ ] componente trailer em details
 - [ ] componente recommendations em details
 - [ ] componente go back em details
+- [x] componente logo em details
+- [x] componente informações em details, listagem dos gêneros
 - [x] consumir [api-themoviedb-v3](https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=1) usando fetch then. Cada requisição retorna 20 elementos. [themoviedb-v3-docs](https://developers.themoviedb.org/3/movies/get-movie-details). [themoviedb-v3-api_key](https://api.themoviedb.org/3/movie/550?api_key=0e3950318bf412e11272f2f58c14e062). [themoviedb-v3-api_key](https://api.themoviedb.org/3/movie/758009?api_key=0e3950318bf412e11272f2f58c14e062&language=en-US&page=1) 
-- [ ] listar os filmes mais populares do dia com o endpoint `GET /movie/popular`
+- [x] listar os filmes mais populares do dia com o endpoint `GET /movie/popular`
 - [x] abrir outra página com os detalhes do filme escolhido ao clicar em um item dessa listagem 
-- [ ] acessar mais detalhes sobre o filme com o endpoint `GET /movie/{movie_id}`
+- [x] acessar mais detalhes sobre o filme com o endpoint `GET /movie/{movie_id}`
 - [x] essa lista deverá ser paginada: react-router-dom com `npm install react-router-dom@6`
 - [x] fazer o layout do [figma](https://www.figma.com/file/rM7WPqhLY9ObnGzSCeWLxB/Teste-Front-End?node-id=0%3A1&t=3soQNmbQBSGQraj3-0) pixel perfect, respeitando a composição, fontes e cores
 - [x] possuir uma rota própria para a página com detalhes de um filme 
@@ -97,11 +100,11 @@ Projeto no github com documentação no readme e hospedagem.
 - [ ] novo endpoint `GET /genre/movie/list` deverá ser consultado para obter a lista dos possíveis gêneros filtrados
 - [ ] filtrar os filmes listados por gênero, com a possibilidade de usar mais de um gênero
 - [ ] remover filtros e a listagem deve ser atualizada de acordo com o filtro removido
-- [ ] conseguir voltar para a página de listagem de filmes com os filtros ainda ativos 
+- [ ] conseguir voltar para a página de listagem de filmes com os filtros ainda ativos  
 - [ ] tratar a data e exibir conforme design
 - [ ] tratar a duração e exibir conforme design
-- [x] fazer um componente de carregando para a requisição
-- [ ] atributo rate do filme para o loader
+- [x] fazer um componente de carregando avaliação 
+- [x] atributo rate do filme para o loader
 - [ ] requisição async await no fetch e usar try catch
 
 #### 📅 Telas
