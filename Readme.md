@@ -113,6 +113,10 @@ Projeto no github com documentação no readme e hospedagem.
 - [ ] remover filtros e a listagem deve ser atualizada de acordo com o filtro removido
 - [ ] conseguir voltar para a página de listagem de filmes com os filtros ainda ativos
 
+#### 📅 Melhorias
+
+- [ ] Analisar o projeto e listar melhorias a serem feitas
+
 #### 📅 Telas
 
 - Desktop
