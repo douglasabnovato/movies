@@ -75,7 +75,7 @@ Projeto no github com documentação no readme e hospedagem.
 
 🚀 Executar esse app na sua máquina
 
-- `git clone url_repos` + `npm install` + `cd promobit` + `npm start`
+- `git clone url_repos` + `cd promobit` + `npm install` + `npm start`
 
 #### 📅 Histórico de Tarefas
 
