@@ -2,6 +2,28 @@ import React, { useState, useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 import "./styles.css";
 
+const filters_name = [
+  { name: "Ação" },
+  { name: "Aventura" },
+  { name: "Animação" },
+  { name: "Comédia" },
+  { name: "Crime" },
+  { name: "Documentário" },
+  { name: "Drama" },
+  { name: "Família" },
+  { name: "Fantasia" },
+  { name: "História" },
+  { name: "Terror" },
+  { name: "Música" },
+  { name: "Mistério" },
+  { name: "Romance" },
+  { name: "Ficção científica" },
+  { name: "Cinema TV" },
+  { name: "Thriller" },
+  { name: "Guerra" },
+  { name: "Faroeste" }
+];
+
 function App() {
   const API_KEY = "0e3950318bf412e11272f2f58c14e062";
   const [movies, setMovies] = useState([]);
@@ -14,6 +36,7 @@ function App() {
     )
       .then((response) => response.json())
       .then((data) => {
+        console.log("home", data)
         setMovies(data.results);
         setPages(data.pages);
       });
@@ -42,64 +65,13 @@ function App() {
             <div className="filter-text">FILTER POR:</div>
 
             <div className="filter-box">
-              <div className="filter-tag">
-                <h1>Ação</h1>
-              </div>
-              <div className="filter-tag">
-                <h1>Aventura</h1>
-              </div>
-              <div className="filter-tag">
-                <h1>Animação</h1>
-              </div>
-              <div className="filter-tag">
-                <h1>Comédia</h1>
-              </div>
-              <div className="filter-tag">
-                <h1>Crime</h1>
-              </div>
-              <div className="filter-tag">
-                <h1>Documentário</h1>
-              </div>
-              <div className="filter-tag">
-                <h1>Drama</h1>
-              </div>
-              <div className="filter-tag">
-                <h1>Família</h1>
-              </div>
-              <div className="filter-tag">
-                <h1>Fantasia</h1>
-              </div>
-              <div className="filter-tag">
-                <h1>História</h1>
-              </div>
-
-              <div className="filter-tag">
-                <h1>Terror</h1>
-              </div>
-              <div className="filter-tag">
-                <h1>Música</h1>
-              </div>
-              <div className="filter-tag">
-                <h1>Mistério</h1>
-              </div>
-              <div className="filter-tag">
-                <h1>Romance</h1>
-              </div>
-              <div className="filter-tag">
-                <h1>Ficção científica</h1>
-              </div>
-              <div className="filter-tag">
-                <h1>Cinema TV</h1>
-              </div>
-              <div className="filter-tag">
-                <h1>Thriller</h1>
-              </div>
-              <div className="filter-tag">
-                <h1>Guerra</h1>
-              </div>
-              <div className="filter-tag">
-                <h1>Faroeste</h1>
-              </div>
+              {filters_name.map((filter) => {
+                return (
+                  <div key={filter.name}  className="filter-tag">
+                    <h1>{filter.name}</h1>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>

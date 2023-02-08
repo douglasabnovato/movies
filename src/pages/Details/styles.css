@@ -194,7 +194,7 @@ html {
 }
 
 .casts {
-  justify-content: center;
+  justify-content: left;
   margin-inline: auto;
   margin-block-start: 98px;
   width: 1100px;
@@ -217,7 +217,6 @@ html {
 
 .list-casts {
   display: flex;
-  justify-content: center;
   align-items: center;
   gap: 1rem;
   width: 65vw;
@@ -372,4 +371,30 @@ html {
   line-height: 24px;
 
   color: #131313;
+}
+
+.back-to {
+  background-color: #38322e;
+  border-radius: 65px;
+  bottom: 14px;
+  box-shadow: 2px 3px 19px -2px rgba(0, 0, 0, 0.75);
+  color: #d9a000;
+  cursor: pointer;
+  height: 40px;
+  position: fixed;
+  right: 22px;
+  width: 40px;
+  z-index: 3;
+}
+
+.back-to::after {
+  content: "<";
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding-left: 1px;
+  padding-top: 10px;
+  font-size: 20px;
+  font-weight: 900;
 }
