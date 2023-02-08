@@ -167,7 +167,7 @@ Projeto no github com documentação no readme e hospedagem.
 - [x] [Array map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map)
 - [x] [typeerror-data-map](https://onecompiler.com/questions/3w48395w3/typeerror-data-map-is-not-a-function-in-react-js)
 - [x] [conditional-rendering](https://pt-br.reactjs.org/docs/conditional-rendering.html)
-- [x] [Math round]https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Math/round)
+- [x] [Math round](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Math/round)
 - [x] [typeof](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Operators/typeof)
 
 ### 🚀 Conclusão
