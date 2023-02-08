@@ -151,10 +151,8 @@ Projeto no github com documentação no readme e hospedagem.
 - [x] [github matheusmhq](https://github.com/matheusmhq/tmdb-react-js)
 - [x] [github charleseduardome](https://github.com/charleseduardome/TheMovieDB)
 - [x] [consumir API em reactjs](https://www.youtube.com/watch?v=b6N29J_utw4&list=PLOzZAH_pgb_QGWVmQwkRFTYhHuG1qKHIR&index=1)
-- [x] [API DO TMDB](https://www.youtube.com/watch?v=XqxUHVVO7-U)
 - [x] [Fetch Data from an API](https://www.youtube.com/watch?v=KveKdXSEV7A)
 - [x] [React MovieDB API](https://www.youtube.com/watch?v=I2ibI7MycUw&list=PL_kAgwZgMfWyZ6m8fDwdiwEarr_g6nFxz&index=7)
-- [x] [Paginação com Hooks](https://www.youtube.com/watch?v=YSlzQlEqTBg)
 - [x] [how-to-use-react-router](https://www.freecodecamp.org/news/how-to-use-react-router-version-6)
 - [x] [themoviedb developers](https://developers.themoviedb.org/3/movies/get-movie-lists)
 - [x] [themoviedb](https://www.themoviedb.org/) 
@@ -169,6 +167,8 @@ Projeto no github com documentação no readme e hospedagem.
 - [x] [conditional-rendering](https://pt-br.reactjs.org/docs/conditional-rendering.html)
 - [x] [Math round](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Math/round)
 - [x] [typeof](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Operators/typeof)
+- [ ] [Paginação com Hooks](https://www.youtube.com/watch?v=YSlzQlEqTBg)
+- [ ] [API DO TMDB](https://www.youtube.com/watch?v=XqxUHVVO7-U)
 
 ### 🚀 Conclusão
 
