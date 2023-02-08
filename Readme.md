@@ -3,7 +3,8 @@
 </h4>
 
 <p align="center" style="display: flex; align-items: flex-start; justify-content: center;">
-  <img alt="tmdb" title="#tmdb" src="./.github/api-tmdb.jpg" >
+  <img alt="tmdb" title="#tmdb" src="./.github/api-tmdb-1.jpg" width="400px">
+  <img alt="tmdb" title="#tmdb" src="./.github/api-tmdb-3.jpg" width="400px">
 </p>
 
 ### 💻 Sobre o desafio
@@ -122,7 +123,11 @@ Projeto no github com documentação no readme e hospedagem.
 - Desktop
 
 <p align="center" style="display: flex; align-items: flex-start; justify-content: center;">
-  <img alt="tmdb" title="#tmdb" src="./.github/api-tmdb.jpg" width="400px">
+  <img alt="tmdb" title="#tmdb" src="./.github/api-tmdb-1.jpg" width="400px">
+  <img alt="tmdb" title="#tmdb" src="./.github/api-tmdb-2.jpg" width="400px">
+  <img alt="tmdb" title="#tmdb" src="./.github/api-tmdb-3.jpg" width="400px">
+  <img alt="tmdb" title="#tmdb" src="./.github/api-tmdb-4.jpg" width="400px">
+  <img alt="tmdb" title="#tmdb" src="./.github/api-tmdb-5.jpg" width="400px">
 </p>  
 
 - Mobile
