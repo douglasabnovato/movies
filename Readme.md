@@ -5,7 +5,15 @@
 <p align="center" style="display: flex; align-items: flex-start; justify-content: center;">
   <img alt="tmdb" title="#tmdb" src="./.github/api-tmdb-1.jpg" width="400px">
   <img alt="tmdb" title="#tmdb" src="./.github/api-tmdb-3.jpg" width="400px">
-</p>
+</p>  
+
+## 💻🔖 Organização do projeto 
+
+Organizamos as branches para serem guardadas as versões do projeto
+- main: em produção
+- developer: em desenvolvimento das tarefas
+- v-dev-promobit: primeira versão do projeto
+- v-dev-rocketflix: segunda versão do projeto
 
 ### 💻 Sobre o desafio
 
