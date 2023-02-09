@@ -1,0 +1,150 @@
+:root {
+    --title: #fffcf9;
+    --subtitle: #b3b3b3;
+    --bg-button: #e9e6e3;
+    --tx-button: #000000;
+    --background: linear-gradient(43deg, #102d71 0%, #000000 52%, #c12a23 100%);
+}
+
+* {
+    margin: 0;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: var(--background);
+    height: 90vh;
+    width: 100%;
+}
+
+.container {
+    width: 65vw;
+    margin: 10vh auto;
+}
+
+.topo .logo {
+    width: 88px;
+    height: 63px;
+    margin: 0 auto;
+}
+
+.topo .logo img {
+    width: 88px;
+    height: 63px;
+}
+
+.topo .slogan p {
+    color: var(--title);
+    font-size: 40px;
+    font-weight: bold;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.box-movies {
+    color: var(--title);
+    margin: 15px;
+    padding: 25px;
+}
+
+.box-movies .div-details {
+    display: flex;
+    justify-content: space-around;
+    gap: .5rem; 
+    flex-wrap: wrap;
+}
+
+.box-movies .div-poster {
+    margin: 3px;
+    padding: 5px;
+    height: 265px;
+}
+
+.box-movies .div-poster img {
+    height: 100%;    
+}
+
+.box-movies .div-box {
+    margin: 3px;
+    padding: 5px;
+    width: 60%;
+}
+
+.box-movies .div-box .div-title {
+    margin: 0px 3px 3px 3px;
+    padding: 0px 5px 5px 5px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.box-movies .div-box .div-title-work {
+    margin: 0px 3px 0px 3px;
+    padding: 0px 5px 0px 5px;
+    font-size: 20px;
+    font-weight: bold;
+    width: 388px;
+
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+}
+
+.box-movies .div-box .div-description {
+    margin: 3px;
+    padding: 5px;
+}
+
+.botao {
+    background: var(--bg-button);
+    color: var(--tx-button);
+    margin-top: 30px;
+    margin-bottom: 26px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    position: relative;
+    justify-content: space-between;
+    width: 180.98px;
+    height: 47px;
+    border: 2px solid #1A1A1A;
+    border-radius: 5px;
+}
+
+.botao:hover {
+    cursor: pointer;
+}
+
+.botao img {
+    width: 36px;
+    height: 26px;
+    position: absolute;
+    top: 50%;
+    margin-right: 50%;
+    transform: translate(50%, -50%);
+    border-radius: 5px;
+}
+
+.botao .textclick {
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+    margin-left: 10px;
+    position: absolute;
+    top: 50%;
+    margin-right: 20%;
+    transform: translate(50%, -50%);
+    font-weight: 700;
+    line-height: 18px;
+}
+
+.instrucao p {
+    color: var(--title);
+    width: 381px;
+    height: 42px;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 14px;
+    font-weight: normal;
+    text-align: center;
+}
