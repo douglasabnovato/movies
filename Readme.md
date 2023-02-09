@@ -13,7 +13,7 @@ Organizamos as branches para serem guardadas as versões do projeto
 - main: em produção
 - developer: em desenvolvimento das tarefas
 - v-dev-promobit: primeira versão do projeto
-- v-dev-rocketflix: segunda versão do projeto
+- v-dev-rocketflix: segunda versão do projeto. uma versão para aperfeiçoar
 
 ### 💻 Sobre o desafio
 
