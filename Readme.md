@@ -185,6 +185,7 @@ Para aperfeiçoar meu processo de desenvolver software e solucionar os desafios,
 - [x] [typeof](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Operators/typeof)
 - [ ] [Paginação com Hooks](https://www.youtube.com/watch?v=YSlzQlEqTBg)
 - [ ] [API DO TMDB](https://www.youtube.com/watch?v=XqxUHVVO7-U)
+- [ ] [site de cinema](https://cinema10.com.br/horarios/juiz-de-fora/alameda-shopping#google_vignette)
 
 ### 🚀 Conclusão
 
