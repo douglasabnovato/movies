@@ -288,3 +288,90 @@ a {
   color: #242424;
   padding: 40px 0;
 }
+
+/* ==========================================================================
+   Ajustes Responsivos Mobile (Issue #31 - Mobile UX Refactor)
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  /* 1. Ajuste da escala base */
+  :root {
+    font-size: 50%; /* Reduz proporcionalmente a escala rem para telas menores */
+  }
+
+  /* 2. Topo e Navbar */
+  .top {
+    height: auto;
+    padding-bottom: 24px;
+  }
+
+  .navbar {
+    height: 56px;
+    padding: 0 16px;
+    justify-content: center;
+  }
+
+  .title-text {
+    font-size: 2.4rem;
+  }
+
+  /* 3. Slogan - Ajuste do tamanho da fonte e espaçamento */
+  .slogan {
+    margin: 20px 16px;
+    height: auto;
+  }
+
+  .slogan-text {
+    font-size: 2.4rem;
+    line-height: 3.2rem;
+    text-align: left;
+    max-width: 100%;
+  }
+
+  /* 4. Painel de Filtros - Exibição em carrossel/wrap otimizado */
+  .filter {
+    padding: 0 16px;
+  }
+
+  .filter-container {
+    width: 100%;
+  }
+
+  .filter-text {
+    font-size: 1.2rem;
+    margin-bottom: 12px;
+  }
+
+  .filter-box {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: flex-start;
+  }
+
+  .filter-tag {
+    padding: 6px 12px;
+    font-size: 1.2rem;
+    margin: 0;
+  }
+
+  /* 5. Grid de Filmes */
+  .films {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 16px;
+    padding: 20px 16px;
+  }
+
+  .film .card img {
+    width: 100%;
+    height: auto;
+  }
+
+  .title-movie {
+    font-size: 1.4rem;
+  }
+
+  .title-date {
+    font-size: 1.2rem;
+  }
+}
