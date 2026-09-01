@@ -1,6 +1,9 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { Link, useParams } from "react-router-dom";
 import { tmdbService } from "../../services/tmdbApi";
+import { DetailsSkeleton } from "../../components/Skeleton";
+import { formatDate, formatRuntime } from "../../utils/formatters";
+import "../../components/Skeleton/styles.css";
 import "./styles.css";
 
 const IMAGE_PATH_W500 = "https://image.tmdb.org/t/p/w500";
@@ -14,22 +17,7 @@ function Details() {
   const [recommendations, setRecommendations] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Formatação de data (DD/MM/YYYY)
-  const formatDate = (dateString) => {
-    if (!dateString) return "Data desconhecida";
-    const [year, month, day] = dateString.split("-");
-    return `${day}/${month}/${year}`;
-  };
-
-  // Formatação de duração (Xh Ym)
-  const formatRuntime = (minutes) => {
-    if (!minutes) return "Duração indisponível";
-    const hours = Math.floor(minutes / 60);
-    const mins = minutes % 60;
-    return `${hours}h ${mins}m`;
-  };
-
-  // Carregamento paralelo das informações do filme usando tmdbService
+  // Carregamento paralelo das informações do filme
   const fetchMovieDetails = useCallback(async () => {
     setLoading(true);
     try {
@@ -44,7 +32,6 @@ function Details() {
       setCast(creditsData.cast ? creditsData.cast.slice(0, 10) : []);
       setCrew(creditsData.crew ? creditsData.crew.slice(0, 5) : []);
 
-      // Busca o trailer oficial no YouTube
       const trailer = videosData.results?.find(
         (vid) => vid.type === "Trailer" && vid.site === "YouTube"
       );
@@ -66,7 +53,21 @@ function Details() {
   }, [fetchMovieDetails]);
 
   if (loading) {
-    return <div className="loading-container">Carregando detalhes do filme...</div>;
+    return (
+      <div className="main">
+        <div className="top-details">
+          <div className="navbar">
+            <div className="title-site">
+              <Link to="/" className="title-text">
+                TMDB
+                <span className="title-obj"></span>
+              </Link>
+            </div>
+          </div>
+          <DetailsSkeleton />
+        </div>
+      </div>
+    );
   }
 
   if (!movie) {
@@ -96,6 +97,10 @@ function Details() {
                   : "https://via.placeholder.com/383x574?text=Sem+Poster"
               }
               alt={movie.title}
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = "https://via.placeholder.com/383x574?text=Sem+Poster";
+              }}
             />
           </div>
 
@@ -158,6 +163,10 @@ function Details() {
                       : "https://via.placeholder.com/165x212?text=Sem+Foto"
                   }
                   alt={actor.name}
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = "https://via.placeholder.com/165x212?text=Sem+Foto";
+                  }}
                 />
                 <div className="details-cast">
                   <div className="name-cast">{actor.name}</div>
@@ -200,6 +209,10 @@ function Details() {
                         : "https://via.placeholder.com/165x212?text=Sem+Imagem"
                     }
                     alt={item.title}
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = "https://via.placeholder.com/165x212?text=Sem+Imagem";
+                    }}
                   />
                   <div className="details-recommendation">
                     <div className="name-recommendation">{item.title}</div>
