@@ -1,94 +1,90 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useState, useCallback } from "react";
+import { Link, useParams } from "react-router-dom";
 import "./styles.css";
-import image19 from "../../assets/image19.png";
-import image20 from "../../assets/image20.png";
-import image21 from "../../assets/image21.png";
-import image22 from "../../assets/image22.png";
-import image23 from "../../assets/image23.png";
-import image24 from "../../assets/image24.png";
-import image26 from "../../assets/image26.png";
-import image28 from "../../assets/image28.png";
-import image29 from "../../assets/image29.png";
-import image30 from "../../assets/image30.png";
-import image31 from "../../assets/image31.png";
-import image32 from "../../assets/image32.png";
-import image33 from "../../assets/image33.png";
-import image35 from "../../assets/image35.png";
-import image36 from "../../assets/image36.png";
-import image37 from "../../assets/image37.png";
 
-async function loader(rating) {
-  let circularProgress = document.querySelector(".circular-progress"),
-    progressValue = document.querySelector(".progress-value");
-
-  let progressStartValue = 0,
-    speed = 100;
-
-  let progressEndValue = Math.round(rating * 10);
-
-  let progress = setInterval(() => {
-    progressStartValue++;
-
-    progressValue.textContent = `${progressStartValue}%`;
-    circularProgress.style.background = `conic-gradient(#14ff00 ${
-      progressStartValue * 3.6
-    }deg, rgba(255, 255, 255, 0.1) 0deg)`;
-
-    if (progressStartValue == progressEndValue) {
-      clearInterval(progress);
-    }
-  }, speed);
-}
+const API_KEY = process.env.REACT_APP_TMDB_KEY || "0e3950318bf412e11272f2f58c14e062";
+const BASE_URL = "https://api.themoviedb.org/3";
+const IMAGE_PATH_W500 = "https://image.tmdb.org/t/p/w500";
 
 function Details() {
-  const API_KEY = "0e3950318bf412e11272f2f58c14e062";
   const { id } = useParams();
-  const [movie, setMovie] = useState({});
-  const [genres, setGenres] = useState({});
-  const image_path = `https://image.tmdb.org/t/p/w500`;
-  const [pages, setPages] = useState(1);
+  const [movie, setMovie] = useState(null);
+  const [cast, setCast] = useState([]);
+  const [crew, setCrew] = useState([]);
+  const [trailerKey, setTrailerKey] = useState(null);
+  const [recommendations, setRecommendations] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // Formatação de data (DD/MM/YYYY)
+  const formatDate = (dateString) => {
+    if (!dateString) return "Data desconhecida";
+    const [year, month, day] = dateString.split("-");
+    return `${day}/${month}/${year}`;
+  };
+
+  // Formatação de duração (Xh Ym)
+  const formatRuntime = (minutes) => {
+    if (!minutes) return "Duração indisponível";
+    const hours = Math.floor(minutes / 60);
+    const mins = minutes % 60;
+    return `${hours}h ${mins}m`;
+  };
+
+  // Carregamento paralelo das informações do filme
+  const fetchMovieDetails = useCallback(async () => {
+    setLoading(true);
+    try {
+      const [movieRes, creditsRes, videosRes, recommendationsRes] = await Promise.all([
+        fetch(`${BASE_URL}/movie/${id}?api_key=${API_KEY}&language=pt-BR`),
+        fetch(`${BASE_URL}/movie/${id}/credits?api_key=${API_KEY}&language=pt-BR`),
+        fetch(`${BASE_URL}/movie/${id}/videos?api_key=${API_KEY}&language=pt-BR`),
+        fetch(`${BASE_URL}/movie/${id}/recommendations?api_key=${API_KEY}&language=pt-BR&page=1`)
+      ]);
+
+      const movieData = await movieRes.json();
+      const creditsData = await creditsRes.json();
+      const videosData = await videosRes.json();
+      const recommendationsData = await recommendationsRes.json();
+
+      setMovie(movieData);
+      setCast(creditsData.cast ? creditsData.cast.slice(0, 10) : []);
+      setCrew(creditsData.crew ? creditsData.crew.slice(0, 5) : []);
+
+      // Busca o trailer oficial no YouTube
+      const trailer = videosData.results?.find(
+        (vid) => vid.type === "Trailer" && vid.site === "YouTube"
+      );
+      setTrailerKey(trailer ? trailer.key : null);
+
+      setRecommendations(
+        recommendationsData.results ? recommendationsData.results.slice(0, 6) : []
+      );
+    } catch (error) {
+      console.error("Erro ao carregar detalhes do filme:", error);
+    } finally {
+      setLoading(false);
+    }
+  }, [id]);
 
   useEffect(() => {
-    fetch(
-      `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}&language=en-US&page=1`
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("details", data);
+    fetchMovieDetails();
+    window.scrollTo(0, 0);
+  }, [fetchMovieDetails]);
 
-        const {
-          title,
-          poster_path,
-          overview,
-          release_date,
-          genres,
-          runtime,
-          vote_average,
-        } = data;
+  if (loading) {
+    return <div className="loading-container">Carregando detalhes do filme...</div>;
+  }
 
-        const movie = {
-          id,
-          title: title,
-          sinopse: overview,
-          image: `${image_path}${poster_path}`,
-          releaseDate: release_date,
-          genres: genres,
-          runtime: runtime,
-          valuation: vote_average,
-        };
+  if (!movie) {
+    return <div className="error-container">Filme não encontrado.</div>;
+  }
 
-        setMovie(movie);
-        setGenres(movie.genres);
-        loader(movie.valuation);
-      });
-  }, []);
+  const ratingPercentage = Math.round((movie.vote_average || 0) * 10);
 
   return (
     <div className="main">
-      <div className="top">
-        <div id="toper" className="navbar">
+      <div className="top-details">
+        <div className="navbar">
           <div className="title-site">
             <Link to="/" className="title-text">
               TMDB
@@ -99,185 +95,132 @@ function Details() {
 
         <div className="film-detail">
           <div className="film-banner">
-            <img src={movie.image}></img>
+            <img
+              src={
+                movie.poster_path
+                  ? `${IMAGE_PATH_W500}${movie.poster_path}`
+                  : "https://via.placeholder.com/383x574?text=Sem+Poster"
+              }
+              alt={movie.title}
+            />
           </div>
 
           <div className="film-infos">
             <div className="info-title">
-              <p className="title-name">{movie.title}</p>
+              <h1 className="title-name">{movie.title}</h1>
               <p className="title-head">
-                16 anos • {movie.releaseDate} (BR) •
-                {genres.length > 0 ? (
-                  genres.map((genre) => {
-                    return (
-                      <span key={genre.id}>
-                        {genre.name}
-                        {"•"}
-                      </span>
-                    );
-                  })
-                ) : (
-                  <span>Livre</span>
-                )}
-                {movie.runtime}min
+                {formatDate(movie.release_date)} (BR) •{" "}
+                {movie.genres?.map((g) => g.name).join(", ")} •{" "}
+                {formatRuntime(movie.runtime)}
               </p>
             </div>
 
             <div className="info-evaluation">
               <div className="evaluation-loading">
-                <div class="circular-progress">
-                  <span class="progress-value">0%</span>
+                <div
+                  className="circular-progress"
+                  style={{
+                    background: `conic-gradient(#14ff00 ${ratingPercentage * 3.6}deg, rgba(255, 255, 255, 0.1) 0deg)`
+                  }}
+                >
+                  <span className="progress-value">{ratingPercentage}%</span>
                 </div>
               </div>
-
               <p className="evaluation-evaluation">Avaliação dos usuários</p>
             </div>
+
             <div className="info-sinopse">
               <p className="sinopse-title">Sinopse</p>
-              <p className="sinopse-text">{movie.sinopse}</p>
+              <p className="sinopse-text">
+                {movie.overview || "Nenhuma sinopse disponível para este filme."}
+              </p>
             </div>
-            <div className="info-datasheet">
-              <div className="datasheet-1">
-                <p className="datasheet-title">Rob Liefeld</p>
-                <p className="datasheet-text">Characters</p>
+
+            {crew.length > 0 && (
+              <div className="info-datasheet">
+                {crew.map((member) => (
+                  <div key={`${member.id}-${member.job}`} className="datasheet-1">
+                    <p className="datasheet-title">{member.name}</p>
+                    <p className="datasheet-text">{member.job}</p>
+                  </div>
+                ))}
               </div>
-              <div className="datasheet-1">
-                <p className="datasheet-title">Rhett Reese</p>
-                <p className="datasheet-text">Screenplay</p>
-              </div>
-              <div className="datasheet-1">
-                <p className="datasheet-title">Fabian Nicieza</p>
-                <p className="datasheet-text">Characters</p>
-              </div>
-              <div className="datasheet-1">
-                <p className="datasheet-title">Paul Wernick</p>
-                <p className="datasheet-text">Screenplay</p>
-              </div>
-              <div className="datasheet-1">
-                <p className="datasheet-title">Tim Miller</p>
-                <p className="datasheet-text">Director</p>
-              </div>
-            </div>
+            )}
           </div>
         </div>
       </div>
 
-      <div className="casts">
-        <div className="title-casts">Elenco Original</div>
-        <div className="list-casts">
-          <div className="item-cast">
-            <img src={image28}></img>
-            <div className="details-cast">
-              <div className="name-cast">Ryan Reynolds</div>
-              <div className="paper-cast">Wade Wilson / Deadpool</div>
-            </div>
-          </div>
-          <div className="item-cast">
-            <img src={image29}></img>
-            <div className="details-cast">
-              <div className="name-cast">Morena Baccarin</div>
-              <div className="paper-cast">Vanessa</div>
-            </div>
-          </div>
-          <div className="item-cast">
-            <img src={image30}></img>
-            <div className="details-cast">
-              <div className="name-cast">Ed Skrein</div>
-              <div className="paper-cast">Ajax</div>
-            </div>
-          </div>
-          <div className="item-cast">
-            <img src={image31}></img>
-            <div className="details-cast">
-              <div className="name-cast">T. J. Miller</div>
-              <div className="paper-cast">Weasel</div>
-            </div>
-          </div>
-          <div className="item-cast">
-            <img src={image32}></img>
-            <div className="details-cast">
-              <div className="name-cast">Gina Carano</div>
-              <div className="paper-cast">Angel Dust</div>
-            </div>
-          </div>
-          <div className="item-cast">
-            <img src={image33}></img>
-            <div className="details-cast">
-              <div className="name-cast">Leslie Uggams</div>
-              <div className="paper-cast">Blind Al</div>
-            </div>
-          </div>
-          <div className="item-cast">
-            <img src={image35}></img>
-            <div className="details-cast">
-              <div className="name-cast">Karan Soni</div>
-              <div className="paper-cast">Dopinder</div>
-            </div>
-          </div>
-          <div className="item-cast">
-            <img src={image36}></img>
-            <div className="details-cast">
-              <div className="name-cast">Jed Rees</div>
-              <div className="paper-cast">Recruiter</div>
-            </div>
+      {/* Elenco Principal */}
+      {cast.length > 0 && (
+        <div className="casts">
+          <div className="title-casts">Elenco Principal</div>
+          <div className="list-casts">
+            {cast.map((actor) => (
+              <div key={actor.id} className="item-cast">
+                <img
+                  src={
+                    actor.profile_path
+                      ? `${IMAGE_PATH_W500}${actor.profile_path}`
+                      : "https://via.placeholder.com/165x212?text=Sem+Foto"
+                  }
+                  alt={actor.name}
+                />
+                <div className="details-cast">
+                  <div className="name-cast">{actor.name}</div>
+                  <div className="paper-cast">{actor.character}</div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
-      </div>
+      )}
 
-      <div className="trailer">
-        <div className="title-trailer">Trailer</div>
-        <img src={image37}></img>
-      </div>
-
-      <div className="recommendations">
-        <div className="title-recommendations">Recomendações</div>
-        <div className="list-recommendations">
-          <div className="item-recommendation">
-            <img src={image19}></img>
-            <div className="details-recommendation">
-              <div className="name-recommendation">Clifford</div>
-              <div className="paper-recommendation">12 NOV 2021</div>
-            </div>
-          </div>
-          <div className="item-recommendation">
-            <img src={image20}></img>
-            <div className="details-recommendation">
-              <div className="name-recommendation">7 Prisioneiros</div>
-              <div className="paper-recommendation">22 JAN 2021</div>
-            </div>
-          </div>
-          <div className="item-recommendation">
-            <img src={image21}></img>
-            <div className="details-recommendation">
-              <div className="name-recommendation">Resident Evil</div>
-              <div className="paper-recommendation">02 MAI 2021</div>
-            </div>
-          </div>
-          <div className="item-recommendation">
-            <img src={image22}></img>
-            <div className="details-recommendation">
-              <div className="name-recommendation">Ghostbusters</div>
-              <div className="paper-recommendation">24 DEZ 2021</div>
-            </div>
-          </div>
-          <div className="item-recommendation">
-            <img src={image23}></img>
-            <div className="details-recommendation">
-              <div className="name-recommendation">A Protegida</div>
-              <div className="paper-recommendation">19 FEV 2022</div>
-            </div>
-          </div>
-          <div className="item-recommendation">
-            <img src={image24}></img>
-            <div className="details-recommendation">
-              <div className="name-recommendation">Casa Gucci</div>
-              <div className="paper-recommendation">27 SET 2020</div>
-            </div>
+      {/* Trailer Oficial */}
+      {trailerKey && (
+        <div className="trailer">
+          <div className="title-trailer">Trailer Oficial</div>
+          <div className="trailer-container">
+            <iframe
+              src={`https://www.youtube.com/embed/${trailerKey}`}
+              title="Trailer do Filme"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
           </div>
         </div>
-      </div>
+      )}
 
-      <Link to="/" class="back-to"></Link>
+      {/* Recomendações */}
+      {recommendations.length > 0 && (
+        <div className="recommendations">
+          <div className="title-recommendations">Recomendações</div>
+          <div className="list-recommendations">
+            {recommendations.map((item) => (
+              <div key={item.id} className="item-recommendation">
+                <Link to={`/movie/${item.id}`}>
+                  <img
+                    src={
+                      item.poster_path
+                        ? `${IMAGE_PATH_W500}${item.poster_path}`
+                        : "https://via.placeholder.com/165x212?text=Sem+Imagem"
+                    }
+                    alt={item.title}
+                  />
+                  <div className="details-recommendation">
+                    <div className="name-recommendation">{item.title}</div>
+                    <div className="paper-recommendation">
+                      {formatDate(item.release_date)}
+                    </div>
+                  </div>
+                </Link>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <Link to="/" className="back-to" title="Voltar para a lista"></Link>
     </div>
   );
 }
