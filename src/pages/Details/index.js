@@ -1,9 +1,8 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { Link, useParams } from "react-router-dom";
+import { tmdbService } from "../../services/tmdbApi";
 import "./styles.css";
 
-const API_KEY = process.env.REACT_APP_TMDB_KEY || "0e3950318bf412e11272f2f58c14e062";
-const BASE_URL = "https://api.themoviedb.org/3";
 const IMAGE_PATH_W500 = "https://image.tmdb.org/t/p/w500";
 
 function Details() {
@@ -30,21 +29,16 @@ function Details() {
     return `${hours}h ${mins}m`;
   };
 
-  // Carregamento paralelo das informações do filme
+  // Carregamento paralelo das informações do filme usando tmdbService
   const fetchMovieDetails = useCallback(async () => {
     setLoading(true);
     try {
-      const [movieRes, creditsRes, videosRes, recommendationsRes] = await Promise.all([
-        fetch(`${BASE_URL}/movie/${id}?api_key=${API_KEY}&language=pt-BR`),
-        fetch(`${BASE_URL}/movie/${id}/credits?api_key=${API_KEY}&language=pt-BR`),
-        fetch(`${BASE_URL}/movie/${id}/videos?api_key=${API_KEY}&language=pt-BR`),
-        fetch(`${BASE_URL}/movie/${id}/recommendations?api_key=${API_KEY}&language=pt-BR&page=1`)
+      const [movieData, creditsData, videosData, recommendationsData] = await Promise.all([
+        tmdbService.getMovieDetails(id),
+        tmdbService.getMovieCredits(id),
+        tmdbService.getMovieVideos(id),
+        tmdbService.getMovieRecommendations(id),
       ]);
-
-      const movieData = await movieRes.json();
-      const creditsData = await creditsRes.json();
-      const videosData = await videosRes.json();
-      const recommendationsData = await recommendationsRes.json();
 
       setMovie(movieData);
       setCast(creditsData.cast ? creditsData.cast.slice(0, 10) : []);

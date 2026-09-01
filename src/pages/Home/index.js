@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import Pagination from "../../components/Pagination";
+import { tmdbService } from "../../services/tmdbApi";
 import "./styles.css";
 
-const API_KEY = process.env.REACT_APP_TMDB_KEY || "0e3950318bf412e11272f2f58c14e062";
-const BASE_URL = "https://api.themoviedb.org/3";
 const IMAGE_PATH = "https://image.tmdb.org/t/p/w500";
 
 function Home() {
@@ -15,14 +14,11 @@ function Home() {
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(false);
 
-  // 1. Carregar lista de gêneros oficial da API
+  // 1. Carregar lista de gêneros oficial da API via tmdbService
   useEffect(() => {
     const fetchGenres = async () => {
       try {
-        const response = await fetch(
-          `${BASE_URL}/genre/movie/list?api_key=${API_KEY}&language=pt-BR`
-        );
-        const data = await response.json();
+        const data = await tmdbService.getGenres();
         if (data.genres) setGenres(data.genres);
       } catch (error) {
         console.error("Erro ao carregar gêneros:", error);
@@ -31,21 +27,17 @@ function Home() {
     fetchGenres();
   }, []);
 
-  // 2. Buscar filmes (Populares ou Filtrados por Gênero)
+  // 2. Buscar filmes (Populares ou Filtrados por Gênero) via tmdbService
   const fetchMovies = useCallback(async () => {
     setLoading(true);
     try {
-      let endpoint = `${BASE_URL}/movie/popular?api_key=${API_KEY}&language=pt-BR&page=${currentPage}`;
-
-      if (selectedGenres.length > 0) {
-        const genreParams = selectedGenres.join(",");
-        endpoint = `${BASE_URL}/discover/movie?api_key=${API_KEY}&language=pt-BR&page=${currentPage}&with_genres=${genreParams}`;
-      }
-
-      const response = await fetch(endpoint);
-      const data = await response.json();
+      const data =
+        selectedGenres.length > 0
+          ? await tmdbService.getDiscoverMovies(selectedGenres, currentPage)
+          : await tmdbService.getPopularMovies(currentPage);
 
       setMovies(data.results || []);
+      // TMDB limita consultas públicas em 500 páginas
       setTotalPages(data.total_pages > 500 ? 500 : data.total_pages || 1);
     } catch (error) {
       console.error("Erro ao carregar filmes:", error);
@@ -60,7 +52,7 @@ function Home() {
 
   // 3. Alternar seleção de gênero
   const handleGenreClick = (genreId) => {
-    setCurrentPage(1);
+    setCurrentPage(1); // Reseta para a primeira página ao mudar filtros
     setSelectedGenres((prevSelected) =>
       prevSelected.includes(genreId)
         ? prevSelected.filter((id) => id !== genreId)
