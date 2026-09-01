@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import Pagination from "../../components/Pagination";
+import { MovieCardSkeleton } from "../../components/Skeleton";
+import "../../components/Skeleton/styles.css";
 import { tmdbService } from "../../services/tmdbApi";
 import "./styles.css";
 
@@ -110,7 +112,9 @@ function Home() {
 
       <div className="films">
         {loading ? (
-          <div className="loading-state">Carregando filmes...</div>
+          Array.from({ length: 10 }).map((_, index) => (
+            <MovieCardSkeleton key={index} />
+          ))
         ) : movies.length > 0 ? (
           movies.map((movie) => (
             <div key={movie.id} className="film">
@@ -123,6 +127,10 @@ function Home() {
                         : "https://via.placeholder.com/176x264?text=Sem+Poster"
                     }
                     alt={movie.title || movie.original_title}
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = "https://via.placeholder.com/176x264?text=Sem+Poster";
+                    }}
                   />
                   <div className="title-movie">
                     {movie.title || movie.original_title}
