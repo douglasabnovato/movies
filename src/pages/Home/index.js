@@ -1,22 +1,59 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import Pagination from "../../components/Pagination";
 import { MovieCardSkeleton } from "../../components/Skeleton";
-import "../../components/Skeleton/styles.css";
 import { tmdbService } from "../../services/tmdbApi";
+import "../../components/Skeleton/styles.css";
 import "./styles.css";
 
 const IMAGE_PATH = "https://image.tmdb.org/t/p/w500";
 
 function Home() {
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // Ler estados iniciais a partir dos parâmetros da URL
+  const initialSearch = searchParams.get("search") || "";
+  const initialPage = Number(searchParams.get("page")) || 1;
+  const initialGenres = searchParams.get("genres")
+    ? searchParams.get("genres").split(",").map(Number)
+    : [];
+
   const [movies, setMovies] = useState([]);
   const [genres, setGenres] = useState([]);
-  const [selectedGenres, setSelectedGenres] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [selectedGenres, setSelectedGenres] = useState(initialGenres);
+  const [searchQuery, setSearchQuery] = useState(initialSearch);
+  const [debouncedQuery, setDebouncedQuery] = useState(initialSearch);
+  const [currentPage, setCurrentPage] = useState(initialPage);
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(false);
 
-  // 1. Carregar lista de gêneros oficial da API via tmdbService
+  // 1. Debounce para o input de busca
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedQuery(searchQuery);
+    }, 500);
+
+    return () => clearTimeout(handler);
+  }, [searchQuery]);
+
+  // 2. Sincronizar estado local com a URL (Query String)
+  useEffect(() => {
+    const params = {};
+
+    if (debouncedQuery.trim() !== "") {
+      params.search = debouncedQuery;
+    } else if (selectedGenres.length > 0) {
+      params.genres = selectedGenres.join(",");
+    }
+
+    if (currentPage > 1) {
+      params.page = currentPage;
+    }
+
+    setSearchParams(params, { replace: true });
+  }, [debouncedQuery, selectedGenres, currentPage, setSearchParams]);
+
+  // 3. Carregar lista de gêneros oficial
   useEffect(() => {
     const fetchGenres = async () => {
       try {
@@ -29,32 +66,36 @@ function Home() {
     fetchGenres();
   }, []);
 
-  // 2. Buscar filmes (Populares ou Filtrados por Gênero) via tmdbService
+  // 4. Buscar filmes na API
   const fetchMovies = useCallback(async () => {
     setLoading(true);
     try {
-      const data =
-        selectedGenres.length > 0
-          ? await tmdbService.getDiscoverMovies(selectedGenres, currentPage)
-          : await tmdbService.getPopularMovies(currentPage);
+      let data;
+      if (debouncedQuery.trim() !== "") {
+        data = await tmdbService.searchMovies(debouncedQuery, currentPage);
+      } else if (selectedGenres.length > 0) {
+        data = await tmdbService.getDiscoverMovies(selectedGenres, currentPage);
+      } else {
+        data = await tmdbService.getPopularMovies(currentPage);
+      }
 
       setMovies(data.results || []);
-      // TMDB limita consultas públicas em 500 páginas
       setTotalPages(data.total_pages > 500 ? 500 : data.total_pages || 1);
     } catch (error) {
       console.error("Erro ao carregar filmes:", error);
     } finally {
       setLoading(false);
     }
-  }, [currentPage, selectedGenres]);
+  }, [currentPage, selectedGenres, debouncedQuery]);
 
   useEffect(() => {
     fetchMovies();
   }, [fetchMovies]);
 
-  // 3. Alternar seleção de gênero
+  // 5. Alternar seleção de gênero
   const handleGenreClick = (genreId) => {
-    setCurrentPage(1); // Reseta para a primeira página ao mudar filtros
+    setSearchQuery("");
+    setCurrentPage(1);
     setSelectedGenres((prevSelected) =>
       prevSelected.includes(genreId)
         ? prevSelected.filter((id) => id !== genreId)
@@ -62,7 +103,14 @@ function Home() {
     );
   };
 
-  // 4. Mudar de página e rolar para o topo
+  // 6. Alterar input de busca
+  const handleSearchChange = (e) => {
+    setSelectedGenres([]);
+    setCurrentPage(1);
+    setSearchQuery(e.target.value);
+  };
+
+  // 7. Paginação
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -84,6 +132,16 @@ function Home() {
           <div className="slogan-text">
             Milhões de filmes, séries e pessoas para descobrir. Explore já.
           </div>
+        </div>
+
+        <div className="search-bar-container">
+          <input
+            type="text"
+            className="search-input"
+            placeholder="Pesquise por um filme pelo nome..."
+            value={searchQuery}
+            onChange={handleSearchChange}
+          />
         </div>
 
         <div className="filter">
@@ -129,7 +187,8 @@ function Home() {
                     alt={movie.title || movie.original_title}
                     onError={(e) => {
                       e.target.onerror = null;
-                      e.target.src = "https://via.placeholder.com/176x264?text=Sem+Poster";
+                      e.target.src =
+                        "https://via.placeholder.com/176x264?text=Sem+Poster";
                     }}
                   />
                   <div className="title-movie">
@@ -146,7 +205,7 @@ function Home() {
           ))
         ) : (
           <div className="empty-state">
-            Nenhum filme encontrado para os filtros selecionados.
+            Nenhum filme encontrado para a pesquisa.
           </div>
         )}
       </div>
