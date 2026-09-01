@@ -1,0 +1,52 @@
+.pagination-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 30px 0;
+  font-family: "Roboto", sans-serif;
+}
+
+.page-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background-color: #e0e0e0;
+  color: #333333;
+  font-size: 1.4rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.page-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.page-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Variantes de Cor */
+.variant-purple .page-btn.active {
+  background-color: #5c16c5;
+  color: #ffffff;
+  box-shadow: 0px 4px 10px rgba(92, 22, 197, 0.4);
+}
+
+.variant-pink .page-btn.active {
+  background-color: #e91e63;
+  color: #ffffff;
+  box-shadow: 0px 4px 10px rgba(233, 30, 99, 0.4);
+}
+
+.variant-dark .page-btn.active {
+  background-color: #2d0c5e;
+  color: #ffffff;
+}

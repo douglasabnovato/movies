@@ -1,0 +1,50 @@
+name: CI/CD Pipeline - Movies App
+
+on:
+  push:
+    branches:
+      - main
+      - developer-mvp
+      - feature/tarefas
+  pull_request:
+    branches:
+      - main
+      - developer-mvp
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do Repositório
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Instalar Dependências
+        run: npm ci
+
+      - name: Executar Testes Unitários
+        run: npm test -- --watchAll=false --passWithNoTests
+        env:
+          CI: true
+
+      - name: Executar Build de Produção
+        run: npm run build
+        env:
+          CI: false
+          REACT_APP_TMDB_KEY: ${{ secrets.REACT_APP_TMDB_KEY }}
+
+      - name: Deploy para GitHub Pages
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/developer-mvp'
+        uses: PeaceIris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build
