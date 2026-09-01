@@ -1,7 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200;300;400;600;700;800;900&family=Roboto:wght@100;300;400;500;700;900&display=swap");
 
 :root {
-  font-size: 62.5%; /* 62.5% = 10px >> 1.2rem .8rem; Que seriam 12px e 8px*/
+  font-size: 62.5%;
+  /* 1rem = 10px */
 }
 
 * {
@@ -11,18 +12,21 @@
 }
 
 html {
-  font-size: 9rem;
+  font-size: 62.5%;
 }
 
-.top {
-  height: 600px;
+.top-details {
+  background: #2d0c5e;
+  padding-bottom: 40px;
 }
 
 .film-detail {
   display: flex;
   justify-content: center;
   margin: 0 auto;
-  width: 1100px;
+  max-width: 1100px;
+  width: 100%;
+  padding: 0 20px;
 }
 
 .film-banner {
@@ -34,11 +38,13 @@ html {
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
   border-radius: 8px;
   width: 383px;
-  height: 574px;
+  height: auto;
+  max-width: 100%;
 }
 
 .film-infos {
-  width: 696px;
+  max-width: 696px;
+  width: 100%;
   margin-block-start: 40px;
 }
 
@@ -51,59 +57,47 @@ html {
 }
 
 .info-title .title-name {
-  font-family: "Roboto";
-  font-style: normal;
+  font-family: "Roboto", sans-serif;
   font-weight: 700;
-  font-size: 32px;
-  line-height: 40px;
-
-  display: flex;
-  align-items: center;
-
+  font-size: 3.2rem;
+  line-height: 4rem;
   color: #ffffff;
 }
 
 .info-title .title-head {
-  font-family: "Roboto";
-  font-style: normal;
+  font-family: "Roboto", sans-serif;
   font-weight: 400;
-  font-size: 18px;
-  line-height: 24px;
-
-  display: flex;
-  align-items: center;
-
+  font-size: 1.8rem;
+  line-height: 2.4rem;
   color: #ffffff;
+  margin-top: 8px;
 }
 
 .info-evaluation {
   display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 20px 0;
 }
 
 .info-evaluation .evaluation-loading {
   width: 61.4px;
   height: 61.4px;
-
   display: flex;
   align-items: center;
   justify-content: center;
-  text-align: center;
-
   border-radius: 50%;
-  margin: 15px;
 }
 
 .circular-progress {
   width: 61.4px;
   height: 61.4px;
-
   border-radius: 50%;
   background: conic-gradient(#14ff00 3.6deg, rgba(255, 255, 255, 0.1) 0deg);
-
   display: flex;
   align-items: center;
   justify-content: center;
-  text-align: center;
+  position: relative;
 }
 
 .circular-progress::before {
@@ -117,260 +111,165 @@ html {
 
 .progress-value {
   position: relative;
-
-  font-family: "Roboto";
-  font-style: normal;
+  font-family: "Roboto", sans-serif;
   font-weight: 700;
-  font-size: 22px;
-  line-height: 38px;
-  letter-spacing: -0.005em;
-
+  font-size: 2.2rem;
   color: #14ff00;
 }
 
 .info-evaluation .evaluation-evaluation {
-  font-family: "Roboto";
-  font-style: normal;
+  font-family: "Roboto", sans-serif;
   font-weight: 400;
-  font-size: 16px;
-  line-height: 20px;
-  display: flex;
-  align-items: center;
-
+  font-size: 1.6rem;
   color: #ffffff;
 }
 
 .info-sinopse .sinopse-title {
-  font-family: "Roboto";
-  font-style: normal;
+  font-family: "Roboto", sans-serif;
   font-weight: 700;
-  font-size: 20px;
-  line-height: 24px;
-
-  display: flex;
-  align-items: center;
-
+  font-size: 2rem;
+  line-height: 2.4rem;
   color: #ffffff;
+  margin-bottom: 8px;
 }
 
 .info-sinopse .sinopse-text {
-  font-family: "Roboto";
-  font-style: normal;
+  font-family: "Roboto", sans-serif;
   font-weight: 400;
-  font-size: 16px;
-  line-height: 24px;
-
-  display: flex;
-  align-items: center;
-  letter-spacing: -0.005em;
-
+  font-size: 1.6rem;
+  line-height: 2.4rem;
   color: #dddddd;
 }
 
 .info-datasheet .datasheet-1 .datasheet-title {
-  font-family: "Roboto";
-  font-style: normal;
+  font-family: "Roboto", sans-serif;
   font-weight: 700;
-  font-size: 16px;
-  line-height: 24px;
-
-  display: flex;
-  align-items: center;
-
+  font-size: 1.6rem;
   color: #ffffff;
 }
 
 .info-datasheet .datasheet-1 .datasheet-text {
-  font-family: "Roboto";
-  font-style: normal;
+  font-family: "Roboto", sans-serif;
   font-weight: 400;
-  font-size: 14px;
-  line-height: 20px;
-
-  display: flex;
-  align-items: center;
-
+  font-size: 1.4rem;
   color: #ffffff;
 }
 
-.casts {
-  justify-content: left;
-  margin-inline: auto;
-  margin-block-start: 98px;
-  width: 1100px;
+/* --- Elenco, Trailers e Recomendações --- */
+
+.casts,
+.trailer,
+.recommendations {
+  max-width: 1100px;
+  width: 100%;
+  margin: 60px auto;
+  padding: 0 20px;
 }
 
-.title-casts {
-  font-family: "Roboto";
-  font-style: normal;
+.title-casts,
+.title-trailer,
+.title-recommendations {
+  font-family: "Roboto", sans-serif;
   font-weight: 700;
-  font-size: 28px;
-  line-height: 32px;
-
-  display: flex;
-  align-items: center;
-  letter-spacing: -0.005em;
-
+  font-size: 2.8rem;
   color: #131313;
-  margin-block-end: 28px;
+  margin-bottom: 24px;
 }
 
-.list-casts {
+.list-casts,
+.list-recommendations {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  width: 65vw;
-
-  overflow: auto;
-  white-space: nowrap;
+  gap: 16px;
+  width: 100%;
+  overflow-x: auto;
+  padding-bottom: 12px;
 }
 
-.list-casts::-webkit-scrollbar {
-  width: 5px;
+.list-casts::-webkit-scrollbar,
+.list-recommendations::-webkit-scrollbar {
+  height: 6px;
 }
 
-.list-casts::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 5px grey;
+.list-casts::-webkit-scrollbar-track,
+.list-recommendations::-webkit-scrollbar-track {
+  background: #f0f0f0;
   border-radius: 10px;
 }
 
-.list-casts::-webkit-scrollbar-thumb {
+.list-casts::-webkit-scrollbar-thumb,
+.list-recommendations::-webkit-scrollbar-thumb {
   background: #adadad;
   border-radius: 10px;
 }
 
-.list-casts::-webkit-scrollbar-thumb:hover {
-  background: #2d0c5e;
-}
-
-.item-cast {
-  background: #ffffff;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 4px;
-}
-
-.item-cast img {
-  padding-inline: 5px;
-  width: 165px;
-  height: 212px;
-}
-
-.details-cast {
-  padding-inline: 5px;
-}
-
-.item-cast .name-cast {
-  font-family: "Roboto";
-  font-style: normal;
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 30px;
-
-  color: #131313;
-}
-
-.item-cast .paper-cast {
-  font-family: "Roboto";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 24px;
-
-  color: #131313;
-}
-
-.trailer {
-  justify-content: center;
-  margin-inline: auto;
-  margin-block-start: 98px;
-  width: 1100px;
-}
-
-.title-trailer {
-  font-family: "Roboto";
-  font-style: normal;
-  font-weight: 700;
-  font-size: 28px;
-  line-height: 32px;
-
-  display: flex;
-  align-items: center;
-  letter-spacing: -0.005em;
-
-  color: #131313;
-
-  margin-block: 28px;
-}
-
-.trailer img {
-  width: 907px;
-  height: 510px;
-}
-
-.recommendations {
-  justify-content: center;
-  margin-inline: auto;
-  margin-block: 98px;
-  width: 1100px;
-}
-
-.title-recommendations {
-  font-family: "Roboto";
-  font-style: normal;
-  font-weight: 700;
-  font-size: 28px;
-  line-height: 32px;
-
-  display: flex;
-  align-items: center;
-  letter-spacing: -0.005em;
-
-  color: #131313;
-  margin-block-end: 28px;
-}
-
-.list-recommendations {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-  width: 65vw;
-}
-
+.item-cast,
 .item-recommendation {
   background: #ffffff;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
   border-radius: 4px;
+  flex: 0 0 165px;
+  text-decoration: none;
 }
 
+.item-cast img,
 .item-recommendation img {
-  padding-inline: 5px;
   width: 165px;
   height: 212px;
+  object-fit: cover;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
 }
 
+.details-cast,
 .details-recommendation {
-  padding-inline: 5px;
+  padding: 8px;
 }
 
+.item-cast .name-cast,
 .item-recommendation .name-recommendation {
-  font-family: "Roboto";
-  font-style: normal;
+  font-family: "Roboto", sans-serif;
   font-weight: 700;
-  font-size: 16px;
-  line-height: 30px;
-
+  font-size: 1.4rem;
   color: #131313;
 }
 
+.item-cast .paper-cast,
 .item-recommendation .paper-recommendation {
-  font-family: "Roboto";
-  font-style: normal;
+  font-family: "Roboto", sans-serif;
   font-weight: 400;
-  font-size: 14px;
-  line-height: 24px;
+  font-size: 1.2rem;
+  color: #666666;
+}
 
-  color: #131313;
+/* Container Responsivo do Iframe de Trailer (16:9) */
+.trailer-container {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  max-width: 900px;
+  border-radius: 8px;
+}
+
+.trailer-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.loading-container,
+.error-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+  font-family: "Roboto", sans-serif;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #2d0c5e;
 }
 
 .back-to {
@@ -394,7 +293,95 @@ html {
   align-items: center;
   text-align: center;
   padding-left: 1px;
-  padding-top: 10px;
+  padding-top: 8px;
   font-size: 20px;
   font-weight: 900;
+}
+
+/* ==========================================================================
+   Ajustes Responsivos Mobile (Issue #32)
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  .top-details {
+    padding-bottom: 24px;
+  }
+
+  .film-detail {
+    flex-direction: column;
+    align-items: center;
+    padding: 0 16px;
+  }
+
+  .film-banner {
+    margin-block-start: 20px;
+    margin-inline: 0;
+  }
+
+  .film-banner img {
+    width: 200px;
+  }
+
+  .film-infos {
+    width: 100%;
+    margin-block-start: 20px;
+    text-align: center;
+  }
+
+  .info-title .title-name {
+    font-size: 2.2rem;
+    line-height: 2.8rem;
+    justify-content: center;
+  }
+
+  .info-title .title-head {
+    font-size: 1.3rem;
+    justify-content: center;
+  }
+
+  .info-evaluation {
+    justify-content: center;
+  }
+
+  .info-sinopse .sinopse-title {
+    font-size: 1.6rem;
+    justify-content: flex-start;
+  }
+
+  .info-sinopse .sinopse-text {
+    font-size: 1.3rem;
+    line-height: 2rem;
+    text-align: left;
+  }
+
+  .info-datasheet {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    text-align: left;
+  }
+
+  .casts,
+  .trailer,
+  .recommendations {
+    margin: 32px auto;
+    padding: 0 16px;
+  }
+
+  .title-casts,
+  .title-trailer,
+  .title-recommendations {
+    font-size: 2rem;
+    margin-bottom: 16px;
+  }
+
+  .item-cast,
+  .item-recommendation {
+    flex: 0 0 130px;
+  }
+
+  .item-cast img,
+  .item-recommendation img {
+    width: 130px;
+    height: 170px;
+  }
 }
