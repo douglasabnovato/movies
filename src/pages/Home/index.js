@@ -11,7 +11,6 @@ const IMAGE_PATH = "https://image.tmdb.org/t/p/w500";
 function Home() {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  // Ler estados iniciais a partir dos parâmetros da URL
   const initialSearch = searchParams.get("search") || "";
   const initialPage = Number(searchParams.get("page")) || 1;
   const initialGenres = searchParams.get("genres")
@@ -27,7 +26,6 @@ function Home() {
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(false);
 
-  // 1. Debounce para o input de busca
   useEffect(() => {
     const handler = setTimeout(() => {
       setDebouncedQuery(searchQuery);
@@ -36,7 +34,6 @@ function Home() {
     return () => clearTimeout(handler);
   }, [searchQuery]);
 
-  // 2. Sincronizar estado local com a URL (Query String)
   useEffect(() => {
     const params = {};
 
@@ -53,7 +50,6 @@ function Home() {
     setSearchParams(params, { replace: true });
   }, [debouncedQuery, selectedGenres, currentPage, setSearchParams]);
 
-  // 3. Carregar lista de gêneros oficial
   useEffect(() => {
     const fetchGenres = async () => {
       try {
@@ -66,7 +62,6 @@ function Home() {
     fetchGenres();
   }, []);
 
-  // 4. Buscar filmes na API
   const fetchMovies = useCallback(async () => {
     setLoading(true);
     try {
@@ -92,7 +87,6 @@ function Home() {
     fetchMovies();
   }, [fetchMovies]);
 
-  // 5. Alternar seleção de gênero
   const handleGenreClick = (genreId) => {
     setSearchQuery("");
     setCurrentPage(1);
@@ -103,52 +97,55 @@ function Home() {
     );
   };
 
-  // 6. Alterar input de busca
   const handleSearchChange = (e) => {
     setSelectedGenres([]);
     setCurrentPage(1);
     setSearchQuery(e.target.value);
   };
 
-  // 7. Paginação
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
-    <div className="main">
-      <div className="top">
-        <div className="navbar">
+    <main className="main">
+      <header className="top">
+        <nav className="navbar" aria-label="Navegação Principal">
           <div className="title-site">
-            <div className="title-text">
+            <h1 className="title-text">
               TMDB
               <span className="title-obj"></span>
-            </div>
+            </h1>
           </div>
-        </div>
+        </nav>
 
-        <div className="slogan">
-          <div className="slogan-text">
+        <section className="slogan" aria-label="Apresentação do Site">
+          <p className="slogan-text">
             Milhões de filmes, séries e pessoas para descobrir. Explore já.
-          </div>
-        </div>
+          </p>
+        </section>
 
-        <div className="search-bar-container">
+        <section className="search-bar-container" aria-label="Busca de Filmes">
+          <label htmlFor="search-input" className="sr-only">
+            Buscar filme pelo nome
+          </label>
           <input
-            type="text"
+            id="search-input"
+            type="search"
             className="search-input"
             placeholder="Pesquise por um filme pelo nome..."
             value={searchQuery}
             onChange={handleSearchChange}
+            aria-label="Campo de pesquisa de filmes"
           />
-        </div>
+        </section>
 
-        <div className="filter">
+        <section className="filter" aria-label="Filtro por Gênero">
           <div className="filter-container">
-            <div className="filter-text">FILTRE POR:</div>
+            <h2 className="filter-text">FILTRE POR:</h2>
 
-            <div className="filter-box">
+            <div className="filter-box" role="group" aria-label="Categorias de filmes">
               {genres.map((genre) => {
                 const isSelected = selectedGenres.includes(genre.id);
                 return (
@@ -157,26 +154,28 @@ function Home() {
                     className={`filter-tag ${isSelected ? "selected" : ""}`}
                     onClick={() => handleGenreClick(genre.id)}
                     type="button"
+                    aria-pressed={isSelected}
+                    aria-label={`Filtrar por ${genre.name}`}
                   >
                     <span>{genre.name}</span>
-                    {isSelected && <span className="remove-icon"> ✕</span>}
+                    {isSelected && <span className="remove-icon" aria-hidden="true"> ✕</span>}
                   </button>
                 );
               })}
             </div>
           </div>
-        </div>
-      </div>
+        </section>
+      </header>
 
-      <div className="films">
+      <section className="films" aria-label="Lista de Filmes">
         {loading ? (
           Array.from({ length: 10 }).map((_, index) => (
             <MovieCardSkeleton key={index} />
           ))
         ) : movies.length > 0 ? (
           movies.map((movie) => (
-            <div key={movie.id} className="film">
-              <Link to={`/movie/${movie.id}`}>
+            <article key={movie.id} className="film">
+              <Link to={`/movie/${movie.id}`} aria-label={`Ver detalhes do filme ${movie.title || movie.original_title}`}>
                 <div className="card">
                   <img
                     src={
@@ -184,31 +183,31 @@ function Home() {
                         ? `${IMAGE_PATH}${movie.poster_path}`
                         : "https://via.placeholder.com/176x264?text=Sem+Poster"
                     }
-                    alt={movie.title || movie.original_title}
+                    alt={`Pôster do filme ${movie.title || movie.original_title}`}
                     onError={(e) => {
                       e.target.onerror = null;
                       e.target.src =
                         "https://via.placeholder.com/176x264?text=Sem+Poster";
                     }}
                   />
-                  <div className="title-movie">
+                  <h3 className="title-movie">
                     {movie.title || movie.original_title}
-                  </div>
-                  <div className="title-date">
+                  </h3>
+                  <p className="title-date">
                     {movie.release_date
                       ? new Date(movie.release_date).toLocaleDateString("pt-BR")
                       : "Data desconhecida"}
-                  </div>
+                  </p>
                 </div>
               </Link>
-            </div>
+            </article>
           ))
         ) : (
-          <div className="empty-state">
-            Nenhum filme encontrado para a pesquisa.
+          <div className="empty-state" role="status">
+            Nenhum filme encontrado para os filtros selecionados.
           </div>
         )}
-      </div>
+      </section>
 
       <Pagination
         currentPage={currentPage}
@@ -219,7 +218,7 @@ function Home() {
         showPrevNext={true}
         variant="purple"
       />
-    </div>
+    </main>
   );
 }
 

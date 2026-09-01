@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Home from "./pages/Home";
 import Details from "./pages/Details";
+import Footer from "./components/Footer";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -13,9 +14,12 @@ root.render(
       v7_relativeSplatPath: true,
     }}
   >
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/movie/:id" element={<Details />} />
-    </Routes>
+    <div className="app-container">
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/movie/:id" element={<Details />} />
+      </Routes>
+      <Footer />
+    </div>
   </BrowserRouter>
 );

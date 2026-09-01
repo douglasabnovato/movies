@@ -22,7 +22,7 @@
   - [Requisitos Não-Funcionais](#requisitos-não-funcionais)
   - [Requisitos Extras (Filtros & Navegação)](#requisitos-extras-filtros--navegação)
 - [Critérios de Avaliação & Boas Práticas](#-critérios-de-avaliação--boas-práticas)
-- [Histórico de Tarefas & Entregas Iniciais](#-histórico-de-tarefas--entregas-iniciais)
+- [Histórico de Tarefas & Entregas Recentes](#-histórico-de-tarefas--entregas-recentes)
 - [Métricas de Performance & Produtividade](#-métricas-de-performance--produtividade)
 - [Layout da Aplicação](#-layout-da-aplicação)
 - [🗺️ Plano Mestre de Evolução (70 Issues)](#️-plano-mestre-de-evolução-70-issues)
@@ -33,46 +33,21 @@
 
 ## 💻 Sobre o Projeto
 
-O **Movies App** é uma plataforma frontend moderna desenvolvida em **React**, cujo objetivo principal é consumir a API pública do [The Movie Database (TMDB v3)](https://developers.themoviedb.org/3/getting-started/introduction) para apresentar listagens de filmes populares, detalhar informações técnicas, elenco, trailers oficiais e permitir navegação fluida com filtros dinâmicos por gêneros.
+O **Movies App** é uma plataforma frontend moderna desenvolvida em **React**, cujo objetivo principal é consumir a API pública do [The Movie Database (TMDB v3)](https://developers.themoviedb.org/3/getting-started/introduction) para apresentar listagens de filmes populares, detalhar informações técnicas, elenco, trailers oficiais e permitir navegação fluida com busca global via debounce, sincronização de estado na URL e filtros dinâmicos por gêneros.
 
 O projeto foi originalmente concebido como um desafio técnico da **Promobit**, evoluindo para um estudo de caso prático de **Product Management (PM)**, **DevOps** e **Engenharia Frontend**.
 
-## 🚀 Instruções de Execução Local
-
-### Pré-requisitos
-Antes de começar, você precisará ter instalado em sua máquina o [Node.js](https://nodejs.org/) (versão 16 ou superior) e o gerenciador de pacotes [Git](https://git-scm.com/).
-
-### Passo a Passo
-
-```bash
-# 1. Clone este repositório
-$ git clone [https://github.com/douglasabnovato/movies.git](https://github.com/douglasabnovato/movies.git)
-
-# 2. Acesse a pasta do projeto
-$ cd movies
-
-# 3. Instale as dependências
-$ npm install
-
-# 4. Configure as variáveis de ambiente
-# Crie um arquivo .env na raiz do projeto e adicione sua chave TMDB:
-REACT_APP_TMDB_KEY=sua_chave_aqui_tmdb
-
-# 5. Inicie o servidor de desenvolvimento
-$ npm start
-```
-
 ---
-
+ 
+ 
 ## 🌿 Estrutura de Branches & Git Workflow
 
-Para manter o versionamento organized e seguro, adotamos o seguinte fluxo de trabalho no Git:
+Para manter o versionamento organizado e seguro, adotamos o seguinte fluxo de trabalho no Git:
 
 - **`main`**: Branch de código estável em produção.
-- **`developer` / `developer-mvp`**: Branch de consolidação do ambiente de desenvolvimento.
-- **`feature/*`**: Branches de desenvolvimento de funcionalidades específicas e tarefas (ex: `feature/tarefas`).
-- **`v-dev-promobit`**: Histórico da primeira versão do desafio (MVP estático).
-- **`v-dev-rocketflix`**: Histórico da segunda iteração de design/features.
+- **`developer-mvp`**: Branch principal de consolidação e integração do ambiente de desenvolvimento.
+- **`feature/tarefas`**: Branch ativa de desenvolvimento para refatoração do core, correções e novas funcionalidades.
+ 
 
 ---
 
@@ -89,39 +64,41 @@ Para manter o versionamento organized e seguro, adotamos o seguinte fluxo de tra
 - [x] O usuário deve ter acesso à página de detalhes ao selecionar um item da lista.
 - [x] O usuário deve conseguir paginar a lista para descobrir novos títulos.
 - [x] A página com detalhes de um filme deve possuir rota própria (`/movie/:id`) e estar preparada para indexação (SEO).
+- [x] Pesquisa de filmes pelo nome em tempo real com técnica de debounce (delay de 500ms).
+- [x] Sincronização automática dos filtros, paginação e termo de busca nos parâmetros de Query String da URL (`useSearchParams`).
 
 ### Requisitos Não-Funcionais
 - [x] Desenvolvido utilizando a biblioteca **React.js**.
-- [x] Arquivo `README.md` completo na raiz do repositório com instruções de execução local e decisões de arquitetura.
+- [x] Arquivo `README.md` completo na raiz do repositório com instruções e decisões de arquitetura.
 - [x] Compatibilidade garantida na última versão estável dos navegadores: Chrome, Firefox e Edge.
-- [x] Layout totalmente responsivo para desktop, tablet e dispositivos móveis.
+- [x] Layout totalmente responsivo para desktop, tablet e dispositivos móveis (Mobile First UX).
 
 ### Requisitos Extras (Filtros & Navegação)
 - [x] Consultar a lista oficial de gêneros através do endpoint `GET /genre/movie/list`.
 - [x] Permitir que o usuário filtre os filmes listados selecionando **um ou múltiplos gêneros** simultaneamente (`GET /discover/movie`).
 - [x] Permitir a remoção individual de filtros de gênero atualizando a listagem em tempo real.
-- [x] Manter os filtros ativos ao retornar da tela de detalhes para a listagem principal.
+- [x] Manter os filtros ativos ao retornar da tela de detalhes para a listagem principal através da URL.
 
 ---
 
 ## 🛠️ Critérios de Avaliação & Boas Práticas
 
 - **Boas Práticas de Desenvolvimento:**
-  - [x] HTML5 Semântico e acessibilidade básica (WCAG).
-  - [x] Componentização modular (`pages`, `components`, `services`).
-  - [x] Clean Code e padrões de projeto (Design Patterns).
+  - [x] HTML5 Semântico (`<main>`, `<header>`, `<nav>`, `<section>`, `<article>`) e acessibilidade (WCAG / ARIA Labels / `.sr-only`).
+  - [x] Componentização modular (`pages`, `components`, `services`, `utils`).
+  - [x] Clean Code e desacoplamento das chamadas à API via camada dedicada (`src/services/tmdbApi.js`).
 - **Domínio de Ferramentas Modernas:**
   - [x] VS Code, Git Bash e GitHub.
   - [x] Google Chrome Developer Tools (Network, Console, Application).
 - **Tecnologias & Integrações:**
-  - [x] React 18, React Router v6, Sass/CSS3, Fetch API / Async-Await.
+  - [x] React 18, React Router v6 (compatível com `v7` future flags), CSS3 Responsivo, Fetch API / Async-Await.
 - **Governança & Documentação:**
   - [x] GitHub Wiki, Issues, Project Boards e Pull Requests estruturados.
-  - [x] Pipeline de Integração Contínua (CI) via **GitHub Actions**.
+  - [x] Pipeline de Integração Contínua (CI) via **GitHub Actions** (`Node v20`, `actions@v4`).
 
 ---
 
-## 📝 Histórico de Tarefas & Entregas Iniciais
+## 📝 Histórico de Tarefas & Entregas Recentes
 
 - [x] Inicialização do projeto com Create React App (`npx create-react-app`).
 - [x] Limpeza e estruturação do projeto (favicon, assets, estilos globais).
@@ -131,9 +108,16 @@ Para manter o versionamento organized e seguro, adotamos o seguinte fluxo de tra
 - [x] Criação da rota e página de detalhes (`/movie/:id`).
 - [x] Desenvolvimento do componente circular de carregamento de avaliação (Score do Usuário).
 - [x] Refatoração declarativa das telas de detalhes para consumo dinâmico do elenco, equipe técnica, trailers no YouTube e recomendações (`Promise.all`).
-- [x] Tratamento e formatação de datas em formato brasileiro (`DD/MM/YYYY`) e cálculo de duração em horas e minutos (`Xh Ym`).
+- [x] Tratamento e formatação de datas em formato brasileiro (`DD/MM/YYYY`) e cálculo de duração em horas e minutos (`Xh Ym`) desacoplados em `src/utils/formatters.js` com testes unitários no Jest (`Issue #05`).
 - [x] Desenvolvimento do componente modular de **Paginação** reutilizável (`<Pagination />`).
-- [x] Configuração da pipeline de CI automatizada com **GitHub Actions** (`.github/workflows/ci.yml`).
+- [x] Centralização de requisições HTTP na camada de serviços `src/services/tmdbApi.js` (`Issue #14`).
+- [x] Configuração e correção do pipeline de CI automatizada com **GitHub Actions** (`.github/workflows/ci.yml`).
+- [x] Implementação de componentes de **Loading Skeleton** animado (`<MovieCardSkeleton/>` e `<DetailsSkeleton/>`) e tratamento para filmes sem poster (`Issues #15, #16, #17`).
+- [x] Reformulação da **Responsividade Mobile** na Home e Details com escala base e carrossel de rolagem horizontal para elenco (`Issues #31, #32`).
+- [x] Resolução de warnings de deprecação do React Router v6 habilitando `future` flags para a v7.
+- [x] Implementação de **Busca Global de Filmes** por nome com técnica de **Debounce** (`Issue #26`).
+- [x] Sincronização do estado de busca, gêneros e página com a **URL** (`Query String`) usando `useSearchParams` (`Issue #52`).
+- [x] Refatoração para **HTML5 Semântico** (`main`, `header`, `nav`, `section`, `article`) e inclusão de rótulos de acessibilidade ARIA (`Issue #35`).
 
 ---
 
@@ -170,88 +154,88 @@ Acompanhamento dos ciclos de desenvolvimento dedicados à construção do MVP:
 Para guiar a reativação, escalabilidade e qualidade do ecossistema do **Movies**, o roadmap foi fatiado em **70 Issues estruturadas** divididas em 7 Fases estratégicas:
 
 ### 🚀 Fase 1: Governança, CI/CD e Qualidade (Issues 01–10)
-1. **Issue #01 — `[DevOps] Setup do GitHub Actions para Pipeline de CI`**: Configuração do workflow automatizado de validação de PRs.
-2. **Issue #02 — `[DevOps] Integração de Linter e Formatador (ESLint & Prettier)`**: Padronização de estilo de código com Husky e `lint-staged`.
-3. **Issue #03 — `[QA] Configuração do Ambiente de Testes (Jest + React Testing Library)`**: Mocks globais e scripts de testes unitários.
-4. **Issue #04 — `[DevOps] Variáveis de Ambiente e Segurança (.env)`**: Isolamento de chaves secretas e credenciais de API.
-5. **Issue #05 — `[QA] Teste Unitário dos Utilitários de Data e Duração`**: Garantia de cobertura para `formatDate` e `formatRuntime`.
-6. **Issue #06 — `[DevOps] Deploy Automatizado com Vercel/GitHub Pages`**: Pipeline de entrega contínua (CD) disparada na `main`.
-7. **Issue #07 — `[QA] Teste do Componente de Avaliação`**: Validação declarativa do gráfico circular de pontuação.
-8. **Issue #08 — `[Governance] Padronização de Issue Templates (User Stories)`**: Modelos para cadastro de bugs e novas funcionalidades.
-9. **Issue #09 — `[Governance] Criação do CONTRIBUTING.md e Guia do Git`**: Documentação de fluxo de branches e regras de contribuição.
-10. **Issue #10 — `[QA] Setup de Testes End-to-End com Cypress/Playwright`**: Automação de testes E2E dos fluxos principais.
+- [x] **Issue #01 — `[DevOps] Setup do GitHub Actions para Pipeline de CI`**: Configuração do workflow automatizado de validação de PRs.
+- [ ] **Issue #02 — `[DevOps] Integração de Linter e Formatador (ESLint & Prettier)`**: Padronização de estilo de código com Husky e `lint-staged`.
+- [ ] **Issue #03 — `[QA] Configuração do Ambiente de Testes (Jest + React Testing Library)`**: Mocks globais e scripts de testes unitários.
+- [x] **Issue #04 — `[DevOps] Variáveis de Ambiente e Segurança (.env)`**: Isolamento de chaves secretas e credenciais de API.
+- [x] **Issue #05 — `[QA] Teste Unitário dos Utilitários de Data e Duração`**: Garantia de cobertura para `formatDate` e `formatRuntime`.
+- [ ] **Issue #06 — `[DevOps] Deploy Automatizado com Vercel/GitHub Pages`**: Pipeline de entrega contínua (CD) disparada na `main`.
+- [ ] **Issue #07 — `[QA] Teste do Componente de Avaliação`**: Validação declarativa do gráfico circular de pontuação.
+- [ ] **Issue #08 — `[Governance] Padronização de Issue Templates (User Stories)`**: Modelos para cadastro de bugs e novas funcionalidades.
+- [ ] **Issue #09 — `[Governance] Criação do CONTRIBUTING.md e Guia do Git`**: Documentação de fluxo de branches e regras de contribuição.
+- [ ] **Issue #10 — `[QA] Setup de Testes End-to-End com Cypress/Playwright`**: Automação de testes E2E dos fluxos principais.
 
 ### ⚙️ Fase 2: Refatoração do Core & Assincronismo (Issues 11–20)
-11. **Issue #11 — `[Tech] Migração de Fetch/Then para Async/Await`**: Refatoração global de chamadas HTTP para padrão moderno.
-12. **Issue #12 — `[Tech] Tratamento de Erros com Try/Catch e Fallbacks`**: Telas de erro amigáveis para falhas de rede na API.
-13. **Issue #13 — `[Tech] Remoção de Manipulação Direta do DOM em Details`**: Substituição do `querySelector` por estado nativo React.
-14. **Issue #14 — `[Tech] Camada de Serviço Centralizada (Service Layer)`**: Módulo desacoplado de chamadas à TMDB API.
-15. **Issue #15 — `[Tech] Loading Skeletons na Home`**: Esqueletos animados de carregamento para os cards da grid.
-16. **Issue #16 — `[Tech] Loading Skeletons em Details`**: Feedback visual enquanto carrega banner e elenco.
-17. **Issue #17 — `[Tech] Tratamento para Filmes Sem Poster`**: Imagem placeholder quando o item não tiver imagem na API.
-18. **Issue #18 — `[Tech] Normalização do Objeto Movie`**: Padronização da estrutura de dados antes do consumo da UI.
-19. **Issue #19 — `[Tech] Scroll Automático ao Alternar Rotas`**: Garantia de rolagem para o topo ao trocar de tela.
-20. **Issue #20 — `[Tech] Hook Customizado useFetch`**: Abstração para chamadas HTTP reutilizáveis.
+- [x] **Issue #11 — `[Tech] Migração de Fetch/Then para Async/Await`**: Refatoração global de chamadas HTTP para padrão moderno.
+- [x] **Issue #12 — `[Tech] Tratamento de Erros com Try/Catch e Fallbacks`**: Telas de erro amigáveis para falhas de rede na API.
+- [x] **Issue #13 — `[Tech] Remoção de Manipulação Direta do DOM em Details`**: Substituição do `querySelector` por estado nativo React.
+- [x] **Issue #14 — `[Tech] Camada de Serviço Centralizada (Service Layer)`**: Módulo desacoplado de chamadas à TMDB API.
+- [x] **Issue #15 — `[Tech] Loading Skeletons na Home`**: Esqueletos animados de carregamento para os cards da grid.
+- [x] **Issue #16 — `[Tech] Loading Skeletons em Details`**: Feedback visual enquanto carrega banner e elenco.
+- [x] **Issue #17 — `[Tech] Tratamento para Filmes Sem Poster`**: Imagem placeholder quando o item não tiver imagem na API.
+- [x] **Issue #18 — `[Tech] Normalização do Objeto Movie`**: Padronização da estrutura de dados antes do consumo da UI.
+- [x] **Issue #19 — `[Tech] Scroll Automático ao Alternar Rotas`**: Garantia de rolagem para o topo ao trocar de tela.
+- [ ] **Issue #20 — `[Tech] Hook Customizado useFetch`**: Abstração para chamadas HTTP reutilizáveis.
 
 ### 🎨 Fase 3: Refinamento de UX/UI, Filtros e Paginação (Issues 21–30)
-21. **Issue #21 — `[Feature] Consumo Dinâmico de Gêneros (GET /genre/movie/list)`**: Integração oficial dos gêneros da TMDB.
-22. **Issue #22 — `[Feature] Filtro Múltiplo de Gêneros na Home`**: Filtro combinado ativando o endpoint `/discover/movie`.
-23. **Issue #23 — `[Feature] Desseleção e Limpeza de Filtros`**: Remoção de gêneros ativos em tempo real.
-24. **Issue #24 — `[Feature] Componente de Paginação Dinâmica`**: Substituição de números estáticos por controles inteligentes.
-25. **Issue #25 — `[Feature] Limite de Páginas e Navegação Seguro`**: Proteção contra extrapolação do limite da API (500 páginas).
-26. **Issue #26 — `[Feature] Busca Global com Debounce`**: Barra de pesquisa inteligente com delay programado.
-27. **Issue #27 — `[UX] Destaque Visual para Gêneros Selecionados`**: Feedback visual destacado nos botões ativos.
-28. **Issue #28 — `[UX] Mensagem de Nenhum Resultado Encontrado`**: Estado vazio para buscas sem retorno.
-29. **Issue #29 — `[UX] Correção de Tipografia e Unidades do CSS (rem)`**: Ajuste do reset e escala de fontes globais.
-30. **Issue #30 — `[UX] Transições Suaves entre Páginas`**: Animações suaves de transição na interface.
+- [x] **Issue #21 — `[Feature] Consumo Dinâmico de Gêneros (GET /genre/movie/list)`**: Integração oficial dos gêneros da TMDB.
+- [x] **Issue #22 — `[Feature] Filtro Múltiplo de Gêneros na Home`**: Filtro combinado ativando o endpoint `/discover/movie`.
+- [x] **Issue #23 — `[Feature] Desseleção e Limpeza de Filtros`**: Remoção de gêneros ativos em tempo real.
+- [x] **Issue #24 — `[Feature] Componente de Paginação Dinâmica`**: Substituição de números estáticos por controles inteligentes.
+- [x] **Issue #25 — `[Feature] Limite de Páginas e Navegação Seguro`**: Proteção contra extrapolação do limite da API (500 páginas).
+- [x] **Issue #26 — `[Feature] Busca Global com Debounce`**: Barra de pesquisa inteligente com delay programado.
+- [x] **Issue #27 — `[UX] Destaque Visual para Gêneros Selecionados`**: Feedback visual destacado nos botões ativos.
+- [x] **Issue #28 — `[UX] Mensagem de Nenhum Resultado Encontrado`**: Estado vazio para buscas sem retorno.
+- [x] **Issue #29 — `[UX] Correção de Tipografia e Unidades do CSS (rem)`**: Ajuste do reset e escala de fontes globais.
+- [ ] **Issue #30 — `[UX] Transições Suaves entre Páginas`**: Animações suaves de transição na interface.
 
 ### 📱 Fase 4: Responsividade e Acessibilidade (Issues 31–40)
-31. **Issue #31 — `[UI] Adaptação Responsive-First da Home`**: Grid fluida para telas de celulares e tablets.
-32. **Issue #32 — `[UI] Adaptação Responsive da Tela de Details`**: Reorganização vertical dos elementos em mobile.
-33. **Issue #33 — `[UI] Carrossel Horizontal para Elenco`**: Scroll de elenco otimizado para navegação por toque.
-34. **Issue #34 — `[UI] Player de Trailer Responsivo (16:9)`**: Container adaptável para o iframe do YouTube.
-35. **Issue #35 — `[A11y] Atributos Alt Descritivos em Imagens`**: Acessibilidade para leitores de tela em posters e fotos.
-36. **Issue #36 — `[A11y] Navegação por Teclado nos Filtros e Botoes`**: Foco e acessibilidade por tecla Tab.
-37. **Issue #37 — `[A11y] Contraste de Cores WCAG`**: Validação e ajuste de contraste nos textos e botões.
-38. **Issue #38 — `[UI] Botão Flutuante de Retorno`**: Ajuste no posicionamento do botão de voltar à lista.
-39. **Issue #39 — `[UI] Componentes Navbar e Slogan Responsivos`**: Alinhamento do cabeçalho institucional.
-40. **Issue #40 — `[UI] Testes Cross-Browser`**: Garantia de compatibilidade em navegadores diversos.
+- [x] **Issue #31 — `[UI] Adaptação Responsive-First da Home`**: Grid fluida para telas de celulares e tablets.
+- [x] **Issue #32 — `[UI] Adaptação Responsive da Tela de Details`**: Reorganização vertical dos elementos em mobile.
+- [x] **Issue #33 — `[UI] Carrossel Horizontal para Elenco`**: Scroll de elenco otimizado para navegação por toque.
+- [x] **Issue #34 — `[UI] Player de Trailer Responsivo (16:9)`**: Container adaptável para o iframe do YouTube.
+- [x] **Issue #35 — `[A11y] Atributos Alt Descritivos em Imagens`**: Acessibilidade para leitores de tela em posters e fotos.
+- [x] **Issue #36 — `[A11y] Navegação por Teclado nos Filtros e Botoes`**: Foco e acessibilidade por tecla Tab.
+- [x] **Issue #37 — `[A11y] Contraste de Cores WCAG`**: Validação e ajuste de contraste nos textos e botões.
+- [x] **Issue #38 — `[UI] Botão Flutuante de Retorno`**: Ajuste no posicionamento do botão de voltar à lista.
+- [x] **Issue #39 — `[UI] Componentes Navbar e Slogan Responsivos`**: Alinhamento do cabeçalho institucional.
+- [x] **Issue #40 — `[UI] Testes Cross-Browser`**: Garantia de compatibilidade em navegadores diversos.
 
 ### 🍿 Fase 5: Integração Dinâmica e Mídia em Details (Issues 41–50)
-41. **Issue #41 — `[Feature] Elenco Dinâmico (GET /movie/{id}/credits)`**: Substituição de atores estáticos pelos dados reais.
-42. **Issue #42 — `[Feature] Equipe Técnica e Direção Dinâmica`**: Exibição dos diretores e roteiristas na ficha técnica.
-43. **Issue #43 — `[Feature] Trailer Oficial Dinâmico (GET /movie/{id}/videos)`**: Player com vídeo oficial do filme.
-44. **Issue #44 — `[Feature] Recomendações Dinâmicas`**: Exibição de filmes similares com links de navegação.
-45. **Issue #45 — `[Feature] Navegação Encadeada entre Recomendações`**: Troca contínua de detalhes entre filmes recomendados.
-46. **Issue #46 — `[Feature] Formatação de Orçamento e Receita`**: Exibição financeira formatada em dólares.
-47. **Issue #47 — `[Feature] Produtoras e Países de Origem`**: Informações institucionais do filme.
-48. **Issue #48 — `[Feature] Slogan do Filme (Tagline)`**: Exibição da frase de impacto oficial do filme.
-49. **Issue #49 — `[Feature] Modal de Zoom para o Poster`**: Visualização ampliada do poster em alta definição.
-50. **Issue #50 — `[Feature] Classificação Indicativa`**: Certificação de faixa etária recomendada por país.
+- [x] **Issue #41 — `[Feature] Elenco Dinâmico (GET /movie/{id}/credits)`**: Substituição de atores estáticos pelos dados reais.
+- [x] **Issue #42 — `[Feature] Equipe Técnica e Direção Dinâmica`**: Exibição dos diretores e roteiristas na ficha técnica.
+- [x] **Issue #43 — `[Feature] Trailer Oficial Dinâmico (GET /movie/{id}/videos)`**: Player com vídeo oficial do filme.
+- [x] **Issue #44 — `[Feature] Recomendações Dinâmicas`**: Exibição de filmes similares com links de navegação.
+- [x] **Issue #45 — `[Feature] Navegação Encadeada entre Recomendações`**: Troca contínua de detalhes entre filmes recomendados.
+- [ ] **Issue #46 — `[Feature] Formatação de Orçamento e Receita`**: Exibição financeira formatada em dólares.
+- [ ] **Issue #47 — `[Feature] Produtoras e Países de Origem`**: Informações institucionais do filme.
+- [ ] **Issue #48 — `[Feature] Slogan do Filme (Tagline)`**: Exibição da frase de impacto oficial do filme.
+- [ ] **Issue #49 — `[Feature] Modal de Zoom para o Poster`**: Visualização ampliada do poster em alta definição.
+- [ ] **Issue #50 — `[Feature] Classificação Indicativa`**: Certificação de faixa etária recomendada por país.
 
 ### 🧠 Fase 6: Estado Avançado, SEO e Cache (Issues 51–60)
-51. **Issue #51 — `[Tech] Integração com TanStack Query (React Query)`**: Cache automatizado de requisições.
-52. **Issue #52 — `[Tech] Persistência de Filtros na URL`**: Sincronização do estado de busca e página na Query String.
-53. **Issue #53 — `[SEO] Metadados Dinâmicos com React Helmet`**: Títulos e Open Graph para redes sociais por filme.
-54. **Issue #54 — `[Tech] Favoritar Filmes em LocalStorage`**: Gerenciamento de filmes favoritados pelo usuário.
-55. **Issue #55 — `[Feature] Tela Dedicada aos Meus Favoritos`**: Rota `/favorites` para exibição de itens salvos.
-56. **Issue #56 — `[Tech] Suporte Offline/PWA com Service Workers`**: Acesso básico e cache em situações offline.
-57. **Issue #57 — `[Tech] Otimização de Imagens (SrcSet)`**: Download adaptável de posters de acordo com a tela.
-58. **Issue #58 — `[Tech] Monitoramento com Web Vitals`**: Otimização de métricas de performance (LCP, FID, CLS).
-59. **Issue #59 — `[SEO] Geração de Sitemap e Robots.txt`**: Estratégias de indexação em buscadores.
-60. **Issue #60 — `[Tech] Controle de Rate Limit e Cache Local`**: Mitigação de requisições excessivas à API.
+- [ ] **Issue #51 — `[Tech] Integração com TanStack Query (React Query)`**: Cache automatizado de requisições.
+- [x] **Issue #52 — `[Tech] Persistência de Filtros na URL`**: Sincronização do estado de busca e página na Query String.
+- [ ] **Issue #53 — `[SEO] Metadados Dinâmicos com React Helmet`**: Títulos e Open Graph para redes sociais por filme.
+- [ ] **Issue #54 — `[Tech] Favoritar Filmes em LocalStorage`**: Gerenciamento de filmes favoritados pelo usuário.
+- [ ] **Issue #55 — `[Feature] Tela Dedicada aos Meus Favoritos`**: Rota `/favorites` para exibição de itens salvos.
+- [ ] **Issue #56 — `[Tech] Suporte Offline/PWA com Service Workers`**: Acesso básico e cache em situações offline.
+- [ ] **Issue #57 — `[Tech] Otimização de Imagens (SrcSet)`**: Download adaptável de posters de acordo com a tela.
+- [ ] **Issue #58 — `[Tech] Monitoramento com Web Vitals`**: Otimização de métricas de performance (LCP, FID, CLS).
+- [ ] **Issue #59 — `[SEO] Geração de Sitemap e Robots.txt`**: Estratégias de indexação em buscadores.
+- [ ] **Issue #60 — `[Tech] Controle de Rate Limit e Cache Local`**: Mitigação de requisições excessivas à API.
 
 ### 🏆 Fase 7: Recursos Especiais, Analytics e Encerramento (Issues 61–70)
-61. **Issue #61 — `[UX/Content] Feature Especial: Timeline 007`**: Trilha temática da franquia James Bond.
-62. **Issue #62 — `[Analytics] Métricas de Uso e Comportamento`**: Monitoramento de cliques e buscas mais populares.
-63. **Issue #63 — `[Feature] Sistema de Avaliação do Usuário`**: Possibilidade do usuário atribuir sua própria nota ao filme.
-64. **Issue #64 — `[Feature] Compartilhamento em Redes Sociais`**: Botões rápidos para envio via WhatsApp e Twitter.
-65. **Issue #65 — `[Feature] Toggle de Dark/Light Mode`**: Suporte a temas claro e escuro.
-66. **Issue #66 — `[Feature] Filtro por Ano de Lançamento`**: Seleção de filmes por décadas e anos.
-67. **Issue #67 — `[Documentation] Atualização Geral do README Profissional`**: Documentação executiva do repositório.
-68. **Issue #68 — `[Governance] Consolidação da GitHub Wiki`**: Documentação técnica e arquitetural completa.
-69. **Issue #69 — `[QA] Auditoria do Lighthouse (Nota ≥90)`**: Validação final de performance, acessibilidade e SEO.
-70. **Issue #70 — `[Product] Release Oficial v2.0.0 & Retrospectiva`**: Encerramento do ciclo e publicação da versão final.
+- [ ] **Issue #61 — `[UX/Content] Feature Especial: Timeline 007`**: Trilha temática da franquia James Bond.
+- [ ] **Issue #62 — `[Analytics] Métricas de Uso e Comportamento`**: Monitoramento de cliques e buscas mais populares.
+- [ ] **Issue #63 — `[Feature] Sistema de Avaliação do Usuário`**: Possibilidade do usuário atribuir sua própria nota ao filme.
+- [ ] **Issue #64 — `[Feature] Compartilhamento em Redes Sociais`**: Botões rápidos para envio via WhatsApp e Twitter.
+- [ ] **Issue #65 — `[Feature] Toggle de Dark/Light Mode`**: Suporte a temas claro e escuro.
+- [ ] **Issue #66 — `[Feature] Filtro por Ano de Lançamento`**: Seleção de filmes por décadas e anos.
+- [x] **Issue #67 — `[Documentation] Atualização Geral do README Profissional`**: Documentação executiva do repositório.
+- [ ] **Issue #68 — `[Governance] Consolidação da GitHub Wiki`**: Documentação técnica e arquitetural completa.
+- [ ] **Issue #69 — `[QA] Auditoria do Lighthouse (Nota ≥90)`**: Validação final de performance, acessibilidade e SEO.
+- [ ] **Issue #70 — `[Product] Release Oficial v2.0.0 & Retrospectiva`**: Encerramento do ciclo e publicação da versão final.
 
 ---
 
