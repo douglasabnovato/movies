@@ -15,6 +15,8 @@
 
 ## 📌 Sumário
 - [Sobre o Projeto](#-sobre-o-projeto)
+- [Como executar](#-como-executar)
+- [Estado do MVP & Documentação](#-estado-do-mvp--documentação)
 - [Estrutura de Branches & Git Workflow](#-estrutura-de-branches--git-workflow)
 - [Especificação de Requisitos & Desafio](#-especificação-de-requisitos--desafio)
   - [Requisitos da Aplicação](#requisitos-da-aplicação)
@@ -36,6 +38,49 @@
 O **Movies App** é uma plataforma frontend moderna desenvolvida em **React**, cujo objetivo principal é consumir a API pública do [The Movie Database (TMDB v3)](https://developers.themoviedb.org/3/getting-started/introduction) para apresentar listagens de filmes populares, detalhar informações técnicas, elenco, trailers oficiais e permitir navegação fluida com busca global via debounce, sincronização de estado na URL e filtros dinâmicos por gêneros.
 
 O projeto foi originalmente concebido como um desafio técnico da **Promobit**, evoluindo para um estudo de caso prático de **Product Management (PM)**, **DevOps** e **Engenharia Frontend**.
+
+---
+
+## ▶️ Como executar
+
+Pré-requisitos: Node.js 20 e uma chave v3 gratuita da TMDB ([criar chave](https://www.themoviedb.org/settings/api)).
+
+```bash
+npm ci
+cp .env.example .env        # o arquivo .env fica na RAIZ do projeto (não em src/)
+# edite .env e preencha REACT_APP_TMDB_KEY
+npm start                   # http://localhost:3000
+npm test -- --watchAll=false
+npm run build
+```
+
+Sem a chave, a aplicação abre e mostra uma mensagem explicando como configurá-la. Nenhuma chave fica no código-fonte. No GitHub Actions, a chave vem do *secret* `REACT_APP_TMDB_KEY`.
+
+---
+
+## 🌐 Em produção
+
+**Demonstração:** https://douglasabnovato.github.io/movies/
+
+- GitHub Pages servindo a branch `gh-pages`, gerada pelo workflow `.github/workflows/ci.yml` a cada push na `main` (testes → build → publicação).
+- A chave da TMDB entra no build pelo segredo `REACT_APP_TMDB_KEY` do repositório; nunca pelo código.
+- `HashRouter` mantém as rotas funcionando no Pages (endereços como `/#/movie/123`).
+- Passo a passo completo: [docs/DEPLOY.md](docs/DEPLOY.md).
+
+## 📊 Estado do MVP & Documentação
+
+| Documento | Conteúdo |
+|---|---|
+| [docs/ANALISE.md](./docs/ANALISE.md) | Requisitos (RF/RNF/RN), diagnóstico, rubrica de MVP e critérios de aceite em BDD |
+| [docs/ARQUITETURA.md](./docs/ARQUITETURA.md) | C4, estrutura de pastas, contratos da TMDB, tratamento de erros e ADRs |
+| [docs/PLANO-DE-ACAO.md](./docs/PLANO-DE-ACAO.md) | Tarefas priorizadas por MoSCoW e ganho ÷ esforço |
+
+| Momento | Nota MVP | Situação |
+|---|---|---|
+| Antes (27/09/2026) | 5,62 | Reprovado — chave no código e erros de rede exibidos como "nenhum resultado" |
+| Depois (27/09/2026) | 8,00 | Aprovado — falta só tirar `src/.env` do Git e revogar a chave antiga |
+
+Principais mudanças deste ciclo: chave só por variável de ambiente, erros tipados (`TmdbError`) com "Tentar novamente", cancelamento de requisições obsoletas (`AbortController`), cache TTL de 5 minutos, detalhe em uma requisição (`append_to_response`), placeholder local, correção da data exibida um dia antes, acessibilidade da paginação e 32 testes automatizados.
 
 ---
  
@@ -95,6 +140,7 @@ Para manter o versionamento organizado e seguro, adotamos o seguinte fluxo de tr
 - **Governança & Documentação:**
   - [x] GitHub Wiki, Issues, Project Boards e Pull Requests estruturados.
   - [x] Pipeline de Integração Contínua (CI) via **GitHub Actions** (`Node v20`, `actions@v4`).
+  - [x] Documentação de análise, arquitetura e plano de ação em [`docs/`](./docs).
 
 ---
 
@@ -142,11 +188,6 @@ Acompanhamento dos ciclos de desenvolvimento dedicados à construção do MVP:
   <img alt="Desktop 5" src="./.github/api-tmdb-5.jpg" width="380px">
 </p>
 
-### Visualização Mobile
-<p align="center">
-  <img alt="Mobile Preview" src="./.github/mobile-tmdb.jpg" height="400px">
-</p>
-
 ---
 
 ## 🗺️ Plano Mestre de Evolução (70 Issues)
@@ -156,8 +197,8 @@ Para guiar a reativação, escalabilidade e qualidade do ecossistema do **Movies
 ### 🚀 Fase 1: Governança, CI/CD e Qualidade (Issues 01–10)
 - [x] **Issue #01 — `[DevOps] Setup do GitHub Actions para Pipeline de CI`**: Configuração do workflow automatizado de validação de PRs.
 - [ ] **Issue #02 — `[DevOps] Integração de Linter e Formatador (ESLint & Prettier)`**: Padronização de estilo de código com Husky e `lint-staged`.
-- [ ] **Issue #03 — `[QA] Configuração do Ambiente de Testes (Jest + React Testing Library)`**: Mocks globais e scripts de testes unitários.
-- [x] **Issue #04 — `[DevOps] Variáveis de Ambiente e Segurança (.env)`**: Isolamento de chaves secretas e credenciais de API.
+- [x] **Issue #03 — `[QA] Configuração do Ambiente de Testes (Jest + React Testing Library)`**: Mocks globais e scripts de testes unitários.
+- [x] **Issue #04 — `[DevOps] Variáveis de Ambiente e Segurança (.env)`**: Isolamento de chaves secretas e credenciais de API. *(Código concluído em 27/09/2026; pendente remover `src/.env` do histórico e revogar a chave antiga.)*
 - [x] **Issue #05 — `[QA] Teste Unitário dos Utilitários de Data e Duração`**: Garantia de cobertura para `formatDate` e `formatRuntime`.
 - [ ] **Issue #06 — `[DevOps] Deploy Automatizado com Vercel/GitHub Pages`**: Pipeline de entrega contínua (CD) disparada na `main`.
 - [ ] **Issue #07 — `[QA] Teste do Componente de Avaliação`**: Validação declarativa do gráfico circular de pontuação.
@@ -175,7 +216,7 @@ Para guiar a reativação, escalabilidade e qualidade do ecossistema do **Movies
 - [x] **Issue #17 — `[Tech] Tratamento para Filmes Sem Poster`**: Imagem placeholder quando o item não tiver imagem na API.
 - [x] **Issue #18 — `[Tech] Normalização do Objeto Movie`**: Padronização da estrutura de dados antes do consumo da UI.
 - [x] **Issue #19 — `[Tech] Scroll Automático ao Alternar Rotas`**: Garantia de rolagem para o topo ao trocar de tela.
-- [ ] **Issue #20 — `[Tech] Hook Customizado useFetch`**: Abstração para chamadas HTTP reutilizáveis.
+- [x] **Issue #20 — `[Tech] Hook Customizado useFetch`**: Abstração para chamadas HTTP reutilizáveis.
 
 ### 🎨 Fase 3: Refinamento de UX/UI, Filtros e Paginação (Issues 21–30)
 - [x] **Issue #21 — `[Feature] Consumo Dinâmico de Gêneros (GET /genre/movie/list)`**: Integração oficial dos gêneros da TMDB.
@@ -223,7 +264,7 @@ Para guiar a reativação, escalabilidade e qualidade do ecossistema do **Movies
 - [ ] **Issue #57 — `[Tech] Otimização de Imagens (SrcSet)`**: Download adaptável de posters de acordo com a tela.
 - [ ] **Issue #58 — `[Tech] Monitoramento com Web Vitals`**: Otimização de métricas de performance (LCP, FID, CLS).
 - [ ] **Issue #59 — `[SEO] Geração de Sitemap e Robots.txt`**: Estratégias de indexação em buscadores.
-- [ ] **Issue #60 — `[Tech] Controle de Rate Limit e Cache Local`**: Mitigação de requisições excessivas à API.
+- [x] **Issue #60 — `[Tech] Controle de Rate Limit e Cache Local`**: Mitigação de requisições excessivas à API.
 
 ### 🏆 Fase 7: Recursos Especiais, Analytics e Encerramento (Issues 61–70)
 - [ ] **Issue #61 — `[UX/Content] Feature Especial: Timeline 007`**: Trilha temática da franquia James Bond.

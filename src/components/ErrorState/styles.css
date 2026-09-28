@@ -1,0 +1,42 @@
+/* ErrorState · estilos do estado de erro */
+.error-state {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+  padding: 4rem 1.6rem;
+  text-align: center;
+  font-family: "Roboto", sans-serif;
+  color: #242424;
+}
+
+.error-state-title {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.error-state-message {
+  font-size: 1.6rem;
+  max-width: 48rem;
+}
+
+.error-state-button,
+.error-state-link {
+  background: #5c16c5;
+  color: #ffffff;
+  border: 0;
+  border-radius: 4px;
+  padding: 1rem 2rem;
+  font-size: 1.6rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.error-state-button:focus-visible,
+.error-state-link:focus-visible {
+  outline: 3px solid #d18000;
+  outline-offset: 2px;
+}
+/* fim de ErrorState/styles.css */
