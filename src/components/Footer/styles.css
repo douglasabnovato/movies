@@ -29,6 +29,11 @@
   margin-top: 4px;
 }
 
+.footer-tmdb-logo {
+  display: inline-block;
+  margin-top: 8px;
+}
+
 .footer-credits {
   font-size: 1.4rem;
   color: #ffffff;
