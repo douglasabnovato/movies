@@ -122,7 +122,11 @@ function Home() {
       const title = movie.title || movie.original_title;
       return (
         <article key={movie.id} className="film">
-          <Link to={`/movie/${movie.id}`} aria-label={`Ver detalhes do filme ${title}`}>
+          <Link
+            to={`/movie/${movie.id}`}
+            state={{ listSearch: searchParams.toString() ? `?${searchParams}` : "" }}
+            aria-label={`Ver detalhes do filme ${title}`}
+          >
             <div className="card">
               <img
                 src={imageUrl(movie.poster_path, "w342")}

@@ -16,7 +16,7 @@ Priorização por **MoSCoW** e ordenação por **ganho ÷ esforço** (esforço e
 | T10 | Should | `document.title` por página (SEO básico, parte da Issue #53) | — | C1, C10 | Baixo | 1 | ✅ Feito |
 | T11 | Could | `loading="lazy"`, `width`/`height` nas imagens (CLS) e trailer via `youtube-nocookie` | — | C8, C4 | Baixo | 1 | ✅ Feito |
 | T12 | Should | Corrigir o README (status das issues, imagem inexistente, seção de configuração) | D9 | C10 | Médio | 1 | ✅ Feito |
-| T13 | Must (usuário) | Tirar `src/.env` do Git e revogar a chave antiga na TMDB | D1 | C4 | Alto | 1 | ⏳ Com você |
+| T13 | Must (usuário) | `src/.env` já saiu do Git (`fix/ci-filtros-env`); falta revogar a chave antiga na TMDB | D1 | C4 | Alto | 1 | ⏳ Com você |
 | T14 | Won't (agora) | Migrar CRA → Vite; TanStack Query; favoritos; E2E | — | C7, C6 | — | — | Roadmap |
 
 ## Sequência de execução
