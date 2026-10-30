@@ -158,7 +158,7 @@ function Home() {
         <nav className="navbar" aria-label="Navegação principal">
           <div className="title-site">
             <h1 className="title-text">
-              TMDB
+              Movies
               <span className="title-obj" aria-hidden="true"></span>
             </h1>
           </div>
