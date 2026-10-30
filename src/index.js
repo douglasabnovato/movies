@@ -4,6 +4,8 @@ import { HashRouter, Routes, Route } from "react-router-dom";
 
 import Home from "./pages/Home";
 import Details from "./pages/Details";
+import NotFound from "./pages/NotFound";
+import ErrorBoundary from "./components/ErrorBoundary";
 import Footer from "./components/Footer";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -16,10 +18,13 @@ root.render(
       }}
     >
       <div className="app-container">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/movie/:id" element={<Details />} />
-        </Routes>
+        <ErrorBoundary>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/movie/:id" element={<Details />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </ErrorBoundary>
         <Footer />
       </div>
     </HashRouter>

@@ -63,19 +63,19 @@ function Details() {
 
   if (loading) {
     return (
-      <div className="main" aria-busy="true">
+      <main className="main" aria-busy="true">
         <div className="top-details">
           <Brand listPath={listPath} />
           <DetailsSkeleton />
         </div>
-      </div>
+      </main>
     );
   }
 
   if (error) {
     const notFound = error.kind === "not_found";
     return (
-      <div className="main">
+      <main className="main">
         <div className="top-details">
           <Brand listPath={listPath} />
         </div>
@@ -88,7 +88,7 @@ function Details() {
             Voltar para a lista
           </Link>
         </ErrorState>
-      </div>
+      </main>
     );
   }
 
@@ -96,7 +96,7 @@ function Details() {
   const ratingPercentage = Math.round((movie.vote_average || 0) * 10);
 
   return (
-    <div className="main">
+    <main className="main">
       <div className="top-details">
         <Brand listPath={listPath} />
 
@@ -227,7 +227,7 @@ function Details() {
       )}
 
       <Link to={listPath} className="back-to" aria-label="Voltar para a lista de filmes"></Link>
-    </div>
+    </main>
   );
 }
 
