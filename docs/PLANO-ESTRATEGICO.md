@@ -66,7 +66,7 @@ Transformar o `movies` em uma vitrine de engenharia front-end: um projeto pequen
 
 **Verificado no ar depois do PR #46 (30/10/2026, API real):** job `deploy`, listagem, rota desconhecida, `page=-1`, filtro com página depois de abrir o detalhe, detalhe com elenco e trailer, e busca.
 
-**Lighthouse da página inicial (rodada única):** celular com desempenho 84 e LCP de 3,8 s; desktop com desempenho 96 e LCP de 1,1 s; 100 em acessibilidade, boas práticas e SEO nos dois. Uma segunda medição no celular, feita em outra máquina de teste, deu 91 e 3,4 s, então os números variam entre rodadas.
+**Lighthouse da página inicial (rodada única):** celular com desempenho 84 e LCP de 3,8 s; desktop com desempenho 96 e LCP de 1,1 s; 100 em acessibilidade, boas práticas e SEO nos dois. Uma segunda rodada no celular, também antes das correções de desempenho, deu 91 e 3,4 s, então os números variam entre rodadas.
 
 **Limite do resultado:** `npm audit` continua com 48 alertas no total, quase todos do `react-scripts` e só resolvidos com a migração. Entre as dependências de produção restam 2 alertas moderados do React Router 6, corrigidos apenas na versão 7. Eles tratam de `<Link>` com destino controlado por terceiros e de hidratação SSR; o app não usa SSR, e o destino dos links vem do próprio app.
 
