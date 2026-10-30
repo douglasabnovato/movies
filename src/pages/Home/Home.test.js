@@ -50,7 +50,7 @@ describe("Pages / Home", () => {
     });
     renderHome();
     await screen.findByText("Filme 1");
-    const posters = document.querySelectorAll("article.film img");
+    const posters = screen.getAllByAltText("");
     expect(posters[0]).toHaveAttribute("fetchpriority", "high");
     expect(posters[1]).toHaveAttribute("loading", "eager");
     expect(posters[2]).toHaveAttribute("loading", "lazy");
