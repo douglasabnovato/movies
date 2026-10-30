@@ -61,14 +61,16 @@ Transformar o `movies` em uma vitrine de engenharia front-end: um projeto pequen
 
 **Verificado:** instalação limpa com `npm ci`, lint, 47 testes em 3 execuções, build estrito com e sem chave. No navegador, com chave falsa: rota desconhecida, `page=-1` e HTTP 401 real da TMDB na Home e no Detalhe.
 
-**Ainda não verificado:** a listagem e o detalhe com dados reais, nesta versão; o job `deploy` novo, que só roda depois do merge na `main`; Lighthouse.
+**Verificado no ar (30/10/2026, versão do PR #45, API real):** listagem, filtro por gênero com página na URL, busca, detalhe em 1 requisição, volta com filtros e filme inexistente.
+
+**Ainda não verificado:** as mudanças deste ciclo no site publicado e o job `deploy` novo, que só rodam depois do merge na `main`; Lighthouse.
 
 **Limite do resultado:** `npm audit` continua com 48 alertas no total, quase todos do `react-scripts` e só resolvidos com a migração. Entre as dependências de produção restam 2 alertas moderados do React Router 6, corrigidos apenas na versão 7. Eles tratam de `<Link>` com destino controlado por terceiros e de hidratação SSR; o app não usa SSR, e o destino dos links vem do próprio app.
 
 ## 7. Próximos passos
 
-1. Fazer o merge do PR #45 e desta branch, nessa ordem, e acompanhar o job `deploy`.
-2. Testar o site publicado com a API real e rodar o Lighthouse.
+1. Fazer o merge desta branch e acompanhar o job `deploy`. O GitHub Pages pode levar cerca de 1 minuto para servir a versão nova depois do job verde.
+2. Testar de novo o site publicado e rodar o Lighthouse.
 3. Fechar as issues com evidência e alinhar o Project #1.
 4. Migrar para Vite e Vitest (ciclo 3), incluindo o React Router 7.
 5. Adicionar TypeScript no serviço, hook de filtros e CSS Modules (ciclo 4).
@@ -88,6 +90,7 @@ Transformar o `movies` em uma vitrine de engenharia front-end: um projeto pequen
 - Proteger a `main`: exigir PR e CI verde. Hoje nada impede um push direto, que publica o site.
 - Simplificar o fluxo de branches: a `developer-mvp` está atrás da `main`. Trabalhar só com a `main` e branches curtas evita esse desvio.
 - Ativar o Dependabot, com agrupamento, depois da migração.
+- Atualizar o Node e as actions: o GitHub já avisa que o Node 20 está obsoleto nos runners.
 - Adicionar medição de erros e de uso. Hoje uma falha em produção não avisa ninguém, e a métrica norte de `docs/ANALISE.md` não é medida.
 
 **Produto e apresentação**
