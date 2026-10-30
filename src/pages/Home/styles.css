@@ -1,5 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200;300;400;600;700;800;900&family=Roboto:wght@100;300;400;500;700;900&display=swap");
-
 :root {
   font-size: 62.5%; /* 62.5% = 10px >> 1.2rem .8rem; Que seriam 12px e 8px*/
 }
@@ -12,6 +10,11 @@
 
 html {
   font-size: 9rem;
+}
+
+body {
+  background: #ffffff;
+  color: #242424;
 }
 
 a {

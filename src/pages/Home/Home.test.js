@@ -43,6 +43,19 @@ describe("Pages / Home", () => {
     expect(screen.getByRole("link", { name: "Ver detalhes do filme Filme A" })).toHaveAttribute("href", "/movie/1");
   });
 
+  it("prioriza só os primeiros pôsteres", async () => {
+    tmdbService.getPopularMovies.mockResolvedValue({
+      results: [1, 2, 3].map((id) => ({ id, title: `Filme ${id}`, poster_path: `/${id}.jpg` })),
+      total_pages: 1,
+    });
+    renderHome();
+    await screen.findByText("Filme 1");
+    const posters = screen.getAllByAltText("");
+    expect(posters[0]).toHaveAttribute("fetchpriority", "high");
+    expect(posters[1]).toHaveAttribute("loading", "eager");
+    expect(posters[2]).toHaveAttribute("loading", "lazy");
+  });
+
   it.each([
     ["3", 3],
     ["500", 500],
