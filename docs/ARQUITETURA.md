@@ -1,4 +1,6 @@
-# Arquitetura alvo — Movies (TMDB Explorer)
+# Arquitetura — Movies (TMDB Explorer)
+
+> Atualizada em 30/10/2026. Descreve o que está no código.
 
 ## 1. Visão C4
 
@@ -43,7 +45,8 @@ flowchart TB
 ```
 src/
 ├── components/
-│   ├── ErrorState/        (novo) mensagem + botão "Tentar novamente"
+│   ├── ErrorBoundary/     impede que um erro de renderização apague a tela
+│   ├── ErrorState/        mensagem + botão "Tentar novamente"
 │   ├── Footer/
 │   ├── Pagination/        (a11y: aria-current, rótulos)
 │   └── Skeleton/
@@ -51,7 +54,8 @@ src/
 │   └── useFetch.js        (reescrito) carrega, cancela e refaz a requisição
 ├── pages/
 │   ├── Home/
-│   └── Details/
+│   ├── Details/
+│   └── NotFound/          endereços sem rota
 ├── services/
 │   ├── cache.js           (novo) cache TTL com limite de entradas
 │   └── tmdbApi.js         (reescrito) sem chave no código, erros tipados
@@ -97,9 +101,9 @@ Erros normalizados pela classe `TmdbError`:
 
 | `kind` | Quando | Mensagem na tela |
 |---|---|---|
-| `config` | `REACT_APP_TMDB_KEY` ausente | Explica como configurar a chave |
+| `config` | `REACT_APP_TMDB_KEY` ausente ou recusada (HTTP 401) | Explica o problema, sem "Tentar novamente" |
 | `not_found` | HTTP 404 | "Filme não encontrado" + link para a lista |
-| `http` | Outros 4xx/5xx | "Não foi possível carregar" + tentar novamente |
+| `http` | Outros 4xx/5xx ou JSON inválido | "Não foi possível carregar" + tentar novamente |
 | `network` | `fetch` rejeitado (offline, DNS, CORS) | Idem, sugerindo verificar a conexão |
 | `aborted` | Requisição cancelada | Ignorado (não é erro para a pessoa) |
 
@@ -109,7 +113,7 @@ Erros normalizados pela classe `TmdbError`:
 
 - **Contexto:** a chave estava como valor padrão no código e o `src/.env` foi versionado.
 - **Decisão:** a chave vem só de `REACT_APP_TMDB_KEY` (arquivo `.env` local não versionado ou *secret* do CI). Sem chave, a aplicação mostra um erro de configuração.
-- **Consequência:** em uma SPA estática, a chave da TMDB v3 continua visível no JavaScript publicado. É um risco aceito porque a chave é gratuita, somente leitura e com limite de uso; a alternativa (proxy em função *serverless*) fica fora do escopo do MVP. A chave antiga precisa ser **revogada** na TMDB, pois ficou no histórico do Git.
+- **Consequência:** em uma SPA estática, a chave da TMDB v3 continua visível no JavaScript publicado. É um risco aceito porque a chave é gratuita, somente leitura e com limite de uso; a alternativa (proxy em função *serverless*) fica fora do escopo do MVP. A troca da chave antiga foi tratada no ADR-006.
 
 ### ADR-002 — Cancelamento com `AbortController` em vez de flag "ignorar"
 
@@ -133,8 +137,18 @@ Erros normalizados pela classe `TmdbError`:
 - **Decisão:** `public/placeholder.svg` substitui `via.placeholder.com`, que foi desativado.
 - **Consequência:** nenhuma dependência externa para o estado "sem pôster".
 
+### ADR-006 — Manter a chave atual da TMDB
+
+- **Contexto:** a chave ficou em `src/.env` no histórico do Git e, como toda chave de SPA, também está no JavaScript publicado.
+- **Decisão (30/10/2026, do responsável pelo projeto):** não revogar nem trocar a chave por enquanto. `src/.env` sai do versionamento.
+- **Consequência:** qualquer pessoa pode usar a chave e consumir a cota. Se a TMDB a recusar, o site mostra um erro claro (HTTP 401). Basta atualizar o secret `REACT_APP_TMDB_KEY` e publicar de novo, sem mudar código.
+
+### ADR-007 — Separar verificação e publicação no CI
+
+- **Contexto:** um único job testava, gerava o build e publicava, com permissão de escrita mesmo em PR, e `developer-mvp` também publicava.
+- **Decisão:** o job `build-and-test` roda lint, testes com cobertura mínima e build, com permissão de leitura e sem a chave. O job `deploy` só roda em push na `main`, depois da verificação, e é o único com permissão de escrita e acesso ao secret.
+- **Consequência:** só a `main` publica, e avisos de lint ou build bloqueiam a entrega. O build é feito duas vezes, um custo aceito pela separação do secret.
+
 ## 6. Fora do escopo deste ciclo
 
-- Favoritos, PWA/offline, React Helmet/Open Graph, TanStack Query e testes E2E (Issues #10, #51, #53–#56).
-- Migração do Create React App para Vite (o CRA está sem manutenção; recomendado em um ciclo próprio).
-- Alterações no workflow `.github/workflows/ci.yml` (ele já roda testes e build).
+Favoritos, PWA/offline, Open Graph, TanStack Query, testes E2E e a migração do Create React App para Vite. A ordem está em `docs/PLANO-ESTRATEGICO.md`.

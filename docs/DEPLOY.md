@@ -19,45 +19,37 @@ Publicar uma SPA em Create React App que consome a API da TMDB, sem deixar a cha
 
 - O código lê `REACT_APP_TMDB_KEY` do ambiente; o arquivo `.env` fica fora do Git.
 - No deploy, o valor vem do **segredo do repositório** (Settings → Secrets and variables → Actions).
-- Limite conhecido: em qualquer SPA, a chave vai dentro do JavaScript publicado. Para a TMDB (leitura pública, cota por chave) isso é aceitável; o que não pode é a chave ficar no histórico do Git, por isso ela precisa ser **revogada e trocada**.
+- Limite conhecido: em qualquer SPA, a chave vai dentro do JavaScript publicado. A chave atual também está no histórico do Git; mantê-la é um risco aceito (ADR-006).
 
 ### O que está pronto no projeto
 
 - `HashRouter` (rotas funcionam no Pages sem configuração extra) e `"homepage"` apontando para o Pages.
 - Workflow com testes, build e publicação.
-- Verificação feita antes da entrega: `npm ci` limpo, 32 testes passando (7 suítes) e build de produção gerado.
+- Verificação: `npm ci` limpo, `npm run lint`, `npm run test:ci` e `npm run build`.
 
-### Melhoria recomendada no workflow
+### Regra de publicação
 
-Hoje o workflow também publica quando há push em `developer-mvp`, o que sobrescreve a versão da `main`. Para publicar só a `main`, troque no `.github/workflows/ci.yml` a condição do passo "Deploy para GitHub Pages" por:
-
-```yaml
-        if: github.ref == 'refs/heads/main'
-```
+Só um push na `main` publica o site, e somente depois de lint, testes e build passarem. PRs e a `developer-mvp` passam só pela verificação (ADR-007).
 
 ## 3. Solução (passo a passo)
 
-### Etapa 1 · Trocar a chave vazada
+### Etapa 1 · Conferir a chave
 
-1. Em https://www.themoviedb.org/settings/api, **gerar uma chave nova** e invalidar a antiga (a antiga está no histórico do Git em `src/.env`).
-2. No GitHub, **Settings → Secrets and variables → Actions**: criar ou editar o segredo `REACT_APP_TMDB_KEY` com a chave nova.
+No GitHub, **Settings → Secrets and variables → Actions**: o segredo `REACT_APP_TMDB_KEY` precisa existir. Para trocar a chave no futuro, gere outra em https://www.themoviedb.org/settings/api e atualize o segredo.
 
 ### Etapa 2 · Validar localmente (Git Bash)
 
 1. `cd /c/ambiente-projeto/ser-mvp/movies`
-2. Criar `.env` na raiz com `REACT_APP_TMDB_KEY=<chave nova>` (a partir do `.env.example`).
+2. Criar `.env` na raiz com `REACT_APP_TMDB_KEY=<sua chave>` (a partir do `.env.example`).
 3. `npm ci`
-4. `npm test -- --watchAll=false` (32 testes)
+4. `npm run lint` e `npm run test:ci`
 5. `npm start` e conferir busca, paginação e detalhe.
 
 ### Etapa 3 · Subir para o GitHub
 
-1. `git rm --cached src/.env` (tira do versionamento o arquivo antigo com a chave)
-2. `git status` (nenhum `.env` pode aparecer como adicionado)
-3. `git add -A`
-4. `git commit -m "refactor: MVP — cache TTL, AbortController, erros tipados, a11y, testes e docs de deploy"`
-5. `git push`
-6. Aba **Actions**: o workflow precisa ficar verde (testes, build e deploy).
+1. `git status` (nenhum `.env` pode aparecer como adicionado)
+2. Abrir um PR para a `main`; a aba **Actions** precisa ficar verde.
+3. Fazer o merge; o job `deploy` publica o site.
 
 ### Etapa 4 · Conferir o GitHub Pages
 

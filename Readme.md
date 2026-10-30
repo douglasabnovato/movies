@@ -78,7 +78,7 @@ Sem a chave, a aplicação abre e mostra uma mensagem explicando como configurá
 | Momento | Nota MVP | Situação |
 |---|---|---|
 | Antes (27/09/2026) | 5,62 | Reprovado — chave no código e erros de rede exibidos como "nenhum resultado" |
-| Depois (27/09/2026) | 8,00 | Aprovado — falta só tirar `src/.env` do Git e revogar a chave antiga |
+| Depois (27/09/2026) | 8,00 | Aprovado — `src/.env` removido depois; a chave atual foi mantida por decisão (ADR-006) |
 
 Principais mudanças deste ciclo: chave só por variável de ambiente, erros tipados (`TmdbError`) com "Tentar novamente", cancelamento de requisições obsoletas (`AbortController`), cache TTL de 5 minutos, detalhe em uma requisição (`append_to_response`), placeholder local, correção da data exibida um dia antes, acessibilidade da paginação e 32 testes automatizados.
 
@@ -198,7 +198,7 @@ Para guiar a reativação, escalabilidade e qualidade do ecossistema do **Movies
 - [x] **Issue #01 — `[DevOps] Setup do GitHub Actions para Pipeline de CI`**: Configuração do workflow automatizado de validação de PRs.
 - [ ] **Issue #02 — `[DevOps] Integração de Linter e Formatador (ESLint & Prettier)`**: Padronização de estilo de código com Husky e `lint-staged`.
 - [x] **Issue #03 — `[QA] Configuração do Ambiente de Testes (Jest + React Testing Library)`**: Mocks globais e scripts de testes unitários.
-- [x] **Issue #04 — `[DevOps] Variáveis de Ambiente e Segurança (.env)`**: Isolamento de chaves secretas e credenciais de API. *(Código concluído em 27/09/2026; pendente remover `src/.env` do histórico e revogar a chave antiga.)*
+- [x] **Issue #04 — `[DevOps] Variáveis de Ambiente e Segurança (.env)`**: Isolamento de chaves secretas e credenciais de API. *(Código concluído em 27/09/2026; `src/.env` fora do versionamento, chave mantida por decisão registrada no ADR-006.)*
 - [x] **Issue #05 — `[QA] Teste Unitário dos Utilitários de Data e Duração`**: Garantia de cobertura para `formatDate` e `formatRuntime`.
 - [ ] **Issue #06 — `[DevOps] Deploy Automatizado com Vercel/GitHub Pages`**: Pipeline de entrega contínua (CD) disparada na `main`.
 - [ ] **Issue #07 — `[QA] Teste do Componente de Avaliação`**: Validação declarativa do gráfico circular de pontuação.
