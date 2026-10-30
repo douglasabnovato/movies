@@ -161,6 +161,7 @@ a {
   padding: 1px;
   width: 176px;
   height: 264px;
+  object-fit: cover;
 }
 
 .title-movie {

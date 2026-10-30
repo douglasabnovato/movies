@@ -3,7 +3,7 @@
  * Carrega tudo em uma requisição (append_to_response) e trata 404, erro e carregando.
  */
 import React, { useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { tmdbService } from "../../services/tmdbApi";
 import { useFetch } from "../../hooks/useFetch";
 import { DetailsSkeleton } from "../../components/Skeleton";
@@ -29,11 +29,11 @@ export function mapMovieResponse(data) {
 }
 
 /* Cabeçalho com a marca, que leva de volta à listagem. */
-function Brand() {
+function Brand({ listPath }) {
   return (
     <div className="navbar">
       <div className="title-site">
-        <Link to="/" className="title-text" aria-label="TMDB, voltar para a lista de filmes">
+        <Link to={listPath} className="title-text" aria-label="TMDB, voltar para a lista de filmes">
           TMDB
           <span className="title-obj" aria-hidden="true"></span>
         </Link>
@@ -45,6 +45,9 @@ function Brand() {
 /* Página de detalhes. */
 function Details() {
   const { id } = useParams();
+  const location = useLocation();
+  /* Volta para a listagem com os filtros e a página de onde o usuário veio. */
+  const listPath = `/${location.state?.listSearch || ""}`;
   const { data, loading, error, retry } = useFetch(
     (options) => tmdbService.getMovieFull(id, options).then(mapMovieResponse),
     [id]
@@ -62,7 +65,7 @@ function Details() {
     return (
       <div className="main" aria-busy="true">
         <div className="top-details">
-          <Brand />
+          <Brand listPath={listPath} />
           <DetailsSkeleton />
         </div>
       </div>
@@ -74,14 +77,14 @@ function Details() {
     return (
       <div className="main">
         <div className="top-details">
-          <Brand />
+          <Brand listPath={listPath} />
         </div>
         <ErrorState
           title={notFound ? "Filme não encontrado" : "Não foi possível carregar o filme"}
           message={notFound ? "O endereço pode estar errado ou o filme foi removido." : error.message}
           onRetry={notFound || error.kind === "config" ? undefined : retry}
         >
-          <Link to="/" className="error-state-link">
+          <Link to={listPath} className="error-state-link">
             Voltar para a lista
           </Link>
         </ErrorState>
@@ -95,7 +98,7 @@ function Details() {
   return (
     <div className="main">
       <div className="top-details">
-        <Brand />
+        <Brand listPath={listPath} />
 
         <div className="film-detail">
           <div className="film-banner">
@@ -203,7 +206,7 @@ function Details() {
           <div className="list-recommendations">
             {recommendations.map((item) => (
               <div key={item.id} className="item-recommendation">
-                <Link to={`/movie/${item.id}`} aria-label={`Ver detalhes do filme ${item.title}`}>
+                <Link to={`/movie/${item.id}`} state={location.state} aria-label={`Ver detalhes do filme ${item.title}`}>
                   <img
                     src={imageUrl(item.poster_path, "w185")}
                     alt=""
@@ -223,7 +226,7 @@ function Details() {
         </section>
       )}
 
-      <Link to="/" className="back-to" aria-label="Voltar para a lista de filmes"></Link>
+      <Link to={listPath} className="back-to" aria-label="Voltar para a lista de filmes"></Link>
     </div>
   );
 }

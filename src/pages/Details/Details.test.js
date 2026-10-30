@@ -1,5 +1,5 @@
 /* Details.test.js · mapeamento da resposta única e estados da página. */
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import { MemoryRouter, Routes, Route } from "react-router-dom";
 import Details, { mapMovieResponse } from "./index";
 import { tmdbService, TmdbError } from "../../services/tmdbApi";
@@ -10,9 +10,9 @@ jest.mock("../../services/tmdbApi", () => {
 });
 
 /* Renderiza a página na rota /movie/:id. */
-function renderAt(path) {
+function renderAt(path, state) {
   return render(
-    <MemoryRouter initialEntries={[path]} future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+    <MemoryRouter initialEntries={[{ pathname: path, state }]} future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <Routes>
         <Route path="/movie/:id" element={<Details />} />
       </Routes>
@@ -42,7 +42,22 @@ describe("Pages / Details", () => {
     renderAt("/movie/5");
     expect(await screen.findByRole("heading", { name: "Filme C" })).toBeInTheDocument();
     expect(screen.getByRole("img", { name: "Avaliação dos usuários: 75%" })).toBeInTheDocument();
-    expect(document.title).toBe("Filme C · Movie's");
+    /* O título muda em um efeito, que pode rodar depois de o texto aparecer. */
+    await waitFor(() => expect(document.title).toBe("Filme C · Movie's"));
+  });
+
+  it("volta para a listagem mantendo os filtros de origem", async () => {
+    tmdbService.getMovieFull.mockResolvedValue({ id: 5, title: "Filme C", release_date: "2020-01-02" });
+    renderAt("/movie/5", { listSearch: "?genres=28,12&page=2" });
+    await screen.findByRole("heading", { name: "Filme C" });
+    expect(screen.getByRole("link", { name: "Voltar para a lista de filmes" })).toHaveAttribute("href", "/?genres=28,12&page=2");
+  });
+
+  it("sem origem conhecida, volta para a listagem inicial", async () => {
+    tmdbService.getMovieFull.mockResolvedValue({ id: 5, title: "Filme C", release_date: "2020-01-02" });
+    renderAt("/movie/5");
+    await screen.findByRole("heading", { name: "Filme C" });
+    expect(screen.getByRole("link", { name: "Voltar para a lista de filmes" })).toHaveAttribute("href", "/");
   });
 
   it("diferencia filme inexistente de falha de rede", async () => {
