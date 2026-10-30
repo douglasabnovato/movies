@@ -62,11 +62,22 @@ export async function fetchFromTMDB(endpoint, params = {}, { signal } = {}) {
   if (response.status === 404) {
     throw new TmdbError("not_found", "Conteúdo não encontrado.", 404);
   }
+  if (response.status === 401) {
+    throw new TmdbError("config", "A TMDB recusou a chave configurada na aplicação.", 401);
+  }
   if (!response.ok) {
     throw new TmdbError("http", `A TMDB respondeu com erro ${response.status}.`, response.status);
   }
 
-  const data = await response.json();
+  let data;
+  try {
+    data = await response.json();
+  } catch (error) {
+    if (error && error.name === "AbortError") {
+      throw new TmdbError("aborted", "Requisição cancelada.");
+    }
+    throw new TmdbError("http", "A TMDB enviou uma resposta inválida.", response.status);
+  }
   responseCache.set(cacheKey, data);
   return data;
 }
@@ -89,7 +100,7 @@ export const tmdbService = {
   /* Detalhe completo em uma única requisição (elenco, vídeos e recomendações). */
   getMovieFull: (id, options) =>
     fetchFromTMDB(
-      `/movie/${id}`,
+      `/movie/${encodeURIComponent(id)}`,
       { append_to_response: "credits,videos,recommendations" },
       options
     ),

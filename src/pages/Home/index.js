@@ -17,12 +17,18 @@ import "./styles.css";
 const MAX_PAGES = 500;
 const DEBOUNCE_MS = 500;
 
+/* Aceita só páginas inteiras dentro do limite da TMDB (RN02); o resto vira a página 1. */
+export function parsePage(value) {
+  const page = Number(value);
+  return Number.isInteger(page) && page >= 1 && page <= MAX_PAGES ? page : 1;
+}
+
 /* Lê busca, página e gêneros da query string. */
 function readInitialState(searchParams) {
   const genres = searchParams.get("genres");
   return {
     search: searchParams.get("search") || "",
-    page: Number(searchParams.get("page")) || 1,
+    page: parsePage(searchParams.get("page")),
     genres: genres ? genres.split(",").map(Number).filter(Boolean) : [],
   };
 }
@@ -103,7 +109,7 @@ function Home() {
       const isConfig = moviesRequest.error.kind === "config";
       return (
         <ErrorState
-          title={isConfig ? "Aplicação sem chave da TMDB" : "Não foi possível carregar os filmes"}
+          title={isConfig ? "Problema com a chave da TMDB" : "Não foi possível carregar os filmes"}
           message={moviesRequest.error.message}
           onRetry={isConfig ? undefined : moviesRequest.retry}
         />

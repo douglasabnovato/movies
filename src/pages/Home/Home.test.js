@@ -1,7 +1,7 @@
 /* Home.test.js · estados de sucesso, vazio, erro e retry da listagem. */
 import { render, screen, fireEvent } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
-import Home from "./index";
+import Home, { parsePage } from "./index";
 import { tmdbService, TmdbError } from "../../services/tmdbApi";
 
 jest.mock("../../services/tmdbApi", () => {
@@ -43,6 +43,18 @@ describe("Pages / Home", () => {
     expect(screen.getByRole("link", { name: "Ver detalhes do filme Filme A" })).toHaveAttribute("href", "/movie/1");
   });
 
+  it.each([
+    ["3", 3],
+    ["500", 500],
+    [null, 1],
+    ["abc", 1],
+    ["-1", 1],
+    ["2.5", 1],
+    ["9999", 1],
+  ])("interpreta a página %s da URL como %i", (value, expected) => {
+    expect(parsePage(value)).toBe(expected);
+  });
+
   it("mostra o estado vazio", async () => {
     tmdbService.getPopularMovies.mockResolvedValue({ results: [], total_pages: 0 });
     renderHome();
@@ -63,7 +75,7 @@ describe("Pages / Home", () => {
     tmdbService.getGenres.mockRejectedValue(new TmdbError("config", "Chave da TMDB não configurada."));
     tmdbService.getPopularMovies.mockRejectedValue(new TmdbError("config", "Chave da TMDB não configurada."));
     renderHome();
-    expect(await screen.findByRole("alert")).toHaveTextContent("Aplicação sem chave da TMDB");
+    expect(await screen.findByRole("alert")).toHaveTextContent("Problema com a chave da TMDB");
     expect(screen.queryByRole("button", { name: "Tentar novamente" })).not.toBeInTheDocument();
   });
 

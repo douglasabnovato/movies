@@ -1,5 +1,7 @@
 # Plano de ação — Movies (TMDB Explorer)
 
+> Histórico do ciclo de 27/09/2026. O plano vigente é `docs/PLANO-ESTRATEGICO.md`.
+
 Priorização por **MoSCoW** e ordenação por **ganho ÷ esforço** (esforço em pontos: 1 = até 15 min, 2 = até 30 min, 3 = até 1 h).
 
 | # | Prioridade | Tarefa | Defeito | Critério | Ganho | Esforço | Status |
@@ -16,7 +18,7 @@ Priorização por **MoSCoW** e ordenação por **ganho ÷ esforço** (esforço e
 | T10 | Should | `document.title` por página (SEO básico, parte da Issue #53) | — | C1, C10 | Baixo | 1 | ✅ Feito |
 | T11 | Could | `loading="lazy"`, `width`/`height` nas imagens (CLS) e trailer via `youtube-nocookie` | — | C8, C4 | Baixo | 1 | ✅ Feito |
 | T12 | Should | Corrigir o README (status das issues, imagem inexistente, seção de configuração) | D9 | C10 | Médio | 1 | ✅ Feito |
-| T13 | Must (usuário) | `src/.env` já saiu do Git (`fix/ci-filtros-env`); falta revogar a chave antiga na TMDB | D1 | C4 | Alto | 1 | ⏳ Com você |
+| T13 | Must | `src/.env` saiu do Git (`fix/ci-filtros-env`); a chave não será trocada por enquanto (ADR-006) | D1 | C4 | Alto | 1 | ✅ Decidido |
 | T14 | Won't (agora) | Migrar CRA → Vite; TanStack Query; favoritos; E2E | — | C7, C6 | — | — | Roadmap |
 
 ## Sequência de execução

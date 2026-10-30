@@ -25,6 +25,27 @@ describe("Services / tmdbApi", () => {
     expect(global.fetch).not.toHaveBeenCalled();
   });
 
+  it("trata chave recusada (401) como erro de configuração", async () => {
+    global.fetch.mockReturnValue(mockResponse(401));
+    await expect(fetchFromTMDB("/movie/popular")).rejects.toMatchObject({ kind: "config", status: 401 });
+  });
+
+  it("normaliza JSON inválido em erro tipado e não guarda em cache", async () => {
+    global.fetch.mockResolvedValue({
+      ok: true,
+      status: 200,
+      json: () => Promise.reject(new SyntaxError("Unexpected token")),
+    });
+    await expect(fetchFromTMDB("/movie/popular")).rejects.toMatchObject({ kind: "http", status: 200 });
+    expect(responseCache.size).toBe(0);
+  });
+
+  it("codifica o id do filme no caminho", async () => {
+    global.fetch.mockReturnValue(mockResponse(200, {}));
+    await tmdbService.getMovieFull("../person/1");
+    expect(global.fetch.mock.calls[0][0]).toContain("/movie/..%2Fperson%2F1?");
+  });
+
   it("envia idioma pt-BR e a chave do ambiente", async () => {
     global.fetch.mockReturnValue(mockResponse(200, { results: [] }));
     await tmdbService.getPopularMovies(2);
