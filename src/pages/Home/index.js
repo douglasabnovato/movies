@@ -16,6 +16,8 @@ import "./styles.css";
 
 const MAX_PAGES = 500;
 const DEBOUNCE_MS = 500;
+/* Pôsteres visíveis na primeira dobra do celular, que não devem esperar o carregamento preguiçoso. */
+const EAGER_POSTERS = 2;
 
 /* Aceita só páginas inteiras dentro do limite da TMDB (RN02); o resto vira a página 1. */
 export function parsePage(value) {
@@ -124,7 +126,7 @@ function Home() {
         </div>
       );
     }
-    return movies.map((movie) => {
+    return movies.map((movie, index) => {
       const title = movie.title || movie.original_title;
       return (
         <article key={movie.id} className="film">
@@ -139,7 +141,8 @@ function Home() {
                 alt=""
                 width="176"
                 height="264"
-                loading="lazy"
+                loading={index < EAGER_POSTERS ? "eager" : "lazy"}
+                fetchpriority={index === 0 ? "high" : undefined}
                 decoding="async"
                 onError={handleImageError}
               />
