@@ -39,7 +39,7 @@ export async function fetchFromTMDB(endpoint, params = {}, { signal } = {}) {
   if (!apiKey) {
     throw new TmdbError(
       "config",
-      "Chave da TMDB não configurada. Crie o arquivo .env com REACT_APP_TMDB_KEY (veja .env.example)."
+      "Chave da TMDB não configurada. Crie o arquivo .env com REACT_APP_TMDB_KEY (veja .env.example).",
     );
   }
 
@@ -82,12 +82,25 @@ export async function fetchFromTMDB(endpoint, params = {}, { signal } = {}) {
   return data;
 }
 
+/* Entrega uma única vez a lista que o index.html já adiantou; sem ela, a chamada segue normal. */
+async function takeHomePreload() {
+  const preload = window.__moviesHomePreload;
+  window.__moviesHomePreload = undefined;
+  const data = preload ? await preload : null;
+  if (data) {
+    responseCache.set(buildCacheKey("/movie/popular", { language: "pt-BR", page: 1 }), data);
+  }
+}
+
 export const tmdbService = {
   /* Lista oficial de gêneros. */
   getGenres: (options) => fetchFromTMDB("/genre/movie/list", {}, options),
 
   /* Filmes populares por página. */
-  getPopularMovies: (page = 1, options) => fetchFromTMDB("/movie/popular", { page }, options),
+  getPopularMovies: async (page = 1, options) => {
+    if (page === 1) await takeHomePreload();
+    return fetchFromTMDB("/movie/popular", { page }, options);
+  },
 
   /* Filmes filtrados por um ou mais gêneros. */
   getDiscoverMovies: (genreIds = [], page = 1, options) =>
@@ -102,7 +115,7 @@ export const tmdbService = {
     fetchFromTMDB(
       `/movie/${encodeURIComponent(id)}`,
       { append_to_response: "credits,videos,recommendations" },
-      options
+      options,
     ),
 };
 /* fim de tmdbApi.js */
