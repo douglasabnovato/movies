@@ -43,7 +43,7 @@ O projeto foi originalmente concebido como um desafio técnico da **Promobit**, 
 
 ## ▶️ Como executar
 
-Pré-requisitos: Node.js 20 e uma chave v3 gratuita da TMDB ([criar chave](https://www.themoviedb.org/settings/api)).
+Pré-requisitos: Node.js 22 e uma chave v3 gratuita da TMDB ([criar chave](https://www.themoviedb.org/settings/api)).
 
 ```bash
 npm ci
@@ -143,7 +143,7 @@ Para manter o versionamento organizado e seguro, adotamos o seguinte fluxo de tr
   - [x] React 18, React Router v6 (compatível com `v7` future flags), CSS3 Responsivo, Fetch API / Async-Await.
 - **Governança & Documentação:**
   - [x] GitHub Wiki, Issues, Project Boards e Pull Requests estruturados.
-  - [x] Pipeline de Integração Contínua (CI) via **GitHub Actions** (`Node v20`, `actions@v4`).
+  - [x] Pipeline de Integração Contínua (CI) via **GitHub Actions** (`Node v22`, `actions@v4`).
   - [x] Documentação de análise, arquitetura e plano de ação em [`docs/`](./docs).
 
 ---

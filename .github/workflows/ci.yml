@@ -4,11 +4,9 @@ on:
   push:
     branches:
       - main
-      - developer-mvp
   pull_request:
     branches:
       - main
-      - developer-mvp
 
 permissions:
   contents: read
@@ -24,7 +22,7 @@ jobs:
       - name: Configurar Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: 'npm'
 
       - name: Instalar Dependências
@@ -53,7 +51,7 @@ jobs:
       - name: Configurar Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: 'npm'
 
       - name: Instalar Dependências
@@ -92,7 +90,7 @@ jobs:
       - name: Configurar Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: 'npm'
 
       - name: Instalar Dependências
