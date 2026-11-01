@@ -8,14 +8,14 @@
 |---|---|---|---|
 | 1 | Problema e público claros | Dá para explicar em uma frase | Atende |
 | 2 | Hipótese a validar | Existe uma aposta escrita, com meta | Atende: veja a seção 5 |
-| 3 | Fluxo principal completo | Uma pessoa conclui sem ajuda | Parcial: teste automático no #53; ninguém de fora testou |
+| 3 | Fluxo principal completo | Uma pessoa conclui sem ajuda | Parcial: teste automático no CI; ninguém de fora testou (#59) |
 | 4 | Escopo enxuto | O que não entra está registrado | Atende: decisões registradas em 31/10 |
-| 5 | Medição de uso | A métrica principal é coletada | Não atende |
-| 6 | Falhas tratadas | Erro, vazio e carregamento têm resposta clara | Parcial: 2 defeitos com correção em PR |
-| 7 | Desempenho aceitável | LCP de até 2,5 s no celular | Parcial: acima da meta; correção em PR |
+| 5 | Medição de uso | A métrica principal é coletada | Não atende (#58) |
+| 6 | Falhas tratadas | Erro, vazio e carregamento têm resposta clara | Atende: URL como fonte dos filtros e página além do total corrigidos; conferido no site em 01/11/2026 |
+| 7 | Desempenho aceitável | LCP de até 2,5 s no celular | Parcial: 3,1 a 3,8 s em 01/11/2026 (#57) |
 | 8 | Acessibilidade básica | Lighthouse e teclado | Parcial: Lighthouse 100; teclado coberto no #53, sem leitor de tela |
-| 9 | Segurança e conformidade | Riscos decididos; termos da API cumpridos | Parcial: chave mantida (ADR-006); atribuição em PR |
-| 10 | Entrega confiável | Publicação só depois de CI verde | Atende, mas a `main` segue sem proteção |
+| 9 | Segurança e conformidade | Riscos decididos; termos da API cumpridos | Atende: chave mantida por decisão (ADR-006); atribuição publicada |
+| 10 | Entrega confiável | Publicação só depois de CI verde | Atende, mas a `main` segue sem proteção (#39) |
 | 11 | Testes dos fluxos críticos | Testes automatizados no CI | Atende |
 | 12 | Documentação honesta | Qualquer pessoa roda o projeto, e os números estão certos | Atende com este documento |
 
@@ -23,15 +23,15 @@
 
 | # | Tarefa | Situação |
 |---|---|---|
-| 1 | Fazer da URL a fonte única dos filtros | PR aberto |
-| 2 | Tratar página além do total | PR aberto |
-| 3 | Proteger a `main` e exigir CI verde | Com o responsável |
-| 4 | Adicionar a atribuição exigida pela TMDB e trocar a marca principal | PR aberto |
-| 5 | Reduzir o LCP no celular para até 2,5 s | PR aberto; medir depois da publicação |
+| 1 | Fazer da URL a fonte única dos filtros | Feito |
+| 2 | Tratar página além do total | Feito |
+| 3 | Proteger a `main` e exigir CI verde | Com o responsável (#39) |
+| 4 | Adicionar a atribuição exigida pela TMDB e trocar a marca principal | Feito |
+| 5 | Reduzir o LCP no celular para até 2,5 s | Em andamento: veja a seção 7 e a #57 |
 | 6 | Definir a hipótese e medir a chegada ao detalhe | Hipótese e meta definidas; a medição automática depende de escolher a ferramenta |
-| 7 | Corrigir README e planos | PR aberto |
+| 7 | Corrigir README e planos | Feito |
 | 8 | Decidir as issues #14, #18, #37 e #44 | Decidido: #14, #18 e #37 fechadas; #44 no PR #54 |
-| 9 | Testar com 5 pessoas e registrar o aprendizado | Com o responsável |
+| 9 | Testar com 5 pessoas e registrar o aprendizado | Com o responsável: roteiro em `docs/TESTE-USUARIOS.md` (#59) |
 
 ## 3. Tarefas recomendadas
 
@@ -73,3 +73,18 @@ Medida em 31/10/2026, com a `main` e os PRs #47 a #54 reunidos: 55 testes, com 9
 A meta da #36, de 70% em hooks e serviços, está cumprida. O ponto mais baixo fora dela é `utils/images.js`, com 60%.
 
 **Decisão sobre o MSW:** não adotar agora. Os testes já simulam `fetch` e cobrem sucesso, erros e cancelamento, e o Playwright cobre o navegador com a rede simulada. O MSW traria mais uma camada para testar o mesmo caminho.
+
+## 7. Medições do LCP móvel
+
+Lighthouse 12.8.2 local, sem ambiente controlado, no site publicado. O resultado varia entre execuções.
+
+| Versão | Execução 1 | Execução 2 | Execução 3 | Mediana | Nota de desempenho |
+|---|---|---|---|---|---|
+| Antes do #56 | 3,5 s | 3,7 s | 4,6 s | 3,7 s | 0,77 a 0,84 |
+| Depois do #56 | 3,8 s | 3,1 s | 3,4 s | 3,4 s | 0,80 a 0,86 |
+
+A meta de 2,5 s não foi atingida. O FCP ficou em 2,7 a 2,8 s, e o LCP não pode ser menor que ele; a #57 segue a partir daí.
+
+## 8. Melhoria do processo
+
+Medir o gargalo antes de corrigir: a fase de cada métrica mostra o limite do ganho. Aqui, adiantar a imagem reduziu a espera, mas o FCP continuou como piso.
