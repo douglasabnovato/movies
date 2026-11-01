@@ -284,16 +284,32 @@ html {
   z-index: 3;
 }
 
-.back-to::after {
-  content: "<";
+.back-to {
+  align-items: center;
   display: flex;
   justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding-left: 1px;
-  padding-top: 8px;
-  font-size: 20px;
-  font-weight: 900;
+  transition: transform 0.2s ease;
+}
+
+.back-to:hover,
+.back-to:focus-visible {
+  transform: translateY(-3px) scale(1.1);
+}
+
+.back-to:focus-visible {
+  outline: 3px solid #d18000;
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .back-to {
+    transition: none;
+  }
+
+  .back-to:hover,
+  .back-to:focus-visible {
+    transform: none;
+  }
 }
 
 /* ==========================================================================
