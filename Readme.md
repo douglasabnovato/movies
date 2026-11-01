@@ -73,14 +73,17 @@ Sem a chave, a aplicação abre e mostra uma mensagem explicando como configurá
 |---|---|
 | [docs/ANALISE.md](./docs/ANALISE.md) | Requisitos (RF/RNF/RN), diagnóstico, rubrica de MVP e critérios de aceite em BDD |
 | [docs/ARQUITETURA.md](./docs/ARQUITETURA.md) | C4, estrutura de pastas, contratos da TMDB, tratamento de erros e ADRs |
-| [docs/PLANO-DE-ACAO.md](./docs/PLANO-DE-ACAO.md) | Tarefas priorizadas por MoSCoW e ganho ÷ esforço |
+| [docs/PLANO-DE-ACAO.md](./docs/PLANO-DE-ACAO.md) | Histórico das tarefas do ciclo de 27/09/2026 |
+| [docs/AVALIACAO.md](./docs/AVALIACAO.md) | Avaliação de arquitetura e engenharia |
+| [docs/PLANO-ESTRATEGICO.md](./docs/PLANO-ESTRATEGICO.md) | Plano vigente, resultados e próximos passos |
+| [docs/MVP.md](./docs/MVP.md) | Critérios de um bom MVP e tarefas que faltam |
 
 | Momento | Nota MVP | Situação |
 |---|---|---|
 | Antes (27/09/2026) | 5,62 | Reprovado — chave no código e erros de rede exibidos como "nenhum resultado" |
 | Depois (27/09/2026) | 8,00 | Aprovado — `src/.env` removido depois; a chave atual foi mantida por decisão (ADR-006) |
 
-Principais mudanças deste ciclo: chave só por variável de ambiente, erros tipados (`TmdbError`) com "Tentar novamente", cancelamento de requisições obsoletas (`AbortController`), cache TTL de 5 minutos, detalhe em uma requisição (`append_to_response`), placeholder local, correção da data exibida um dia antes, acessibilidade da paginação e 32 testes automatizados.
+Principais mudanças deste ciclo: chave só por variável de ambiente, erros tipados (`TmdbError`) com "Tentar novamente", cancelamento de requisições obsoletas (`AbortController`), cache TTL de 5 minutos, detalhe em uma requisição (`append_to_response`), placeholder local, correção da data exibida um dia antes, acessibilidade da paginação e testes automatizados.
 
 ---
  
@@ -90,8 +93,8 @@ Principais mudanças deste ciclo: chave só por variável de ambiente, erros tip
 Para manter o versionamento organizado e seguro, adotamos o seguinte fluxo de trabalho no Git:
 
 - **`main`**: Branch de código estável em produção.
-- **`developer-mvp`**: Branch principal de consolidação e integração do ambiente de desenvolvimento.
-- **`feature/tarefas`**: Branch ativa de desenvolvimento para refatoração do core, correções e novas funcionalidades.
+- **Branches curtas por tarefa** (`fix/...`, `perf/...`, `docs/...`): saem da `main` e voltam por Pull Request, com o CI verde.
+- **`developer-mvp`** e **`feature/tarefas`**: branches antigas, fora do fluxo atual. Só a `main` publica o site.
  
 
 ---
@@ -101,14 +104,15 @@ Para manter o versionamento organizado e seguro, adotamos o seguinte fluxo de tr
 ### Requisitos da Aplicação
 - [x] Usar a API gratuita do [TMDB v3](https://developers.themoviedb.org/3/getting-started/introduction) para criar a listagem dos filmes populares do dia via endpoint `GET /movie/popular`.
 - [x] Exibir uma página de detalhes ao clicar em qualquer filme da listagem usando o endpoint `GET /movie/{movie_id}`.
-- [x] Seguir a composição visual, cores e fontes definidas no [Layout do Figma](https://www.figma.com/file/rM7WPqhLY9ObnGzSCeWLxB/Teste-Front-End).
+- [ ] Seguir a composição visual, cores e fontes definidas no [Layout do Figma](https://www.figma.com/file/rM7WPqhLY9ObnGzSCeWLxB/Teste-Front-End). *(Comparação medida pendente: issue #14.)*
 - [x] Garantir a navegação entre páginas através de um componente funcional de **paginação**.
 
 ### Requisitos Funcionais
 - [x] O usuário deve ter acesso à listagem dos filmes mais populares do dia.
 - [x] O usuário deve ter acesso à página de detalhes ao selecionar um item da lista.
 - [x] O usuário deve conseguir paginar a lista para descobrir novos títulos.
-- [x] A página com detalhes de um filme deve possuir rota própria (`/movie/:id`) e estar preparada para indexação (SEO).
+- [x] A página com detalhes de um filme deve possuir rota própria (`/movie/:id`).
+- [ ] A página com detalhes de um filme deve estar preparada para indexação (SEO). *(Limitada pelo `HashRouter`: issue #38.)*
 - [x] Pesquisa de filmes pelo nome em tempo real com técnica de debounce (delay de 500ms).
 - [x] Sincronização automática dos filtros, paginação e termo de busca nos parâmetros de Query String da URL (`useSearchParams`).
 
@@ -191,6 +195,8 @@ Acompanhamento dos ciclos de desenvolvimento dedicados à construção do MVP:
 ---
 
 ## 🗺️ Plano Mestre de Evolução (70 Issues)
+
+> Os números deste plano são internos e não correspondem às issues do GitHub. O plano vigente está em [docs/PLANO-ESTRATEGICO.md](./docs/PLANO-ESTRATEGICO.md).
 
 Para guiar a reativação, escalabilidade e qualidade do ecossistema do **Movies**, o roadmap foi fatiado em **70 Issues estruturadas** divididas em 7 Fases estratégicas:
 
