@@ -2,8 +2,8 @@
  * Home · listagem de filmes com busca (debounce de 500 ms), filtro por gêneros,
  * paginação e estado sincronizado na URL. Trata carregando, vazio, erro e sucesso.
  */
-import React, { useState, useEffect } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import React, { useState, useEffect, useRef } from "react";
+import { Link, createSearchParams, useSearchParams } from "react-router-dom";
 import Pagination from "../../components/Pagination";
 import ErrorState from "../../components/ErrorState";
 import { MovieCardSkeleton } from "../../components/Skeleton";
@@ -23,14 +23,24 @@ export function parsePage(value) {
   return Number.isInteger(page) && page >= 1 && page <= MAX_PAGES ? page : 1;
 }
 
-/* Lê busca, página e gêneros da query string. */
-function readInitialState(searchParams) {
+/* Lê busca, página e gêneros da query string; a busca tem precedência sobre os gêneros (RN01). */
+function readUrlState(searchParams) {
+  const search = searchParams.get("search") || "";
   const genres = searchParams.get("genres");
   return {
-    search: searchParams.get("search") || "",
+    search,
     page: parsePage(searchParams.get("page")),
-    genres: genres ? genres.split(",").map(Number).filter(Boolean) : [],
+    genres: !search.trim() && genres ? genres.split(",").map(Number).filter(Boolean) : [],
   };
+}
+
+/* Monta a query string canônica do estado da listagem. */
+function buildUrlParams({ search, genres, page }) {
+  const params = {};
+  if (search.trim() !== "") params.search = search;
+  else if (genres.length > 0) params.genres = genres.join(",");
+  if (page > 1) params.page = String(page);
+  return createSearchParams(params);
 }
 
 /* Escolhe o endpoint conforme a regra RN01: busca tem precedência sobre gêneros. */
@@ -43,12 +53,15 @@ function loadMovies(query, genres, page, options) {
 /* Página inicial. */
 function Home() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [initial] = useState(() => readInitialState(searchParams));
-
-  const [selectedGenres, setSelectedGenres] = useState(initial.genres);
-  const [searchQuery, setSearchQuery] = useState(initial.search);
-  const [debouncedQuery, setDebouncedQuery] = useState(initial.search);
-  const [currentPage, setCurrentPage] = useState(initial.page);
+  /* A URL é a fonte única do estado; só o texto em digitação fica no componente. */
+  const { search: debouncedQuery, genres: selectedGenres, page: currentPage } = readUrlState(searchParams);
+  const canonicalParams = buildUrlParams({
+    search: debouncedQuery,
+    genres: selectedGenres,
+    page: currentPage,
+  }).toString();
+  const [searchQuery, setSearchQuery] = useState(debouncedQuery);
+  const lastWrittenSearch = useRef(debouncedQuery);
 
   const genresRequest = useFetch((options) => tmdbService.getGenres(options), []);
   const moviesRequest = useFetch(
@@ -60,18 +73,35 @@ function Home() {
     document.title = "Movie's · Descubra filmes";
   }, []);
 
-  useEffect(() => {
-    const handler = setTimeout(() => setDebouncedQuery(searchQuery), DEBOUNCE_MS);
-    return () => clearTimeout(handler);
-  }, [searchQuery]);
+  /* Grava o estado na URL, que por sua vez atualiza a tela. */
+  const updateUrl = (state) => {
+    lastWrittenSearch.current = state.search;
+    setSearchParams(buildUrlParams(state), { replace: true });
+  };
 
+  /* Normaliza endereços com valores inválidos, como page=-1. */
   useEffect(() => {
-    const params = {};
-    if (debouncedQuery.trim() !== "") params.search = debouncedQuery;
-    else if (selectedGenres.length > 0) params.genres = selectedGenres.join(",");
-    if (currentPage > 1) params.page = currentPage;
-    setSearchParams(params, { replace: true });
-  }, [debouncedQuery, selectedGenres, currentPage, setSearchParams]);
+    if (searchParams.toString() !== canonicalParams) {
+      setSearchParams(canonicalParams, { replace: true });
+    }
+  }, [searchParams, canonicalParams, setSearchParams]);
+
+  /* Acompanha uma busca que mudou por fora, sem apagar o que está sendo digitado. */
+  useEffect(() => {
+    if (debouncedQuery !== lastWrittenSearch.current) {
+      lastWrittenSearch.current = debouncedQuery;
+      setSearchQuery(debouncedQuery);
+    }
+  }, [debouncedQuery]);
+
+  /* Leva o termo digitado para a URL depois do debounce e limpa os gêneros (RN01). */
+  useEffect(() => {
+    const search = searchQuery.trim() === "" ? "" : searchQuery;
+    if (search === debouncedQuery) return undefined;
+    const handler = setTimeout(() => updateUrl({ search, genres: [], page: 1 }), DEBOUNCE_MS);
+    return () => clearTimeout(handler);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchQuery, debouncedQuery]);
 
   const genres = genresRequest.data?.genres || [];
   const movies = moviesRequest.data?.results || [];
@@ -80,23 +110,20 @@ function Home() {
   /* Liga ou desliga um gênero e limpa a busca (RN01). */
   const handleGenreClick = (genreId) => {
     setSearchQuery("");
-    setDebouncedQuery("");
-    setCurrentPage(1);
-    setSelectedGenres((previous) =>
-      previous.includes(genreId) ? previous.filter((id) => id !== genreId) : [...previous, genreId]
-    );
+    const genres = selectedGenres.includes(genreId)
+      ? selectedGenres.filter((id) => id !== genreId)
+      : [...selectedGenres, genreId];
+    updateUrl({ search: "", genres, page: 1 });
   };
 
-  /* Atualiza o termo digitado e limpa os gêneros (RN01). */
+  /* Atualiza o termo digitado. */
   const handleSearchChange = (event) => {
-    setSelectedGenres([]);
-    setCurrentPage(1);
     setSearchQuery(event.target.value);
   };
 
   /* Troca de página e volta ao topo. */
   const handlePageChange = (newPage) => {
-    setCurrentPage(newPage);
+    updateUrl({ search: debouncedQuery, genres: selectedGenres, page: newPage });
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -113,6 +140,16 @@ function Home() {
           message={moviesRequest.error.message}
           onRetry={isConfig ? undefined : moviesRequest.retry}
         />
+      );
+    }
+    if (movies.length === 0 && currentPage > 1) {
+      return (
+        <div className="empty-state" role="status">
+          <p>Esta página não existe nesta lista.</p>
+          <button type="button" className="empty-state-action" onClick={() => handlePageChange(1)}>
+            Voltar para a primeira página
+          </button>
+        </div>
       );
     }
     if (movies.length === 0) {
@@ -220,7 +257,7 @@ function Home() {
         {renderFilms()}
       </section>
 
-      {!moviesRequest.error && (
+      {!moviesRequest.error && (moviesRequest.loading || movies.length > 0) && (
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}
