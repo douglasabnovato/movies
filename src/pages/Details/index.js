@@ -33,8 +33,8 @@ function Brand({ listPath }) {
   return (
     <div className="navbar">
       <div className="title-site">
-        <Link to={listPath} className="title-text" aria-label="TMDB, voltar para a lista de filmes">
-          TMDB
+        <Link to={listPath} className="title-text" aria-label="Movies, voltar para a lista de filmes">
+          Movies
           <span className="title-obj" aria-hidden="true"></span>
         </Link>
       </div>
