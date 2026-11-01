@@ -12,7 +12,7 @@
 | 4 | Escopo enxuto | O que não entra está registrado | Atende: decisões registradas em 31/10 |
 | 5 | Medição de uso | A métrica principal é coletada | Não atende (#58) |
 | 6 | Falhas tratadas | Erro, vazio e carregamento têm resposta clara | Atende: URL como fonte dos filtros e página além do total corrigidos; conferido no site em 01/11/2026 |
-| 7 | Desempenho aceitável | LCP de até 2,5 s no celular | Parcial: 3,1 a 3,8 s em 01/11/2026 (#57) |
+| 7 | Desempenho aceitável | LCP de até 2,5 s no celular | Não atende: mediana de 3,4 s em 01/11/2026 (#57) |
 | 8 | Acessibilidade básica | Lighthouse e teclado | Parcial: Lighthouse 100; teclado coberto no #53, sem leitor de tela |
 | 9 | Segurança e conformidade | Riscos decididos; termos da API cumpridos | Atende: chave mantida por decisão (ADR-006); atribuição publicada |
 | 10 | Entrega confiável | Publicação só depois de CI verde | Atende, mas a `main` segue sem proteção (#39) |
@@ -82,8 +82,10 @@ Lighthouse 12.8.2 local, sem ambiente controlado, no site publicado. O resultado
 |---|---|---|---|---|---|
 | Antes do #56 | 3,5 s | 3,7 s | 4,6 s | 3,7 s | 0,77 a 0,84 |
 | Depois do #56 | 3,8 s | 3,1 s | 3,4 s | 3,4 s | 0,80 a 0,86 |
+| Antes do #68 | 3,98 s | 4,49 s | 4,40 s | 4,40 s | 0,67 a 0,73 |
+| Depois do #70 | 3,43 s | 3,16 s | 3,38 s | 3,38 s | 0,83 a 0,89 |
 
-A meta de 2,5 s não foi atingida. O FCP ficou em 2,7 a 2,8 s, e o LCP não pode ser menor que ele; a #57 segue a partir daí.
+A meta de 2,5 s não foi atingida. Com o esqueleto no HTML, o CLS caiu de 0,10 a 0,13 para 0. O Lighthouse simula a rede lenta: o LCP observado sem essa simulação foi de 1,2 s na primeira execução final, mas o simulado é o que vale para a meta. O pôster depende de uma chamada à API feita por JavaScript, e esse é o limite restante; a #57 segue a partir daí.
 
 ## 8. Melhoria do processo
 
