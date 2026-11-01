@@ -32,6 +32,35 @@
       onload="this.media='all'"
     />
     <title>Movie's</title>
+    <script>
+      /* Só na Home sem filtros: adianta a lista e o primeiro pôster, sem esperar o JavaScript da aplicação. */
+      (function () {
+        var key = "%REACT_APP_TMDB_KEY%";
+        var hash = location.hash;
+        if (key.charAt(0) === "%" || (hash !== "" && hash !== "#/")) return;
+        window.__moviesHomePreload = fetch(
+          "https://api.themoviedb.org/3/movie/popular?api_key=" + key + "&language=pt-BR&page=1"
+        )
+          .then(function (response) {
+            return response.ok ? response.json() : null;
+          })
+          .then(function (data) {
+            var first = data && data.results && data.results[0];
+            if (first && first.poster_path) {
+              var link = document.createElement("link");
+              link.rel = "preload";
+              link.as = "image";
+              link.href = "https://image.tmdb.org/t/p/w342" + first.poster_path;
+              link.setAttribute("fetchpriority", "high");
+              document.head.appendChild(link);
+            }
+            return data;
+          })
+          .catch(function () {
+            return null;
+          });
+      })();
+    </script>
   </head>
   <body>
     <noscript>Você precisa habilitar o JavaScript para executar esta aplicação.</noscript>

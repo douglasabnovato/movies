@@ -5,7 +5,11 @@ const ORIGINAL_KEY = process.env.REACT_APP_TMDB_KEY;
 
 /* Cria uma resposta falsa do fetch. */
 function mockResponse(status, body = {}) {
-  return Promise.resolve({ ok: status >= 200 && status < 300, status, json: () => Promise.resolve(body) });
+  return Promise.resolve({
+    ok: status >= 200 && status < 300,
+    status,
+    json: () => Promise.resolve(body),
+  });
 }
 
 describe("Services / tmdbApi", () => {
@@ -27,7 +31,10 @@ describe("Services / tmdbApi", () => {
 
   it("trata chave recusada (401) como erro de configuração", async () => {
     global.fetch.mockReturnValue(mockResponse(401));
-    await expect(fetchFromTMDB("/movie/popular")).rejects.toMatchObject({ kind: "config", status: 401 });
+    await expect(fetchFromTMDB("/movie/popular")).rejects.toMatchObject({
+      kind: "config",
+      status: 401,
+    });
   });
 
   it("normaliza JSON inválido em erro tipado e não guarda em cache", async () => {
@@ -36,8 +43,26 @@ describe("Services / tmdbApi", () => {
       status: 200,
       json: () => Promise.reject(new SyntaxError("Unexpected token")),
     });
-    await expect(fetchFromTMDB("/movie/popular")).rejects.toMatchObject({ kind: "http", status: 200 });
+    await expect(fetchFromTMDB("/movie/popular")).rejects.toMatchObject({
+      kind: "http",
+      status: 200,
+    });
     expect(responseCache.size).toBe(0);
+  });
+
+  it("usa uma única vez a lista adiantada pelo index.html, sem chamar a rede", async () => {
+    const lista = { results: [{ id: 1 }] };
+    window.__moviesHomePreload = Promise.resolve(lista);
+    await expect(tmdbService.getPopularMovies(1)).resolves.toEqual(lista);
+    expect(global.fetch).not.toHaveBeenCalled();
+    expect(window.__moviesHomePreload).toBeUndefined();
+  });
+
+  it("segue pela rede quando a lista adiantada falhou", async () => {
+    window.__moviesHomePreload = Promise.resolve(null);
+    global.fetch.mockReturnValue(mockResponse(200, { results: [] }));
+    await tmdbService.getPopularMovies(1);
+    expect(global.fetch).toHaveBeenCalledTimes(1);
   });
 
   it("codifica o id do filme no caminho", async () => {
@@ -73,7 +98,10 @@ describe("Services / tmdbApi", () => {
 
   it("traduz 404 em kind=not_found", async () => {
     global.fetch.mockReturnValue(mockResponse(404));
-    await expect(tmdbService.getMovieFull(0)).rejects.toMatchObject({ kind: "not_found", status: 404 });
+    await expect(tmdbService.getMovieFull(0)).rejects.toMatchObject({
+      kind: "not_found",
+      status: 404,
+    });
   });
 
   it("traduz 500 em kind=http e não guarda em cache", async () => {
@@ -99,7 +127,7 @@ describe("Services / tmdbApi", () => {
     await tmdbService.getMovieFull(1);
     expect(global.fetch).toHaveBeenCalledTimes(1);
     expect(global.fetch.mock.calls[0][0]).toContain(
-      "append_to_response=credits%2Cvideos%2Crecommendations"
+      "append_to_response=credits%2Cvideos%2Crecommendations",
     );
   });
 });
