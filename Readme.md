@@ -17,6 +17,7 @@
 - [Sobre o Projeto](#-sobre-o-projeto)
 - [Como executar](#-como-executar)
 - [Estado do MVP & Documentação](#-estado-do-mvp--documentação)
+- [Próximos passos que dependem do responsável](#-próximos-passos-que-dependem-do-responsável)
 - [Estrutura de Branches & Git Workflow](#-estrutura-de-branches--git-workflow)
 - [Especificação de Requisitos & Desafio](#-especificação-de-requisitos--desafio)
   - [Requisitos da Aplicação](#requisitos-da-aplicação)
@@ -88,12 +89,23 @@ Principais mudanças deste ciclo: chave só por variável de ambiente, erros tip
 ---
  
  
+## 🧭 Próximos passos que dependem do responsável
+
+| Ação | Como fazer | Issue |
+|---|---|---|
+| Proteger a `main` | Settings → Branches → Add rule para `main`; marcar "Require a pull request" e "Require status checks" com `build-and-test` e `e2e` | #39 |
+| Medir o uso | Criar conta em uma ferramenta sem cookies e informar o código do site | #58 |
+| Testar com 5 pessoas | Aplicar [`docs/TESTE-USUARIOS.md`](docs/TESTE-USUARIOS.md) | #59 |
+| Conferir a largura de 768 px | Abrir o site em um aparelho real | #57 |
+| Ajustar a visão "Gestão Entrega" do Project #1 | Na visão de roadmap, escolher os campos `Início` e `Fim` em Date fields | - |
+
 ## 🌿 Estrutura de Branches & Git Workflow
 
 Para manter o versionamento organizado e seguro, adotamos o seguinte fluxo de trabalho no Git:
 
 - **`main`**: Branch de código estável em produção.
-- **Branches curtas por tarefa** (`fix/...`, `perf/...`, `docs/...`): saem da `main` e voltam por Pull Request, com o CI verde.
+- **`feature/AAAA-MM-DD`**: reúne as tarefas do dia e vai por Pull Request para a `developer/sprint-AAAA-MM-DD`.
+- **`developer/sprint-AAAA-MM-DD`**: junta o trabalho da sprint e vai por Pull Request para a `main`, que roda o CI. Verificação vermelha bloqueia o merge.
 - **`developer-mvp`** e **`feature/tarefas`**: branches antigas, fora do fluxo atual. Só a `main` publica o site.
  
 
