@@ -50,3 +50,9 @@
   background-color: #2d0c5e;
   color: #ffffff;
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .page-btn:hover:not(:disabled) {
+    transform: none;
+  }
+}
