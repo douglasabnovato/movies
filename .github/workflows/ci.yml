@@ -43,8 +43,43 @@ jobs:
         env:
           CI: true
 
+  e2e:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do Repositório
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Instalar Dependências
+        run: npm ci
+
+      - name: Gerar Build para o Teste
+        run: npm run build
+        env:
+          CI: true
+          PUBLIC_URL: /
+          REACT_APP_TMDB_KEY: e2e-sem-api-real
+
+      - name: Instalar o Playwright
+        working-directory: e2e
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium
+
+      - name: Executar o Fluxo Principal
+        working-directory: e2e
+        run: npm test
+        env:
+          CI: true
+
   deploy:
-    needs: build-and-test
+    needs: [build-and-test, e2e]
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     permissions:

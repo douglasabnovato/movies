@@ -1,0 +1,78 @@
+const { test, expect } = require("@playwright/test");
+const { mockTmdb } = require("./tmdb");
+
+test.beforeEach(async ({ page }) => {
+  await mockTmdb(page);
+});
+
+test("filtra por gênero, abre o detalhe e volta com o filtro", async ({ page }) => {
+  await page.goto("/");
+  await expect(page.getByText("Filme Popular")).toBeVisible();
+
+  await page.getByRole("button", { name: "Ação" }).click();
+  await expect(page.getByText("Filme de Ação")).toBeVisible();
+  await expect(page).toHaveURL(/genres=28/);
+
+  await page.getByRole("link", { name: "Ver detalhes do filme Filme de Ação" }).click();
+  await expect(page.getByRole("heading", { name: "Detalhe 3" })).toBeVisible();
+
+  await page.getByRole("link", { name: "Voltar para a lista de filmes", exact: true }).click();
+  await expect(page).toHaveURL(/genres=28/);
+  await expect(page.getByText("Filme de Ação")).toBeVisible();
+  await expect(page.getByRole("button", { name: "Ação" })).toHaveAttribute("aria-pressed", "true");
+});
+
+test("busca pelo nome e atualiza a URL", async ({ page }) => {
+  await page.goto("/");
+  await page.getByLabel("Buscar filme pelo nome").fill("buscado");
+  await expect(page.getByText("Filme Buscado")).toBeVisible();
+  await expect(page).toHaveURL(/search=buscado/);
+});
+
+test("conclui o fluxo só com o teclado, com o foco visível", async ({ page }) => {
+  await page.goto("/");
+  await expect(page.getByText("Filme Popular")).toBeVisible();
+
+  const outlineOf = (locator) =>
+    locator.evaluate((el) => {
+      const style = getComputedStyle(el);
+      return style.outlineStyle !== "none" && parseFloat(style.outlineWidth) > 0;
+    });
+
+  const search = page.getByLabel("Buscar filme pelo nome");
+  const genre = page.getByRole("button", { name: "Ação" });
+  const card = page.getByRole("link", { name: "Ver detalhes do filme Filme de Ação" });
+
+  await page.keyboard.press("Tab");
+  await expect(search).toBeFocused();
+  expect(await outlineOf(search)).toBe(true);
+
+  await page.keyboard.press("Tab");
+  await expect(genre).toBeFocused();
+  expect(await outlineOf(genre)).toBe(true);
+  await page.keyboard.press("Enter");
+  await expect(page.getByText("Filme de Ação")).toBeVisible();
+
+  await card.focus();
+  expect(await outlineOf(card)).toBe(true);
+  await page.keyboard.press("Enter");
+  await expect(page.getByRole("heading", { name: "Detalhe 3" })).toBeVisible();
+
+  const back = page.getByRole("link", { name: "Voltar para a lista de filmes", exact: true });
+  await back.focus();
+  expect(await outlineOf(back)).toBe(true);
+  await page.keyboard.press("Enter");
+  await expect(page).toHaveURL(/genres=28/);
+});
+
+test("não há rolagem horizontal nas larguras de referência", async ({ page }) => {
+  for (const width of [320, 375, 768, 1280]) {
+    await page.setViewportSize({ width, height: 800 });
+    await page.goto("/");
+    await expect(page.getByText("Filme Popular")).toBeVisible();
+    const overflow = await page.evaluate(
+      () => document.documentElement.scrollWidth - document.documentElement.clientWidth
+    );
+    expect(overflow, `largura ${width}`).toBeLessThanOrEqual(0);
+  }
+});
