@@ -226,7 +226,9 @@ function Details() {
         </section>
       )}
 
-      <Link to={listPath} className="back-to" aria-label="Voltar para a lista de filmes"></Link>
+      <Link to={listPath} className="back-to" aria-label="Voltar para a lista de filmes">
+        <img src={`${process.env.PUBLIC_URL}/movie.png`} alt="" width="24" height="24" />
+      </Link>
     </main>
   );
 }
