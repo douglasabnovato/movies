@@ -64,7 +64,10 @@
               /* Põe o pôster no esqueleto, sem esperar o React montar a lista. */
               var showPoster = function () {
                 var slot = document.querySelector("#shell-first .skeleton-poster");
-                if (slot) slot.style.background = "#3c137c url(" + link.href + ") center / cover no-repeat";
+                if (!slot) return;
+                /* Mesma imagem, em largura total da coluna: o React não cria um elemento maior que este. */
+                slot.parentNode.style.width = "100%";
+                slot.outerHTML = '<img src="' + link.href + '" alt="" width="176" height="264" fetchpriority="high" style="display:block;width:100%;height:auto;border-radius:8px" />';
               };
               if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", showPoster);
               else showPoster();
