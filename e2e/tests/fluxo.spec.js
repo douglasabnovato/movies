@@ -76,3 +76,17 @@ test("não há rolagem horizontal nas larguras de referência", async ({ page })
     expect(overflow, `largura ${width}`).toBeLessThanOrEqual(0);
   }
 });
+
+test("respeita a preferência por menos movimento", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/");
+  const genre = page.getByRole("button", { name: "Ação" });
+  await expect(genre).toHaveCSS("transition-duration", "0s");
+  const animation = await page.evaluate(() => {
+    const element = document.createElement("div");
+    element.className = "pulse";
+    document.body.appendChild(element);
+    return getComputedStyle(element).animationName;
+  });
+  expect(animation).toBe("none");
+});

@@ -232,7 +232,6 @@ a {
   font-size: 20px;
 }
 
-
 /* --- Estilos dos Filtros Selecionados e Paginação Dinâmica --- */
 
 .filter-tag {
@@ -457,4 +456,14 @@ a {
   cursor: pointer;
   font-weight: 700;
   padding: 0.2rem 0.8rem;
+}
+
+/* Vale para a aplicação toda: a Home está sempre no pacote principal. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
 }
