@@ -32,12 +32,20 @@
       onload="this.media='all'"
     />
     <title>Movie's</title>
+    <style>
+      /* O esqueleto vale só para a Home sem filtros */
+      .no-shell #app-shell { display: none; }
+    </style>
     <script>
       /* Só na Home sem filtros: adianta a lista e o primeiro pôster, sem esperar o JavaScript da aplicação. */
       (function () {
         var key = "%REACT_APP_TMDB_KEY%";
         var hash = location.hash;
-        if (key.charAt(0) === "%" || (hash !== "" && hash !== "#/")) return;
+        if (hash !== "" && hash !== "#/") {
+          document.documentElement.className = "no-shell";
+          return;
+        }
+        if (key.charAt(0) === "%") return;
         window.__moviesHomePreload = fetch(
           "https://api.themoviedb.org/3/movie/popular?api_key=" + key + "&language=pt-BR&page=1"
         )
@@ -53,6 +61,13 @@
               link.href = "https://image.tmdb.org/t/p/w342" + first.poster_path;
               link.setAttribute("fetchpriority", "high");
               document.head.appendChild(link);
+              /* Põe o pôster no esqueleto, sem esperar o React montar a lista. */
+              var showPoster = function () {
+                var slot = document.querySelector("#shell-first .skeleton-poster");
+                if (slot) slot.style.background = "#3c137c url(" + link.href + ") center / cover no-repeat";
+              };
+              if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", showPoster);
+              else showPoster();
             }
             return data;
           })
@@ -64,6 +79,19 @@
   </head>
   <body>
     <noscript>Você precisa habilitar o JavaScript para executar esta aplicação.</noscript>
-    <div id="root"></div> 
+    <div id="root">
+      <!-- Esqueleto da Home, trocado pelo React: conteúdo antes do JavaScript, com as mesmas classes da página -->
+      <div class="app-container" id="app-shell">
+        <main class="main">
+          <header class="top">
+            <nav class="navbar"><div class="title-site"><p class="title-text">Movies<span class="title-obj"></span></p></div></nav>
+            <section class="slogan"><p class="slogan-text">Milhões de filmes, séries e pessoas para descobrir. Explore já.</p></section>
+            <section class="search-bar-container"><input class="search-input" type="search" disabled aria-label="Buscar filme pelo nome" placeholder="Pesquise por um filme pelo nome..." /></section>
+            <section class="filter"><div class="filter-container"><p class="filter-text">FILTRE POR:</p><div class="filter-box"></div></div></section>
+          </header>
+          <section class="films"><div class="film-skeleton" id="shell-first"><div class="skeleton-poster pulse"></div><div class="skeleton-title pulse"></div><div class="skeleton-date pulse"></div></div><div class="film-skeleton"><div class="skeleton-poster pulse"></div><div class="skeleton-title pulse"></div><div class="skeleton-date pulse"></div></div><div class="film-skeleton"><div class="skeleton-poster pulse"></div><div class="skeleton-title pulse"></div><div class="skeleton-date pulse"></div></div><div class="film-skeleton"><div class="skeleton-poster pulse"></div><div class="skeleton-title pulse"></div><div class="skeleton-date pulse"></div></div></section>
+        </main>
+      </div>
+    </div> 
   </body>
 </html>
