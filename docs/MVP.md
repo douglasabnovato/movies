@@ -12,7 +12,7 @@
 | 4 | Escopo enxuto | O que não entra está registrado | Atende: decisões registradas em 31/10 |
 | 5 | Medição de uso | A métrica principal é coletada | Não atende (#58) |
 | 6 | Falhas tratadas | Erro, vazio e carregamento têm resposta clara | Atende: URL como fonte dos filtros e página além do total corrigidos; conferido no site em 01/11/2026 |
-| 7 | Desempenho aceitável | LCP de até 2,5 s no celular | Não atende: mediana de 3,4 s em 01/11/2026 (#57) |
+| 7 | Desempenho aceitável | LCP de até 2,5 s no celular | Não atende: mediana de 3,29 s no site publicado em 02/11/2026 (2,95, 3,29, 2,35, 3,36 e 4,19 s). A primeira pintura caiu para 0,9 s; o limite agora é o pôster, que depende da chamada à API. |
 | 8 | Acessibilidade básica | Lighthouse e teclado | Atende: Lighthouse 100, teclado no CI e verificação automática WCAG A e AA nas 3 telas do fluxo; leitor de tela não testado |
 | 9 | Segurança e conformidade | Riscos decididos; termos da API cumpridos | Atende: chave mantida por decisão (ADR-006); atribuição publicada |
 | 10 | Entrega confiável | Publicação só depois de CI verde | Atende, mas a `main` segue sem proteção (#73) |
