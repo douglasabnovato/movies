@@ -1,10 +1,10 @@
 # MVP — critérios e tarefas
 
-> Criado em 30/10/2026 e revisto em 31/10/2026. Complementa a rubrica técnica de `docs/ANALISE.md`, medindo também se o produto consegue aprender com o uso real.
+> Criado em 30/10/2026 e revisto em 02/11/2026. Complementa a rubrica técnica de `docs/ANALISE.md`, medindo também se o produto consegue aprender com o uso real.
 
 ## 1. Critérios
 
-| # | Critério | Como verificar | Situação em 30/10/2026 |
+| # | Critério | Como verificar | Situação em 02/11/2026 |
 |---|---|---|---|
 | 1 | Problema e público claros | Dá para explicar em uma frase | Atende |
 | 2 | Hipótese a validar | Existe uma aposta escrita, com meta | Atende: veja a seção 5 |
@@ -13,11 +13,13 @@
 | 5 | Medição de uso | A métrica principal é coletada | Não atende (#58) |
 | 6 | Falhas tratadas | Erro, vazio e carregamento têm resposta clara | Atende: URL como fonte dos filtros e página além do total corrigidos; conferido no site em 01/11/2026 |
 | 7 | Desempenho aceitável | LCP de até 2,5 s no celular | Não atende: mediana de 3,4 s em 01/11/2026 (#57) |
-| 8 | Acessibilidade básica | Lighthouse e teclado | Parcial: Lighthouse 100; teclado coberto no #53, sem leitor de tela |
+| 8 | Acessibilidade básica | Lighthouse e teclado | Atende: Lighthouse 100, teclado no CI e verificação automática WCAG A e AA nas 3 telas do fluxo; leitor de tela não testado |
 | 9 | Segurança e conformidade | Riscos decididos; termos da API cumpridos | Atende: chave mantida por decisão (ADR-006); atribuição publicada |
-| 10 | Entrega confiável | Publicação só depois de CI verde | Atende, mas a `main` segue sem proteção (#39) |
+| 10 | Entrega confiável | Publicação só depois de CI verde | Atende, mas a `main` segue sem proteção (#73) |
 | 11 | Testes dos fluxos críticos | Testes automatizados no CI | Atende |
 | 12 | Documentação honesta | Qualquer pessoa roda o projeto, e os números estão certos | Atende com este documento |
+
+**Resultado em 02/11/2026:** 9 de 12 critérios atendidos. Faltam o teste com pessoas de fora (#59), a medição de uso (#58) e o LCP móvel (#57). Os dois primeiros dependem do responsável; o terceiro, de mudar a arquitetura, o que só vale depois de medir em celular real.
 
 ## 2. Tarefas obrigatórias
 
@@ -25,7 +27,7 @@
 |---|---|---|
 | 1 | Fazer da URL a fonte única dos filtros | Feito |
 | 2 | Tratar página além do total | Feito |
-| 3 | Proteger a `main` e exigir CI verde | Com o responsável (#39) |
+| 3 | Proteger a `main` e exigir CI verde | Com o responsável (#73) |
 | 4 | Adicionar a atribuição exigida pela TMDB e trocar a marca principal | Feito |
 | 5 | Reduzir o LCP no celular para até 2,5 s | Em andamento: veja a seção 7 e a #57 |
 | 6 | Definir a hipótese e medir a chegada ao detalhe | Hipótese e meta definidas; a medição automática depende de escolher a ferramenta |
@@ -87,6 +89,10 @@ Lighthouse 12.8.2 local, sem ambiente controlado, no site publicado. O resultado
 
 A meta de 2,5 s não foi atingida. Com o esqueleto no HTML, o CLS caiu de 0,10 a 0,13 para 0. O Lighthouse simula a rede lenta: o LCP observado sem essa simulação foi de 1,2 s na primeira execução final, mas o simulado é o que vale para a meta. O pôster depende de uma chamada à API feita por JavaScript, e esse é o limite restante; a #57 segue a partir daí.
 
-## 8. Melhoria do processo
+## 8. Verificação de acessibilidade
+
+Em 02/11/2026, o axe-core entrou no Playwright (`e2e/tests/acessibilidade.spec.js`), cobrindo página inicial, lista filtrada e detalhe. Ele achou um defeito real: o gênero selecionado tinha texto branco sobre laranja, com contraste insuficiente. O texto passou a ser escuro. A ferramenta não substitui o teste com leitor de tela.
+
+## 9. Melhoria do processo
 
 Medir o gargalo antes de corrigir: a fase de cada métrica mostra o limite do ganho. Aqui, adiantar a imagem reduziu a espera, mas o FCP continuou como piso.
