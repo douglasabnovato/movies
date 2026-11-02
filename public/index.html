@@ -20,17 +20,23 @@
     <meta
       name="description"
       content="Aplicação para exploração e busca de filmes integrada com a API da TMDB."
-    />    
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    />
     <link rel="preconnect" href="https://api.themoviedb.org" />
     <link rel="preconnect" href="https://image.tmdb.org" />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;700;900&display=swap"
-      media="print"
-      onload="this.media='all'"
-    />
+    <script>
+      /* Fonte só depois do load: pedir o CSS dela antes atrasava a primeira pintura no perfil móvel */
+      window.addEventListener("load", function () {
+        var font = document.createElement("link");
+        font.rel = "stylesheet";
+        font.media = "print";
+        font.onload = function () {
+          font.media = "all";
+        };
+        font.href = "https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;700;900&display=swap";
+        document.head.appendChild(font);
+      });
+    </script>
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;700;900&display=swap" /></noscript>
     <title>Movie's</title>
     <style>
       /* O esqueleto vale só para a Home sem filtros */
