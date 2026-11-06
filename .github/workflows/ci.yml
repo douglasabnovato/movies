@@ -38,6 +38,9 @@ jobs:
         env:
           CI: true
 
+      - name: Testar os Scripts do Build
+        run: npm run test:scripts
+
       - name: Executar Build de Produção
         run: npm run build
         env:
