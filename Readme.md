@@ -16,6 +16,7 @@
 ## 📌 Sumário
 - [Sobre o Projeto](#-sobre-o-projeto)
 - [Como executar](#-como-executar)
+- [Estado e próximos passos (ciclo de 03/11/2026)](#estado-e-próximos-passos-ciclo-de-03112026)
 - [Estado do MVP & Documentação](#-estado-do-mvp--documentação)
 - [Próximos passos que dependem do responsável](#-próximos-passos-que-dependem-do-responsável)
 - [Estrutura de Branches & Git Workflow](#-estrutura-de-branches--git-workflow)
@@ -68,13 +69,39 @@ Sem a chave, a aplicação abre e mostra uma mensagem explicando como configurá
 - `HashRouter` mantém as rotas funcionando no Pages (endereços como `/#/movie/123`).
 - Passo a passo completo: [docs/DEPLOY.md](docs/DEPLOY.md).
 
+## Estado e próximos passos (ciclo de 03/11/2026)
+
+Nível: Vitrine (N2). **8 de 12** critérios do MVP atendidos; o projeto ainda não está finalizado. Site publicado respondendo com HTTP 200 em 06/11/2026: https://douglasabnovato.github.io/movies/
+
+**O que foi feito**
+- Lista e primeiro pôster da Home gravados no HTML do build, com `preload` e prioridade alta; o pôster começa a baixar sem esperar a API (PR #81).
+- Revisão do retrato: entra depois do `<meta charset>` e só aceita caminho de pôster da TMDB, com 7 testes no CI (PR #81).
+- CI também nos PRs e pushes para `developer/**` (PR #81).
+- Integração na `main` com CI e deploy verdes (PR #82).
+- `docs/MVP.md` com o critério 10 conforme a regra de proteção e o LCP de 06/11/2026; plano do ciclo em `docs/PLANO-DE-ACAO.md`.
+
+**O que queremos fazer**
+- [#57](https://github.com/douglasabnovato/movies/issues/57) Levar o LCP móvel da Home a até 2,5 s (hoje 3,33 s; falta o atraso de renderização).
+- [#83](https://github.com/douglasabnovato/movies/issues/83) Renovar o retrato da Home todos os dias (responsável).
+- [#73](https://github.com/douglasabnovato/movies/issues/73) Proteger a `main` e exigir CI verde (responsável).
+- [#59](https://github.com/douglasabnovato/movies/issues/59) Testar o fluxo principal com 5 pessoas (responsável).
+- [#58](https://github.com/douglasabnovato/movies/issues/58) Medir a chegada ao detalhe do filme (responsável).
+- [#84](https://github.com/douglasabnovato/movies/issues/84) Mostrar onde assistir, com crédito à JustWatch.
+- [#85](https://github.com/douglasabnovato/movies/issues/85) Salvar filmes favoritos no navegador.
+
+**Onde está a documentação**
+- Estado e critérios: [`docs/MVP.md`](docs/MVP.md).
+- Plano do ciclo, pesquisa e backlog: [`docs/PLANO-DE-ACAO.md`](docs/PLANO-DE-ACAO.md).
+
+---
+
 ## 📊 Estado do MVP & Documentação
 
 | Documento | Conteúdo |
 |---|---|
 | [docs/ANALISE.md](./docs/ANALISE.md) | Requisitos (RF/RNF/RN), diagnóstico, rubrica de MVP e critérios de aceite em BDD |
 | [docs/ARQUITETURA.md](./docs/ARQUITETURA.md) | C4, estrutura de pastas, contratos da TMDB, tratamento de erros e ADRs |
-| [docs/PLANO-DE-ACAO.md](./docs/PLANO-DE-ACAO.md) | Histórico das tarefas do ciclo de 27/09/2026 |
+| [docs/PLANO-DE-ACAO.md](./docs/PLANO-DE-ACAO.md) | Tarefas do ciclo de 27/09/2026 e plano do ciclo de 03/11/2026 |
 | [docs/AVALIACAO.md](./docs/AVALIACAO.md) | Avaliação de arquitetura e engenharia |
 | [docs/PLANO-ESTRATEGICO.md](./docs/PLANO-ESTRATEGICO.md) | Plano vigente, resultados e próximos passos |
 | [docs/MVP.md](./docs/MVP.md) | Critérios de um bom MVP e tarefas que faltam |
@@ -93,10 +120,11 @@ Principais mudanças deste ciclo: chave só por variável de ambiente, erros tip
 
 | Ação | Como fazer | Issue |
 |---|---|---|
-| Proteger a `main` | Settings → Branches → Add rule para `main`; marcar "Require a pull request" e "Require status checks" com `build-and-test` e `e2e` | #39 |
+| Proteger a `main` | Settings → Branches → Add rule para `main`; marcar "Require a pull request" e "Require status checks" com `build-and-test` e `e2e` | #73 |
 | Medir o uso | Criar conta em uma ferramenta sem cookies e informar o código do site | #58 |
 | Testar com 5 pessoas | Aplicar [`docs/TESTE-USUARIOS.md`](docs/TESTE-USUARIOS.md) | #59 |
 | Conferir a largura de 768 px | Abrir o site em um aparelho real | #57 |
+| Renovar o retrato da Home | Decidir se o workflow publica de novo todo dia | #83 |
 | Ajustar a visão "Gestão Entrega" do Project #1 | Na visão de roadmap, escolher os campos `Início` e `Fim` em Date fields | - |
 
 ## 🌿 Estrutura de Branches & Git Workflow
