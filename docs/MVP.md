@@ -1,10 +1,14 @@
 # MVP — critérios e tarefas
 
-> Criado em 30/10/2026 e revisto em 02/11/2026. Complementa a rubrica técnica de `docs/ANALISE.md`, medindo também se o produto consegue aprender com o uso real.
+> Criado em 30/10/2026 e revisto em 06/11/2026 (ciclo de 03/11/2026, plano em [`PLANO-DE-ACAO.md`](PLANO-DE-ACAO.md)). Complementa a rubrica técnica de `docs/ANALISE.md`, medindo também se o produto consegue aprender com o uso real.
+
+**Nível:** Vitrine (N2). Valem os 12 critérios.
+
+**Finalizado:** não. Falta o critério 7 (#57), que o código ainda pode melhorar. Os critérios 3, 5 e 10 dependem do responsável e têm issue com `depende-do-responsavel` (#59, #58, #73).
 
 ## 1. Critérios
 
-| # | Critério | Como verificar | Situação em 02/11/2026 |
+| # | Critério | Como verificar | Situação em 06/11/2026 |
 |---|---|---|---|
 | 1 | Problema e público claros | Dá para explicar em uma frase | Atende |
 | 2 | Hipótese a validar | Existe uma aposta escrita, com meta | Atende: veja a seção 5 |
@@ -12,14 +16,14 @@
 | 4 | Escopo enxuto | O que não entra está registrado | Atende: decisões registradas em 31/10 |
 | 5 | Medição de uso | A métrica principal é coletada | Não atende (#58) |
 | 6 | Falhas tratadas | Erro, vazio e carregamento têm resposta clara | Atende: URL como fonte dos filtros e página além do total corrigidos; conferido no site em 01/11/2026 |
-| 7 | Desempenho aceitável | LCP de até 2,5 s no celular | Não atende: mediana de 3,29 s no site publicado em 02/11/2026 (2,95, 3,29, 2,35, 3,36 e 4,19 s). A primeira pintura caiu para 0,9 s; o limite agora é o pôster, que depende da chamada à API. |
+| 7 | Desempenho aceitável | LCP de até 2,5 s no celular | Não atende: mediana de 3,33 s no site publicado em 06/11/2026 (3,33, 3,68 e 3,28 s), já com o retrato da Home no HTML (#81). O pôster começa a baixar sem espera; o limite agora é o atraso de renderização, de 2,3 a 2,8 s (#57) |
 | 8 | Acessibilidade básica | Lighthouse e teclado | Atende: Lighthouse 100, teclado no CI e verificação automática WCAG A e AA nas 3 telas do fluxo; leitor de tela não testado |
 | 9 | Segurança e conformidade | Riscos decididos; termos da API cumpridos | Atende: chave mantida por decisão (ADR-006); atribuição publicada |
-| 10 | Entrega confiável | Publicação só depois de CI verde | Atende, mas a `main` segue sem proteção (#73) |
+| 10 | Entrega confiável | Publicação só depois de CI verde | Parcial: publicação só pelo CI, depois de testes e e2e, mas a `main` segue sem proteção (#73). Pela decisão de 03/11/2026, sem proteção o critério fica parcial |
 | 11 | Testes dos fluxos críticos | Testes automatizados no CI | Atende |
 | 12 | Documentação honesta | Qualquer pessoa roda o projeto, e os números estão certos | Atende com este documento |
 
-**Resultado em 02/11/2026:** 9 de 12 critérios atendidos. Faltam o teste com pessoas de fora (#59), a medição de uso (#58) e o LCP móvel (#57). Os dois primeiros dependem do responsável; o terceiro, de mudar a arquitetura, o que só vale depois de medir em celular real.
+**Resultado em 06/11/2026:** 8 de 12 critérios atendidos, 2 parciais (3 e 10) e 2 não atendidos (5 e 7). Em 02/11 eram 9: o critério 10 passou a parcial pela regra de proteção da `main`, sem mudança no código. Faltam o teste com pessoas de fora (#59), a medição de uso (#58), a proteção da `main` (#73) e o LCP móvel (#57).
 
 ## 2. Tarefas obrigatórias
 
@@ -29,7 +33,7 @@
 | 2 | Tratar página além do total | Feito |
 | 3 | Proteger a `main` e exigir CI verde | Com o responsável (#73) |
 | 4 | Adicionar a atribuição exigida pela TMDB e trocar a marca principal | Feito |
-| 5 | Reduzir o LCP no celular para até 2,5 s | Em andamento: veja a seção 7 e a #57 |
+| 5 | Reduzir o LCP no celular para até 2,5 s | Em andamento: retrato da Home no build (#81); veja a seção 7 e a #57 |
 | 6 | Definir a hipótese e medir a chegada ao detalhe | Hipótese e meta definidas; a medição automática depende de escolher a ferramenta |
 | 7 | Corrigir README e planos | Feito |
 | 8 | Decidir as issues #14, #18, #37 e #44 | Decidido: #14, #18 e #37 fechadas; #44 no PR #54 |
@@ -86,6 +90,9 @@ Lighthouse 12.8.2 local, sem ambiente controlado, no site publicado. O resultado
 | Depois do #56 | 3,8 s | 3,1 s | 3,4 s | 3,4 s | 0,80 a 0,86 |
 | Antes do #68 | 3,98 s | 4,49 s | 4,40 s | 4,40 s | 0,67 a 0,73 |
 | Depois do #70 | 3,43 s | 3,16 s | 3,38 s | 3,38 s | 0,83 a 0,89 |
+| Depois do #81 (06/11) | 3,33 s | 3,68 s | 3,28 s | 3,33 s | 0,66 a 0,83 |
+
+**06/11/2026:** com o retrato no HTML, a espera para começar a baixar o pôster caiu para 0 ms, mas o LCP medido é a imagem que o React renderiza, com atraso de renderização de 2,3 a 2,8 s. O próximo passo é fazer o esqueleto contar como LCP ou o React montar antes (#57). O retrato vale 48 h e só é renovado a cada push na `main` (#83).
 
 A meta de 2,5 s não foi atingida. Com o esqueleto no HTML, o CLS caiu de 0,10 a 0,13 para 0. O Lighthouse simula a rede lenta: o LCP observado sem essa simulação foi de 1,2 s na primeira execução final, mas o simulado é o que vale para a meta. O pôster depende de uma chamada à API feita por JavaScript, e esse é o limite restante; a #57 segue a partir daí.
 
