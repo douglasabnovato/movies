@@ -51,6 +51,12 @@
           document.documentElement.className = "no-shell";
           return;
         }
+        /* Retrato gravado no build (scripts/home-snapshot.js): com até 48 h, dispensa a chamada à API. */
+        var snapshot = window.__moviesHomeSnapshot;
+        if (snapshot && Date.now() - Date.parse(snapshot.geradoEm) < 48 * 60 * 60 * 1000) {
+          window.__moviesHomePreload = Promise.resolve(snapshot.data);
+          return;
+        }
         if (key.charAt(0) === "%") return;
         window.__moviesHomePreload = fetch(
           "https://api.themoviedb.org/3/movie/popular?api_key=" + key + "&language=pt-BR&page=1"

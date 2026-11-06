@@ -17,7 +17,8 @@
     "test:ci": "react-scripts test --watchAll=false --coverage",
     "format": "prettier --write",
     "prepare": "husky",
-    "postbuild": "node scripts/inline-css.js"
+    "postbuild": "node scripts/inline-css.js && node scripts/home-snapshot.js",
+    "test:scripts": "node --test scripts/home-snapshot.test.js"
   },
   "eslintConfig": {
     "extends": [
