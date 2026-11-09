@@ -16,7 +16,7 @@
 ## 📌 Sumário
 - [Sobre o Projeto](#-sobre-o-projeto)
 - [Como executar](#-como-executar)
-- [Estado e próximos passos (ciclo de 03/11/2026)](#estado-e-próximos-passos-ciclo-de-03112026)
+- [Estado e próximos passos (ciclo de 07/11/2026)](#estado-e-próximos-passos-ciclo-de-07112026)
 - [Estado do MVP & Documentação](#-estado-do-mvp--documentação)
 - [Próximos passos que dependem do responsável](#-próximos-passos-que-dependem-do-responsável)
 - [Estrutura de Branches & Git Workflow](#-estrutura-de-branches--git-workflow)
@@ -69,25 +69,28 @@ Sem a chave, a aplicação abre e mostra uma mensagem explicando como configurá
 - `HashRouter` mantém as rotas funcionando no Pages (endereços como `/#/movie/123`).
 - Passo a passo completo: [docs/DEPLOY.md](docs/DEPLOY.md).
 
-## Estado e próximos passos (ciclo de 03/11/2026)
+## Estado e próximos passos (ciclo de 07/11/2026)
 
-Nível: Vitrine (N2). **8 de 12** critérios do MVP atendidos; o projeto ainda não está finalizado. Site publicado respondendo com HTTP 200 em 06/11/2026: https://douglasabnovato.github.io/movies/
+Nível: Vitrine (N2). **8 de 12** critérios do MVP atendidos; o projeto ainda não está finalizado. Site publicado respondendo com HTTP 200 em 09/11/2026: https://douglasabnovato.github.io/movies/ (o retrato da Home publicado era de 06/11/2026 e já tinha vencido, #83).
 
-**O que foi feito**
-- Lista e primeiro pôster da Home gravados no HTML do build, com `preload` e prioridade alta; o pôster começa a baixar sem esperar a API (PR #81).
-- Revisão do retrato: entra depois do `<meta charset>` e só aceita caminho de pôster da TMDB, com 7 testes no CI (PR #81).
-- CI também nos PRs e pushes para `developer/**` (PR #81).
-- Integração na `main` com CI e deploy verdes (PR #82).
-- `docs/MVP.md` com o critério 10 conforme a regra de proteção e o LCP de 06/11/2026; plano do ciclo em `docs/PLANO-DE-ACAO.md`.
+**O que foi feito no ciclo de 07/11/2026 (PR #88)**
+- Causa do atraso de renderização do LCP achada no navegador: o React apagava o esqueleto antes de o pôster dele pintar.
+- O React agora espera o pôster do esqueleto virar LCP (até 2,5 s, ou 400 ms depois do load), com 10 testes.
+- LCP local com o build de produção: mediana de 3,93 s antes e 3,02 s depois. O número no ar muda depois do merge na `main`.
+- `docs/MVP.md` com uma tabela só e histórico; plano do ciclo em `docs/PLANO-DE-ACAO.md`.
+
+**Ciclo de 03/11/2026:** retrato da Home no build, com `preload` e prioridade alta (PR #81); CI nos PRs para `developer/**`; integração com CI e deploy verdes (PR #82).
 
 **O que queremos fazer**
-- [#57](https://github.com/douglasabnovato/movies/issues/57) Levar o LCP móvel da Home a até 2,5 s (hoje 3,33 s; falta o atraso de renderização).
+- [#57](https://github.com/douglasabnovato/movies/issues/57) Levar o LCP móvel da Home a até 2,5 s (no ar 3,33 s em 06/11; local 3,02 s depois do PR #88).
+- [#90](https://github.com/douglasabnovato/movies/issues/90) Mesclar o ciclo de 07/11 (responsável).
 - [#83](https://github.com/douglasabnovato/movies/issues/83) Renovar o retrato da Home todos os dias (responsável).
 - [#73](https://github.com/douglasabnovato/movies/issues/73) Proteger a `main` e exigir CI verde (responsável).
 - [#59](https://github.com/douglasabnovato/movies/issues/59) Testar o fluxo principal com 5 pessoas (responsável).
 - [#58](https://github.com/douglasabnovato/movies/issues/58) Medir a chegada ao detalhe do filme (responsável).
 - [#84](https://github.com/douglasabnovato/movies/issues/84) Mostrar onde assistir, com crédito à JustWatch.
 - [#85](https://github.com/douglasabnovato/movies/issues/85) Salvar filmes favoritos no navegador.
+- [#89](https://github.com/douglasabnovato/movies/issues/89) Trocar o pôster do esqueleto quando o retrato venceu.
 
 **Onde está a documentação**
 - Estado e critérios: [`docs/MVP.md`](docs/MVP.md).
