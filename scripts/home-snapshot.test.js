@@ -1,7 +1,14 @@
 /* Testes do retrato da Home (node --test) */
 const test = require("node:test");
 const assert = require("node:assert");
-const { reduzirPopulares, injetarRetrato, SHELL_POSTER, POSTER_BASE } = require("./home-snapshot-lib");
+const {
+  reduzirPopulares,
+  injetarRetrato,
+  adiarScriptPrincipal,
+  SHELL_POSTER,
+  POSTER_BASE,
+  LIMITE_JS_MS,
+} = require("./home-snapshot-lib");
 
 const HTML = `<html><head><title>x</title></head><body>${SHELL_POSTER}<div class="skeleton-title"></div></div></body></html>`;
 const DATA = {
@@ -61,4 +68,56 @@ test("pôster com caminho fora do formato da TMDB não entra no HTML", () => {
   const html = injetarRetrato(HTML, estranho, "agora");
   assert.ok(!html.includes('rel="preload"'));
   assert.ok(html.includes(SHELL_POSTER));
+});
+
+const MAIN = '<script defer="defer" src="/movies/static/js/main.abc123.js"></script>';
+const HTML_COM_JS = `<html><head><title>x</title>${MAIN}</head><body>${SHELL_POSTER}</div></body></html>`;
+
+test("com pôster no esqueleto, o JavaScript só baixa depois dele", () => {
+  const html = injetarRetrato(HTML_COM_JS, DATA, "agora");
+  assert.ok(!html.includes(MAIN));
+  assert.ok(html.includes('s.src="/movies/static/js/main.abc123.js"'));
+  assert.ok(html.includes('img.addEventListener("load",carregar)'));
+  assert.ok(html.includes(`setTimeout(carregar,${LIMITE_JS_MS})`));
+});
+
+test("sem pôster no primeiro filme, o JavaScript segue com defer", () => {
+  const semPoster = { ...DATA, results: [DATA.results[1]] };
+  assert.ok(injetarRetrato(HTML_COM_JS, semPoster, "agora").includes(MAIN));
+});
+
+test("o carregador baixa o JavaScript uma vez só", () => {
+  const html = adiarScriptPrincipal(MAIN);
+  const codigo = html.replace(/^<script>/, "").replace(/<\/script>$/, "");
+  const criados = [];
+  const ouvintes = {};
+  const img = { complete: false, addEventListener: (tipo, fn) => (ouvintes[tipo] = fn) };
+  const documento = {
+    readyState: "interactive",
+    documentElement: { className: "" },
+    querySelector: () => img,
+    createElement: () => ({}),
+    head: { appendChild: (s) => criados.push(s.src) },
+  };
+  const temporizadores = [];
+  new Function("document", "setTimeout", codigo)(documento, (fn) => temporizadores.push(fn));
+  assert.deepStrictEqual(criados, []);
+  ouvintes.load();
+  temporizadores.forEach((fn) => fn());
+  ouvintes.error();
+  assert.deepStrictEqual(criados, ["/movies/static/js/main.abc123.js"]);
+});
+
+test("fora da Home sem filtros, o JavaScript baixa na hora", () => {
+  const codigo = adiarScriptPrincipal(MAIN).replace(/^<script>/, "").replace(/<\/script>$/, "");
+  const criados = [];
+  const documento = {
+    readyState: "interactive",
+    documentElement: { className: "no-shell" },
+    querySelector: () => ({ complete: false, addEventListener() {} }),
+    createElement: () => ({}),
+    head: { appendChild: (s) => criados.push(s.src) },
+  };
+  new Function("document", "setTimeout", codigo)(documento, () => {});
+  assert.strictEqual(criados.length, 1);
 });

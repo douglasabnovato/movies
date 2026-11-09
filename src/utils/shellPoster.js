@@ -44,7 +44,15 @@ export function esperarPosterDoEsqueleto({
       INTERACOES.forEach((tipo) => doc.removeEventListener(tipo, aoInteragir, true));
       resolve(motivo);
     };
-    const aposLoad = () => timers.push(win.setTimeout(() => fim("apos-load"), folga));
+    /* A folga conta a partir do primeiro quadro depois do "load": com a CPU ocupada, o quadro atrasa e a folga junto. */
+    const depoisDoQuadro = (fn) =>
+      typeof win.requestAnimationFrame === "function"
+        ? win.requestAnimationFrame(() => win.requestAnimationFrame(fn))
+        : fn();
+    const aposLoad = () =>
+      depoisDoQuadro(() => {
+        if (!feito) timers.push(win.setTimeout(() => fim("apos-load"), folga));
+      });
     try {
       timers.push(win.setTimeout(() => fim("limite"), limite));
       img.addEventListener("error", () => fim("erro"), { once: true });
