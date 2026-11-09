@@ -16,7 +16,7 @@
 ## 📌 Sumário
 - [Sobre o Projeto](#-sobre-o-projeto)
 - [Como executar](#-como-executar)
-- [Estado e próximos passos (ciclo de 07/11/2026)](#estado-e-próximos-passos-ciclo-de-07112026)
+- [Estado e próximos passos (ciclo de 09/11/2026)](#estado-e-próximos-passos-ciclo-de-09112026)
 - [Estado do MVP & Documentação](#-estado-do-mvp--documentação)
 - [Próximos passos que dependem do responsável](#-próximos-passos-que-dependem-do-responsável)
 - [Estrutura de Branches & Git Workflow](#-estrutura-de-branches--git-workflow)
@@ -69,9 +69,14 @@ Sem a chave, a aplicação abre e mostra uma mensagem explicando como configurá
 - `HashRouter` mantém as rotas funcionando no Pages (endereços como `/#/movie/123`).
 - Passo a passo completo: [docs/DEPLOY.md](docs/DEPLOY.md).
 
-## Estado e próximos passos (ciclo de 07/11/2026)
+## Estado e próximos passos (ciclo de 09/11/2026)
 
-Nível: Vitrine (N2). **8 de 12** critérios do MVP atendidos; o projeto ainda não está finalizado. Site publicado respondendo com HTTP 200 em 09/11/2026: https://douglasabnovato.github.io/movies/ (o retrato da Home publicado era de 06/11/2026 e já tinha vencido, #83).
+Nível: Vitrine (N2). **8 de 12** critérios do MVP atendidos; finalizado do lado do código: o que falta depende do responsável (merge na `main` e medição no ar do critério 7, teste com pessoas, medição de uso e proteção da `main`). Site publicado respondendo com HTTP 200 em 09/11/2026: https://douglasabnovato.github.io/movies/ (o retrato da Home publicado era de 06/11/2026 e já tinha vencido, #83).
+
+**O que foi feito no ciclo de 09/11/2026 (PR #92)**
+- LCP local com gzip, como no Pages: mediana de 2,38 s (5 execuções), com o pôster do esqueleto como LCP em todas. O 3,02 s anterior foi medido sem compressão.
+- A espera do esqueleto conta a folga depois de decodificar o pôster: com a CPU ocupada, o esqueleto não sai antes de o pôster pintar.
+- Retrato vencido: o pôster antigo fica oculto e é trocado pelo da lista nova, ou volta o bloco cinza (#89), com teste no Playwright.
 
 **O que foi feito no ciclo de 07/11/2026 (PR #88)**
 - Causa do atraso de renderização do LCP achada no navegador: o React apagava o esqueleto antes de o pôster dele pintar.
@@ -82,7 +87,7 @@ Nível: Vitrine (N2). **8 de 12** critérios do MVP atendidos; o projeto ainda n
 **Ciclo de 03/11/2026:** retrato da Home no build, com `preload` e prioridade alta (PR #81); CI nos PRs para `developer/**`; integração com CI e deploy verdes (PR #82).
 
 **O que queremos fazer**
-- [#57](https://github.com/douglasabnovato/movies/issues/57) Levar o LCP móvel da Home a até 2,5 s (no ar 3,33 s em 06/11; local 3,02 s depois do PR #88).
+- [#57](https://github.com/douglasabnovato/movies/issues/57) Levar o LCP móvel da Home a até 2,5 s (no ar 3,33 s em 06/11; local 2,38 s depois do PR #92; medir no ar depois do merge).
 - [#90](https://github.com/douglasabnovato/movies/issues/90) Mesclar o ciclo de 07/11 (responsável).
 - [#83](https://github.com/douglasabnovato/movies/issues/83) Renovar o retrato da Home todos os dias (responsável).
 - [#73](https://github.com/douglasabnovato/movies/issues/73) Proteger a `main` e exigir CI verde (responsável).
@@ -90,7 +95,7 @@ Nível: Vitrine (N2). **8 de 12** critérios do MVP atendidos; o projeto ainda n
 - [#58](https://github.com/douglasabnovato/movies/issues/58) Medir a chegada ao detalhe do filme (responsável).
 - [#84](https://github.com/douglasabnovato/movies/issues/84) Mostrar onde assistir, com crédito à JustWatch.
 - [#85](https://github.com/douglasabnovato/movies/issues/85) Salvar filmes favoritos no navegador.
-- [#89](https://github.com/douglasabnovato/movies/issues/89) Trocar o pôster do esqueleto quando o retrato venceu.
+- [#89](https://github.com/douglasabnovato/movies/issues/89) Trocar o pôster do esqueleto quando o retrato venceu (feito no PR #92; fecha depois do merge na `main`).
 
 **Onde está a documentação**
 - Estado e critérios: [`docs/MVP.md`](docs/MVP.md).
