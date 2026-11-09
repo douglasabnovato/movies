@@ -83,6 +83,7 @@ Nível: Vitrine (N2). **8 de 12** critérios do MVP atendidos; o projeto ainda n
 
 **O que queremos fazer**
 - [#57](https://github.com/douglasabnovato/movies/issues/57) Levar o LCP móvel da Home a até 2,5 s (no ar 3,33 s em 06/11; local 3,02 s depois do PR #88).
+- [#90](https://github.com/douglasabnovato/movies/issues/90) Mesclar o ciclo de 07/11 (responsável).
 - [#83](https://github.com/douglasabnovato/movies/issues/83) Renovar o retrato da Home todos os dias (responsável).
 - [#73](https://github.com/douglasabnovato/movies/issues/73) Proteger a `main` e exigir CI verde (responsável).
 - [#59](https://github.com/douglasabnovato/movies/issues/59) Testar o fluxo principal com 5 pessoas (responsável).

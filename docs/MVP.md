@@ -8,7 +8,7 @@
 
 **Finalizado:** não
 
-Falta o critério 7 (#57): o código mudou neste ciclo, e a medição no ar depende do merge na `main` pelo responsável. Os critérios 3, 5 e 10 dependem do responsável e têm issue com `depende-do-responsavel` (#59, #58, #73).
+Falta o critério 7 (#57): o código mudou neste ciclo, e a medição no ar depende do merge pelo responsável (#90: o merge do agente foi negado pela permissão). Os critérios 3, 5 e 10 dependem do responsável e têm issue com `depende-do-responsavel` (#59, #58, #73).
 
 ## 1. Critérios
 
