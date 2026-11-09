@@ -12,7 +12,7 @@ import { esperarPosterDoEsqueleto } from "./utils/shellPoster";
 const Details = lazy(() => import("./pages/Details"));
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-/* O React só troca o esqueleto depois que o pôster dele pintou (até 2,5 s): assim ele conta para o LCP (#57). */
+/* O React só troca o esqueleto depois que o pôster dele conta como LCP (até 2,5 s) (#57). */
 esperarPosterDoEsqueleto().then(() =>
   root.render(
     <React.StrictMode>

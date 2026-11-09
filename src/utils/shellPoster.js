@@ -1,24 +1,14 @@
 /*
- * shellPoster.js · Espera o pôster do esqueleto (index.html) aparecer antes de o React trocar o esqueleto.
- * Se o React monta antes de a imagem pintar, ela sai da página sem contar para o LCP, e o LCP passa a ser
- * o pôster que o React desenha depois, com 2 a 3 s de atraso de renderização (#57). Com limite de tempo,
- * para nunca segurar a aplicação por causa de uma imagem lenta.
+ * shellPoster.js · Espera o pôster do esqueleto (index.html) contar para o LCP antes de o React trocar o esqueleto.
+ * Se o React monta antes, a imagem sai da página sem virar LCP, e o LCP passa a ser o pôster que o React
+ * desenha depois (#57). Esperar só o "load" não basta: a pintura da imagem decodificada vem alguns quadros
+ * depois. Por isso a espera acaba quando o navegador registra o LCP da própria imagem, com limite de tempo
+ * para nunca segurar a aplicação.
  */
 export const SHELL_POSTER = "#shell-first img";
 export const LIMITE_MS = 2500;
 
-/* Duas voltas de quadro: a primeira agenda, a segunda garante que o quadro com a imagem foi pintado. */
-function depoisDaPintura(win) {
-  return new Promise((resolve) => {
-    if (typeof win.requestAnimationFrame !== "function") {
-      resolve();
-      return;
-    }
-    win.requestAnimationFrame(() => win.requestAnimationFrame(() => resolve()));
-  });
-}
-
-/* Resolve quando o pôster do esqueleto já pintou, falhou, não existe ou o limite passou. */
+/* Resolve com o motivo: "lcp", "sem-poster", "sem-suporte", "erro" ou "limite". */
 export function esperarPosterDoEsqueleto({
   doc = document,
   win = window,
@@ -26,19 +16,29 @@ export function esperarPosterDoEsqueleto({
 } = {}) {
   const img = doc.querySelector(SHELL_POSTER);
   if (!img) return Promise.resolve("sem-poster");
-  if (img.complete) return depoisDaPintura(win).then(() => "pintado");
+  const Observer = win.PerformanceObserver;
+  const suportaLcp =
+    typeof Observer === "function" &&
+    Array.isArray(Observer.supportedEntryTypes) &&
+    Observer.supportedEntryTypes.includes("largest-contentful-paint");
+  if (!suportaLcp) return Promise.resolve("sem-suporte");
+
   return new Promise((resolve) => {
     let feito = false;
+    let observer;
     const fim = (motivo) => {
       if (feito) return;
       feito = true;
       win.clearTimeout(timer);
-      if (motivo === "carregado") depoisDaPintura(win).then(() => resolve("pintado"));
-      else resolve(motivo);
+      if (observer) observer.disconnect();
+      resolve(motivo);
     };
     const timer = win.setTimeout(() => fim("limite"), limite);
-    img.addEventListener("load", () => fim("carregado"), { once: true });
     img.addEventListener("error", () => fim("erro"), { once: true });
+    observer = new Observer((lista) => {
+      if (lista.getEntries().some((entrada) => entrada.element === img)) fim("lcp");
+    });
+    observer.observe({ type: "largest-contentful-paint", buffered: true });
   });
 }
 /* fim de shellPoster.js */
