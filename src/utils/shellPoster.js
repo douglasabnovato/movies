@@ -8,6 +8,8 @@
  */
 export const SHELL_POSTER = "#shell-first img";
 export const LIMITE_MS = 2500;
+/* Id do estilo que o index.html cria para ocultar o pôster de um retrato vencido. */
+export const SHELL_STALE = "shell-stale";
 /* Depois do "load", tempo suficiente para decodificar e pintar; sem entrada de LCP até lá, não haverá. */
 export const FOLGA_APOS_LOAD_MS = 400;
 
@@ -54,12 +56,19 @@ export function esperarPosterDoEsqueleto({
         : fn();
     const decodificada = () =>
       typeof img.decode === "function" ? img.decode().catch(() => undefined) : Promise.resolve();
-    const aposLoad = () =>
+    /* Retrato vencido (#89): o pôster antigo fica oculto até o index.html trocar o src; o load dele não conta. */
+    const oculto = () => !!doc.getElementById(SHELL_STALE);
+    const aposLoad = () => {
+      if (oculto()) {
+        img.addEventListener("load", aposLoad, { once: true });
+        return;
+      }
       decodificada().then(() =>
         depoisDoQuadro(() => {
           if (!feito) timers.push(win.setTimeout(() => fim("apos-load"), folga));
         }),
       );
+    };
     try {
       timers.push(win.setTimeout(() => fim("limite"), limite));
       img.addEventListener("error", () => fim("erro"), { once: true });

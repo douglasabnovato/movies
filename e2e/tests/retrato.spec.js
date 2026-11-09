@@ -30,9 +30,11 @@ async function prepararRetrato(page, { idadeMs, popular }) {
   await page.addInitScript(() => {
     window.__posteres = [];
     window.__blocoCinza = false;
+    window.__velhoVisivel = false;
     new MutationObserver(() => {
       const img = document.querySelector("#shell-first img");
       if (img && window.__posteres[window.__posteres.length - 1] !== img.src) window.__posteres.push(img.src);
+      if (img && /velho\.jpg$/.test(img.src) && getComputedStyle(img).visibility !== "hidden") window.__velhoVisivel = true;
       if (document.querySelector("#shell-first .skeleton-poster")) window.__blocoCinza = true;
     }).observe(document, { subtree: true, childList: true, attributes: true, attributeFilter: ["src"] });
   });
@@ -45,6 +47,7 @@ test("com retrato vencido, o esqueleto troca o pôster pelo da lista nova", asyn
   await expect(page.getByText("Filme Novo")).toBeVisible();
   const posteres = await page.evaluate(() => window.__posteres);
   expect(posteres[posteres.length - 1]).toMatch(/\/novo\.jpg$/);
+  expect(await page.evaluate(() => window.__velhoVisivel)).toBe(false);
   await expect(page.getByText("Filme do Retrato")).toHaveCount(0);
 });
 

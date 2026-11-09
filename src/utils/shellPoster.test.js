@@ -124,6 +124,24 @@ test("com a imagem ainda decodificando, a folga não começa", async () => {
   expect(motivo).toBe("apos-load");
 });
 
+test("com o pôster vencido oculto, só o load do pôster novo conta", async () => {
+  const img = montarEsqueleto();
+  const estilo = document.createElement("style");
+  estilo.id = "shell-stale";
+  document.body.appendChild(estilo);
+  let motivo = null;
+  esperarPosterDoEsqueleto({ win: criarWin(), limite: 5000, folga: 10 }).then((m) => {
+    motivo = m;
+  });
+  img.dispatchEvent(new Event("load"));
+  await new Promise((r) => setTimeout(r, 40));
+  expect(motivo).toBeNull();
+  estilo.remove();
+  img.dispatchEvent(new Event("load"));
+  await new Promise((r) => setTimeout(r, 40));
+  expect(motivo).toBe("apos-load");
+});
+
 test("primeira interação libera a montagem", async () => {
   montarEsqueleto();
   const espera = esperarPosterDoEsqueleto({ win: criarWin(), limite: 5000 });

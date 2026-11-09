@@ -62,6 +62,7 @@
         var stale = null;
         if (snapshot) {
           stale = document.createElement("style");
+          stale.id = "shell-stale";
           stale.textContent = "#shell-first img{visibility:hidden}";
           document.head.appendChild(stale);
         }
