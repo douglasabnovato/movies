@@ -51,7 +51,7 @@ function injetarRetrato(html, data, geradoEm) {
 }
 
 /* Script do CRA no build: <script defer="defer" src="/movies/static/js/main.abc.js"></script> */
-const SCRIPT_PRINCIPAL = /<script defer="defer" src="([^"<>]+\/static\/js\/main\.[\w]+\.js)"><\/script>/;
+const SCRIPT_PRINCIPAL = /<script defer="defer" src="([^"<>]*\/static\/js\/main\.\w+\.js)"><\/script>/;
 /* Igual ao limite da espera do React (src/utils/shellPoster.js): o JavaScript nunca espera mais que isso. */
 const LIMITE_JS_MS = 2500;
 

@@ -58,6 +58,30 @@
           return;
         }
         if (key.charAt(0) === "%") return;
+        /* Retrato vencido: o pôster gravado no esqueleto já pode não ser o primeiro da lista. Fica oculto até a resposta (#89). */
+        var stale = null;
+        if (snapshot) {
+          stale = document.createElement("style");
+          stale.textContent = "#shell-first img{visibility:hidden}";
+          document.head.appendChild(stale);
+        }
+        /* Depois da resposta: troca o pôster vencido pelo novo ou, sem pôster novo, volta ao bloco cinza. */
+        var renewPoster = function (src) {
+          if (!stale) return;
+          var run = function () {
+            var old = document.querySelector("#shell-first img");
+            if (old && src) old.src = src;
+            else if (old) {
+              /* Avisa quem espera o pôster (o carregador do JavaScript) antes de tirá-lo da página. */
+              old.dispatchEvent(new Event("error"));
+              old.outerHTML = '<div class="skeleton-poster pulse"></div>';
+            }
+            stale.parentNode.removeChild(stale);
+            stale = null;
+          };
+          if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", run);
+          else run();
+        };
         window.__moviesHomePreload = fetch(
           "https://api.themoviedb.org/3/movie/popular?api_key=" + key + "&language=pt-BR&page=1"
         )
@@ -74,6 +98,7 @@
               link.setAttribute("fetchpriority", "high");
               document.head.appendChild(link);
               /* Põe o pôster no esqueleto, sem esperar o React montar a lista. */
+              renewPoster(link.href);
               var showPoster = function () {
                 var slot = document.querySelector("#shell-first .skeleton-poster");
                 if (!slot) return;
@@ -83,10 +108,11 @@
               };
               if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", showPoster);
               else showPoster();
-            }
+            } else renewPoster(null);
             return data;
           })
           .catch(function () {
+            renewPoster(null);
             return null;
           });
       })();

@@ -121,3 +121,8 @@ test("fora da Home sem filtros, o JavaScript baixa na hora", () => {
   new Function("document", "setTimeout", codigo)(documento, () => {});
   assert.strictEqual(criados.length, 1);
 });
+
+test("acha o script principal também com o site na raiz (PUBLIC_URL=/)", () => {
+  const html = adiarScriptPrincipal('<script defer="defer" src="/static/js/main.abc123.js"></script>');
+  assert.ok(html.includes('s.src="/static/js/main.abc123.js"'));
+});
