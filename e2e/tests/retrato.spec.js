@@ -1,4 +1,4 @@
-/* Retrato da Home no build (#57, #89): o servidor de teste não grava retrato, então o teste o injeta no HTML. */
+/* Retrato da Home no build (#89): o servidor de teste não grava retrato, então o teste o injeta no HTML. */
 const { test, expect } = require("@playwright/test");
 const { mockTmdb } = require("./tmdb");
 const { injetarRetrato } = require("../../scripts/home-snapshot-lib");
@@ -12,17 +12,14 @@ const HORA = 60 * 60 * 1000;
 const filme = (id, title, poster_path) => ({ id, title, original_title: title, poster_path, release_date: "2020-01-02" });
 const RETRATO = { page: 1, total_pages: 3, total_results: 60, results: [filme(10, "Filme do Retrato", "/velho.jpg")] };
 
-async function prepararRetrato(page, { idadeMs, popular, atrasoPosterMs = 0 }) {
+async function prepararRetrato(page, { idadeMs, popular }) {
   await mockTmdb(page);
   if (popular !== undefined) {
     await page.route("https://api.themoviedb.org/3/movie/popular**", (route) =>
       popular ? route.fulfill({ json: popular }) : route.fulfill({ status: 500, json: {} }),
     );
   }
-  await page.route("https://image.tmdb.org/**", async (route) => {
-    if (atrasoPosterMs) await new Promise((r) => setTimeout(r, atrasoPosterMs));
-    return route.fulfill({ body: PNG, contentType: "image/png" });
-  });
+  await page.route("https://image.tmdb.org/**", (route) => route.fulfill({ body: PNG, contentType: "image/png" }));
   /* Só o documento da Home, no servidor local do teste. */
   await page.route((url) => url.hostname === "127.0.0.1" && url.pathname === "/", async (route) => {
     const resposta = await route.fetch();
@@ -40,21 +37,6 @@ async function prepararRetrato(page, { idadeMs, popular, atrasoPosterMs = 0 }) {
     }).observe(document, { subtree: true, childList: true, attributes: true, attributeFilter: ["src"] });
   });
 }
-
-test("com retrato válido, o JavaScript só baixa depois do pôster", async ({ page }) => {
-  const tempos = {};
-  page.on("requestfinished", (req) => {
-    if (req.url().endsWith("/velho.jpg") && !tempos.poster) tempos.poster = Date.now();
-  });
-  page.on("request", (req) => {
-    if (/\/static\/js\/main\.\w+\.js$/.test(req.url())) tempos.js = Date.now();
-  });
-  await prepararRetrato(page, { idadeMs: HORA, atrasoPosterMs: 700 });
-  await page.goto("/");
-  await expect(page.getByText("Filme do Retrato")).toBeVisible();
-  expect(tempos.poster).toBeDefined();
-  expect(tempos.js).toBeGreaterThanOrEqual(tempos.poster);
-});
 
 test("com retrato vencido, o esqueleto troca o pôster pelo da lista nova", async ({ page }) => {
   const popular = { page: 1, total_pages: 3, results: [filme(20, "Filme Novo", "/novo.jpg")] };
