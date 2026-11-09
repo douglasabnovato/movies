@@ -28,7 +28,10 @@ function montarEsqueleto(comPoster = true) {
   document.body.innerHTML = comPoster
     ? '<p>slogan</p><div id="shell-first"><img src="https://image.tmdb.org/t/p/w342/a.jpg" alt="" /></div>'
     : '<div id="shell-first"><div class="skeleton-poster"></div></div>';
-  return document.querySelector("#shell-first img");
+  const img = document.querySelector("#shell-first img");
+  /* O jsdom não baixa imagens: o padrão aqui é "ainda carregando". */
+  if (img) Object.defineProperty(img, "complete", { value: false, configurable: true });
+  return img;
 }
 
 afterEach(() => {
@@ -73,5 +76,40 @@ test("imagem com erro não segura a aplicação", async () => {
 test("imagem lenta: desiste no limite", async () => {
   montarEsqueleto();
   await expect(esperarPosterDoEsqueleto({ win: criarWin(), limite: 10 })).resolves.toBe("limite");
+});
+test("imagem que já falhou antes do JavaScript: não espera", async () => {
+  const img = montarEsqueleto();
+  Object.defineProperty(img, "complete", { value: true });
+  Object.defineProperty(img, "naturalWidth", { value: 0 });
+  await expect(esperarPosterDoEsqueleto({ win: criarWin() })).resolves.toBe("erro");
+});
+
+test("pôster que não vira LCP (ex.: desktop): desiste pouco depois do load", async () => {
+  const img = montarEsqueleto();
+  const espera = esperarPosterDoEsqueleto({ win: criarWin(), limite: 5000, folga: 10 });
+  img.dispatchEvent(new Event("load"));
+  await expect(espera).resolves.toBe("apos-load");
+});
+
+test("primeira interação libera a montagem", async () => {
+  montarEsqueleto();
+  const espera = esperarPosterDoEsqueleto({ win: criarWin(), limite: 5000 });
+  document.dispatchEvent(new Event("keydown"));
+  await expect(espera).resolves.toBe("interacao");
+});
+
+test("aba em segundo plano: não espera", async () => {
+  montarEsqueleto();
+  const doc = { querySelector: (sel) => document.querySelector(sel), visibilityState: "hidden" };
+  await expect(esperarPosterDoEsqueleto({ doc, win: criarWin() })).resolves.toBe("oculta");
+});
+
+test("erro no PerformanceObserver não impede a montagem", async () => {
+  montarEsqueleto();
+  const win = criarWin();
+  win.PerformanceObserver.prototype.observe = () => {
+    throw new Error("sem suporte de verdade");
+  };
+  await expect(esperarPosterDoEsqueleto({ win, limite: 5000 })).resolves.toBe("erro");
 });
 /* fim de shellPoster.test.js */

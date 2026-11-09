@@ -13,28 +13,30 @@ const Details = lazy(() => import("./pages/Details"));
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 /* O React só troca o esqueleto depois que o pôster dele conta como LCP (até 2,5 s) (#57). */
-esperarPosterDoEsqueleto().then(() =>
-  root.render(
-    <React.StrictMode>
-      <HashRouter
-        future={{
-          v7_startTransition: true,
-          v7_relativeSplatPath: true,
-        }}
-      >
-        <div className="app-container">
-          <ErrorBoundary>
-            <Suspense fallback={null}>
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/movie/:id" element={<Details />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </Suspense>
-          </ErrorBoundary>
-          <Footer />
-        </div>
-      </HashRouter>
-    </React.StrictMode>,
-  ),
-);
+esperarPosterDoEsqueleto()
+  .catch(() => "erro")
+  .then(() =>
+    root.render(
+      <React.StrictMode>
+        <HashRouter
+          future={{
+            v7_startTransition: true,
+            v7_relativeSplatPath: true,
+          }}
+        >
+          <div className="app-container">
+            <ErrorBoundary>
+              <Suspense fallback={null}>
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/movie/:id" element={<Details />} />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </Suspense>
+            </ErrorBoundary>
+            <Footer />
+          </div>
+        </HashRouter>
+      </React.StrictMode>,
+    ),
+  );
