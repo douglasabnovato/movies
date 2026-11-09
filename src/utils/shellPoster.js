@@ -44,15 +44,22 @@ export function esperarPosterDoEsqueleto({
       INTERACOES.forEach((tipo) => doc.removeEventListener(tipo, aoInteragir, true));
       resolve(motivo);
     };
-    /* A folga conta a partir do primeiro quadro depois do "load": com a CPU ocupada, o quadro atrasa e a folga junto. */
+    /*
+     * A folga conta a partir do quadro seguinte à decodificação da imagem: com a CPU ocupada, decodificar
+     * e pintar atrasam, e a folga atrasa junto (antes, o esqueleto podia sumir sem o pôster ter pintado).
+     */
     const depoisDoQuadro = (fn) =>
       typeof win.requestAnimationFrame === "function"
         ? win.requestAnimationFrame(() => win.requestAnimationFrame(fn))
         : fn();
+    const decodificada = () =>
+      typeof img.decode === "function" ? img.decode().catch(() => undefined) : Promise.resolve();
     const aposLoad = () =>
-      depoisDoQuadro(() => {
-        if (!feito) timers.push(win.setTimeout(() => fim("apos-load"), folga));
-      });
+      decodificada().then(() =>
+        depoisDoQuadro(() => {
+          if (!feito) timers.push(win.setTimeout(() => fim("apos-load"), folga));
+        }),
+      );
     try {
       timers.push(win.setTimeout(() => fim("limite"), limite));
       img.addEventListener("error", () => fim("erro"), { once: true });

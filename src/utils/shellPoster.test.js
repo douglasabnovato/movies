@@ -108,6 +108,22 @@ test("a folga depois do load só começa depois do quadro seguinte", async () =>
   expect(motivo).toBe("apos-load");
 });
 
+test("com a imagem ainda decodificando, a folga não começa", async () => {
+  const img = montarEsqueleto();
+  let decodificar;
+  img.decode = () => new Promise((r) => (decodificar = r));
+  let motivo = null;
+  esperarPosterDoEsqueleto({ win: criarWin(), limite: 5000, folga: 10 }).then((m) => {
+    motivo = m;
+  });
+  img.dispatchEvent(new Event("load"));
+  await new Promise((r) => setTimeout(r, 30));
+  expect(motivo).toBeNull();
+  decodificar();
+  await new Promise((r) => setTimeout(r, 30));
+  expect(motivo).toBe("apos-load");
+});
+
 test("primeira interação libera a montagem", async () => {
   montarEsqueleto();
   const espera = esperarPosterDoEsqueleto({ win: criarWin(), limite: 5000 });
