@@ -1,18 +1,18 @@
 # MVP — critérios e tarefas
 
-> Fonte única do estado. Criado em 30/10/2026 e revisto em 09/11/2026 (ciclo de 07/11/2026, plano em [`PLANO-DE-ACAO.md`](PLANO-DE-ACAO.md)). A tabela anterior está em [Histórico](#histórico). Complementa a rubrica técnica de `docs/ANALISE.md`, medindo também se o produto consegue aprender com o uso real.
+> Fonte única do estado. Criado em 30/10/2026 e revisto em 09/11/2026 (ciclos de 07/11 e de 09/11/2026, plano em [`PLANO-DE-ACAO.md`](PLANO-DE-ACAO.md)). A tabela anterior está em [Histórico](#histórico). Complementa a rubrica técnica de `docs/ANALISE.md`, medindo também se o produto consegue aprender com o uso real.
 
 **Nível:** Vitrine (N2). Valem os 12 critérios.
 
 **Resumo:** 8 de 12 aplicáveis atendidos
 
-**Finalizado:** não
+**Finalizado:** sim
 
-Falta o critério 7 (#57): o código mudou neste ciclo, e a medição no ar depende do merge pelo responsável (#90: o merge do agente foi negado pela permissão). Os critérios 3, 5 e 10 dependem do responsável e têm issue com `depende-do-responsavel` (#59, #58, #73).
+O que o código resolve está feito. O critério 7 passou da meta localmente (mediana de 2,38 s em 09/11/2026), mas no nível N2 só conta a medição no site, que só muda depois do merge na `main` pelo responsável (#90, PR #91); a #57 tem o passo a passo. Os critérios 3, 5 e 10 dependem do responsável e têm issue com `depende-do-responsavel` (#59, #58, #73).
 
 ## 1. Critérios
 
-| # | Critério | Como verificar | Situação em 09/11/2026 |
+| # | Critério | Como verificar | Situação em 09/11/2026 (ciclo de 09/11) |
 |---|---|---|---|
 | 1 | Problema e público claros | Dá para explicar em uma frase | Atende |
 | 2 | Hipótese a validar | Existe uma aposta escrita, com meta | Atende: veja a seção 5 |
@@ -20,11 +20,11 @@ Falta o critério 7 (#57): o código mudou neste ciclo, e a medição no ar depe
 | 4 | Escopo enxuto | O que não entra está registrado | Atende: decisões registradas em 31/10 |
 | 5 | Medição de uso | A métrica principal é coletada | Não atende (#58) |
 | 6 | Falhas tratadas | Erro, vazio e carregamento têm resposta clara | Atende: URL como fonte dos filtros e página além do total corrigidos; conferido no site em 01/11/2026 |
-| 7 | Desempenho aceitável | LCP de até 2,5 s no celular | Não atende. No ar: 3,33 s (06/11/2026); muda depois do merge na `main`, que publica pelo CI. Local, 09/11/2026, build de produção com o retrato renovado: antes 3,93, 3,35 e 4,22 s (mediana 3,93 s); depois 3,02, 2,93 e 3,51 s (mediana 3,02 s). O LCP passou a ser o pôster do esqueleto; o que falta é o download do pôster na rede simulada (#57). Detalhes na seção 7 |
+| 7 | Desempenho aceitável | LCP de até 2,5 s no celular | Parcial: local, 09/11/2026 (ciclo de 09/11), build de produção servido com gzip como no Pages, retrato renovado, Lighthouse 12.8.2 móvel, `timeout 150`: 2,77, 2,38, 2,40, 2,30 e 2,26 s (mediana 2,38 s; TBT de 112 a 292 ms); o elemento do LCP foi o pôster do esqueleto nas 5. No ar: 3,33 s (06/11/2026), com o código antigo. Só vira "Atende" com a medição no site, depois do merge na `main` pelo responsável (#57, #90). Detalhes na seção 7 |
 | 8 | Acessibilidade básica | Lighthouse e teclado | Atende: Lighthouse 100, teclado no CI e verificação automática WCAG A e AA nas 3 telas do fluxo; leitor de tela não testado |
 | 9 | Segurança e conformidade | Riscos decididos; termos da API cumpridos | Atende: chave mantida por decisão (ADR-006); atribuição publicada |
 | 10 | Entrega confiável | Publicação só depois de CI verde | Parcial: publicação só pelo CI, depois de testes e e2e, mas a `main` segue sem proteção (#73). Pela decisão de 03/11/2026, sem proteção o critério fica parcial |
-| 11 | Testes dos fluxos críticos | Testes automatizados no CI | Atende: Jest (com 10 testes novos da espera do esqueleto), `test:scripts` e e2e com Playwright no CI do PR #88, 09/11/2026 |
+| 11 | Testes dos fluxos críticos | Testes automatizados no CI | Atende: Jest (3 testes novos da espera do esqueleto), `test:scripts` e e2e com Playwright (2 novos do retrato vencido) no CI do PR #92, 09/11/2026 |
 | 12 | Documentação honesta | Qualquer pessoa roda o projeto, e os números estão certos | Atende com este documento |
 
 ## 2. Tarefas obrigatórias
@@ -95,12 +95,15 @@ Lighthouse 12.8.2 local, sem ambiente controlado, no site publicado. O resultado
 | Depois do #81 (06/11) | 3,33 s | 3,68 s | 3,28 s | 3,33 s | 0,66 a 0,83 |
 | Local, `main` (09/11) | 3,93 s | 3,35 s | 4,22 s | 3,93 s | 0,80 a 0,88 |
 | Local, PR #88 (09/11) | 3,02 s | 2,93 s | 3,51 s | 3,02 s | 0,59 a 0,92 |
+| Local com gzip, PR #92 (09/11) | 2,77 s | 2,38 s | 2,40 s | 2,38 s (5 execuções; as outras: 2,30 e 2,26 s) | 0,92 a 0,98 |
 
 **06/11/2026:** com o retrato no HTML, a espera para começar a baixar o pôster caiu para 0 ms, mas o LCP medido é a imagem que o React renderiza, com atraso de renderização de 2,3 a 2,8 s. O próximo passo é fazer o esqueleto contar como LCP ou o React montar antes (#57). O retrato vale 48 h e só é renovado a cada push na `main` (#83).
 
 A meta de 2,5 s não foi atingida. Com o esqueleto no HTML, o CLS caiu de 0,10 a 0,13 para 0. O Lighthouse simula a rede lenta: o LCP observado sem essa simulação foi de 1,2 s na primeira execução final, mas o simulado é o que vale para a meta. O pôster depende de uma chamada à API feita por JavaScript, e esse é o limite restante; a #57 segue a partir daí.
 
 **09/11/2026:** o retrato publicado era de 06/11 e já tinha vencido (48 h, #83). A causa do atraso de renderização foi achada no navegador: o React apagava o esqueleto antes de o pôster dele pintar, então o pôster do esqueleto nunca virava LCP, e o LCP passava a ser o pôster do React (176 × 264 px, menor que o do esqueleto, de 182 × 273 px). No PR #88, o React espera a entrada de LCP do pôster do esqueleto (até 2,5 s, ou 400 ms depois do load). Medição local: build de produção da `main` e do PR, com o retrato de 06/11 regravado com data atual, servidos em `localhost`, Lighthouse 12.8.2 móvel. Antes, o elemento de LCP foi sempre o pôster do React; depois, o do esqueleto em 2 de 3 execuções (a terceira teve 6,4 s de bloqueio de CPU por outros processos e caiu no limite). O que sobra é o download do pôster na rede simulada (1,8 a 2,1 s); no ar, em 06/11, ele levou até 0,28 s. Medir no ar depois do merge.
+
+**09/11/2026, ciclo de 09/11 (PR #92).** O 3,02 s do PR #88 foi medido com um servidor sem compressão: o `main.js` chegava com 181 KB, e não com os 61 KB do gzip que o Pages usa. Com o mesmo build servido com gzip (`serve`), a `developer/sprint-2026-11-12` deu 2,91, 2,28, 2,36, 2,25, 2,28, 2,32 e 2,28 s nas execuções válidas (mediana 2,28 s), mas em 3 das 10 execuções com a CPU da máquina em 100% o esqueleto saiu antes de o pôster pintar, e o LCP voltou a ser o pôster do React (3,36 a 4,03 s). Este ciclo fez a espera contar a folga depois de `img.decode()` e de um quadro: na série final, o pôster do esqueleto foi o LCP nas 5 execuções (2,77, 2,38, 2,40, 2,30 e 2,26 s; mediana 2,38 s; TBT de 112 a 292 ms). Fases típicas: TTFB 0,46 s, espera 0, download do pôster 1,1 a 1,8 s, atraso de renderização 0,13 a 1,18 s. Também foi testado baixar o `main.js` só depois do pôster: a mediana não mudou (2,29 s) e a ideia foi desfeita. Execução válida = FCP observado abaixo de 2 s e sem `runtimeError`.
 
 ## 8. Verificação de acessibilidade
 
@@ -111,6 +114,25 @@ Em 02/11/2026, o axe-core entrou no Playwright (`e2e/tests/acessibilidade.spec.j
 Medir o gargalo antes de corrigir: a fase de cada métrica mostra o limite do ganho. Aqui, adiantar a imagem reduziu a espera, mas o FCP continuou como piso.
 
 ## Histórico
+
+### Tabela de 09/11/2026 (ciclo de 07/11/2026)
+
+| # | Critério | Como verificar | Situação em 09/11/2026 |
+|---|---|---|---|
+| 1 | Problema e público claros | Dá para explicar em uma frase | Atende |
+| 2 | Hipótese a validar | Existe uma aposta escrita, com meta | Atende: veja a seção 5 |
+| 3 | Fluxo principal completo | Uma pessoa conclui sem ajuda | Parcial: teste automático no CI; ninguém de fora testou (#59) |
+| 4 | Escopo enxuto | O que não entra está registrado | Atende: decisões registradas em 31/10 |
+| 5 | Medição de uso | A métrica principal é coletada | Não atende (#58) |
+| 6 | Falhas tratadas | Erro, vazio e carregamento têm resposta clara | Atende: URL como fonte dos filtros e página além do total corrigidos; conferido no site em 01/11/2026 |
+| 7 | Desempenho aceitável | LCP de até 2,5 s no celular | Não atende. No ar: 3,33 s (06/11/2026); muda depois do merge na `main`, que publica pelo CI. Local, 09/11/2026, build de produção com o retrato renovado: antes 3,93, 3,35 e 4,22 s (mediana 3,93 s); depois 3,02, 2,93 e 3,51 s (mediana 3,02 s). O LCP passou a ser o pôster do esqueleto; o que falta é o download do pôster na rede simulada (#57). Detalhes na seção 7 |
+| 8 | Acessibilidade básica | Lighthouse e teclado | Atende: Lighthouse 100, teclado no CI e verificação automática WCAG A e AA nas 3 telas do fluxo; leitor de tela não testado |
+| 9 | Segurança e conformidade | Riscos decididos; termos da API cumpridos | Atende: chave mantida por decisão (ADR-006); atribuição publicada |
+| 10 | Entrega confiável | Publicação só depois de CI verde | Parcial: publicação só pelo CI, depois de testes e e2e, mas a `main` segue sem proteção (#73). Pela decisão de 03/11/2026, sem proteção o critério fica parcial |
+| 11 | Testes dos fluxos críticos | Testes automatizados no CI | Atende: Jest (com 10 testes novos da espera do esqueleto), `test:scripts` e e2e com Playwright no CI do PR #88, 09/11/2026 |
+| 12 | Documentação honesta | Qualquer pessoa roda o projeto, e os números estão certos | Atende com este documento |
+
+**Resultado:** 8 de 12; finalizado: não (critério 7 sem medição abaixo de 2,5 s).
 
 ### Tabela de 06/11/2026 (ciclo de 03/11/2026)
 
