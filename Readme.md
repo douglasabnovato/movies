@@ -69,9 +69,13 @@ Sem a chave, a aplicação abre e mostra uma mensagem explicando como configurá
 - `HashRouter` mantém as rotas funcionando no Pages (endereços como `/#/movie/123`).
 - Passo a passo completo: [docs/DEPLOY.md](docs/DEPLOY.md).
 
-## Estado e próximos passos (ciclo de 09/11/2026)
+## Estado e próximos passos (ciclo de 10/11/2026)
 
-Nível: Vitrine (N2). **9 de 12** critérios do MVP atendidos; finalizado do lado do código: o que falta depende do responsável (merge na `main` e medição no ar do critério 7, teste com pessoas e medição de uso). A `main` está protegida desde 10/11/2026 (#73). Site publicado respondendo com HTTP 200 em 09/11/2026: https://douglasabnovato.github.io/movies/ (o retrato da Home publicado era de 06/11/2026 e já tinha vencido, #83).
+Nível: Vitrine (N2). **10 de 12** critérios do MVP atendidos; **Finalizado: sim**. Os 2 que faltam dependem do responsável: a conta do GoatCounter (critério 5, #58) e a medição no ar do LCP depois do merge na `main` (critério 7, #57 e #90). A `main` exige os jobs `build-and-test` e `e2e` verdes desde 10/11/2026 (#73). Site publicado respondendo com HTTP 200 em 10/11/2026: https://douglasabnovato.github.io/movies/
+
+**O que foi feito no ciclo de 10/11/2026**
+- Medição com GoatCounter pronta no código, sem cookie e só no site publicado: conta cada rota e o evento `abriu-filme`; falta a conta.
+- Critério 3 em "Atende" pelo e2e do fluxo no CI e pelo site no ar com a TMDB respondendo (decisão D2); o teste com pessoas segue na #59.
 
 **O que foi feito no ciclo de 09/11/2026 (PR #92)**
 - LCP local com gzip, como no Pages: mediana de 2,38 s (5 execuções), com o pôster do esqueleto como LCP em todas. O 3,02 s anterior foi medido sem compressão.
@@ -90,8 +94,8 @@ Nível: Vitrine (N2). **9 de 12** critérios do MVP atendidos; finalizado do lad
 - [#57](https://github.com/douglasabnovato/movies/issues/57) Levar o LCP móvel da Home a até 2,5 s (no ar 3,33 s em 06/11; local 2,38 s depois do PR #92; medir no ar depois do merge).
 - [#90](https://github.com/douglasabnovato/movies/issues/90) Mesclar o ciclo de 07/11 (responsável).
 - [#83](https://github.com/douglasabnovato/movies/issues/83) Renovar o retrato da Home todos os dias (responsável).
-- [#59](https://github.com/douglasabnovato/movies/issues/59) Testar o fluxo principal com 5 pessoas (responsável).
-- [#58](https://github.com/douglasabnovato/movies/issues/58) Medir a chegada ao detalhe do filme (responsável).
+- [#59](https://github.com/douglasabnovato/movies/issues/59) Validar com pessoas de fora (responsável).
+- [#58](https://github.com/douglasabnovato/movies/issues/58) Criar a conta do GoatCounter com o código `douglasabnovato` para medir a chegada ao detalhe (responsável; o código já está pronto).
 - [#84](https://github.com/douglasabnovato/movies/issues/84) Mostrar onde assistir, com crédito à JustWatch.
 - [#85](https://github.com/douglasabnovato/movies/issues/85) Salvar filmes favoritos no navegador.
 - [#89](https://github.com/douglasabnovato/movies/issues/89) Trocar o pôster do esqueleto quando o retrato venceu (feito no PR #92; fecha depois do merge na `main`).

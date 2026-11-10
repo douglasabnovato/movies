@@ -4,28 +4,28 @@
 
 **Nível:** Vitrine (N2). Valem os 12 critérios.
 
-**Resumo:** 9 de 12 aplicáveis atendidos
+**Resumo:** 10 de 12 aplicáveis atendidos
 
 **Finalizado:** sim
 
-O que o código resolve está feito. O critério 7 passou da meta localmente (mediana de 2,38 s em 09/11/2026), mas no nível N2 só conta a medição no site, que só muda depois do merge na `main` pelo responsável (#90, PR #91); a #57 tem o passo a passo. Os critérios 3 e 5 dependem do responsável e têm issue com `depende-do-responsavel` (#59, #58). O 10 passou a "Atende" em 10/11/2026, com a `main` protegida (#73).
+Revisão de 10/11/2026 (ciclo da faixa de 90%, decisões D1 a D7 do repositório `engenharia`). O que o código resolve está feito. Faltam dois, e os dois dependem do responsável: o 5 (criar a conta do GoatCounter, #58) e o 7 (medir no site depois do merge na `main`, #57 e #90). O critério 7 passou da meta localmente (mediana de 2,38 s em 09/11/2026), mas no nível N2 só conta a medição no site.
 
 ## 1. Critérios
 
-| # | Critério | Como verificar | Situação em 09/11/2026 (ciclo de 09/11) |
+| # | Critério | Como verificar | Situação em 10/11/2026 (ciclo da faixa de 90%) |
 |---|---|---|---|
 | 1 | Problema e público claros | Dá para explicar em uma frase | Atende |
-| 2 | Hipótese a validar | Existe uma aposta escrita, com meta | Atende: veja a seção 5 |
-| 3 | Fluxo principal completo | Uma pessoa conclui sem ajuda | Parcial: teste automático no CI; ninguém de fora testou (#59) |
+| 2 | Hipótese a validar | Existe uma aposta escrita, com meta | Atende: meta decidida pelo coordenador em 10/11/2026 (decisão D1), revisável pelo responsável; aposta na seção 5 |
+| 3 | Fluxo principal completo | Uma pessoa conclui sem ajuda | Atende (decisão D2): o e2e `filtra por gênero, abre o detalhe e volta com o filtro` roda no CI (job `e2e`); local, 10/11/2026: 12 testes, 0 falhas. No ar, 10/11/2026: `curl` no site deu HTTP 200 e a TMDB respondeu 200 (19 gêneros) à chave publicada, conferida sem imprimir. O teste com 5 pessoas virou validação de produto (#59) |
 | 4 | Escopo enxuto | O que não entra está registrado | Atende: decisões registradas em 31/10 |
-| 5 | Medição de uso | A métrica principal é coletada | Não atende (#58) |
+| 5 | Medição de uso | A métrica principal é coletada | Parcial: código pronto; falta a conta (decisão D5, #58). GoatCounter com o código `douglasabnovato`, sem cookie, só no site publicado; conta cada rota e o evento `abriu-filme`. Testes (Jest e e2e) conferem que não carrega em localhost nem nos testes e que, no endereço publicado, abrir um filme conta o evento |
 | 6 | Falhas tratadas | Erro, vazio e carregamento têm resposta clara | Atende: URL como fonte dos filtros e página além do total corrigidos; conferido no site em 01/11/2026 |
-| 7 | Desempenho aceitável | LCP de até 2,5 s no celular | Parcial: local, 09/11/2026 (ciclo de 09/11), build de produção servido com gzip como no Pages, retrato renovado, Lighthouse 12.8.2 móvel, `timeout 150`: 2,77, 2,38, 2,40, 2,30 e 2,26 s (mediana 2,38 s; TBT de 112 a 292 ms); o elemento do LCP foi o pôster do esqueleto nas 5. No ar: 3,33 s (06/11/2026), com o código antigo. Só vira "Atende" com a medição no site, depois do merge na `main` pelo responsável (#57, #90). Detalhes na seção 7 |
+| 7 | Desempenho aceitável | LCP de até 2,5 s no celular | Parcial: o código que baixa o LCP ainda não está no ar (a `main` não recebeu a sprint; `git log main..developer/sprint-2026-11-12` com os PRs #88 e #92, 10/11/2026). Local, 09/11/2026: mediana de 2,38 s; no ar, 3,33 s em 06/11/2026 com o código antigo. Medir no site depois do merge (decisão D6, #57, #90). Detalhes na seção 7 |
 | 8 | Acessibilidade básica | Lighthouse e teclado | Atende: Lighthouse 100, teclado no CI e verificação automática WCAG A e AA nas 3 telas do fluxo; leitor de tela não testado |
 | 9 | Segurança e conformidade | Riscos decididos; termos da API cumpridos | Atende: chave mantida por decisão (ADR-006); atribuição publicada |
-| 10 | Entrega confiável | Publicação só depois de CI verde | Atende (10/11/2026): `gh api repos/douglasabnovato/movies/rulesets`, ruleset `principal-protegida` ativo (exige PR, bloqueia force push e exclusão); o workflow `CI` roda nos PRs para `main` e `developer/**`, e a publicação no Pages só sai dele, depois de testes e e2e (#73) |
-| 11 | Testes dos fluxos críticos | Testes automatizados no CI | Atende: Jest (3 testes novos da espera do esqueleto), `test:scripts` e e2e com Playwright (2 novos do retrato vencido) no CI do PR #92, 09/11/2026 |
-| 12 | Documentação honesta | Qualquer pessoa roda o projeto, e os números estão certos | Atende com este documento |
+| 10 | Entrega confiável | Publicação só depois de CI verde | Atende: `gh api repos/douglasabnovato/movies/rules/branches/main`, 10/11/2026: `required_status_checks` com `build-and-test` e `e2e`, além de PR obrigatório e bloqueio de force push e exclusão; a publicação no Pages só sai do workflow, depois de testes e e2e (#73) |
+| 11 | Testes dos fluxos críticos | Testes automatizados no CI | Atende: `npx react-scripts test --watchAll=false`, 10/11/2026: 74 testes, 0 falhas; `test:scripts` sem `skipped`; e2e com 12 testes no CI |
+| 12 | Documentação honesta | Qualquer pessoa roda o projeto, e os números estão certos | Atende com este documento, conferido contra o `package.json` em 10/11/2026 |
 
 ## 2. Tarefas obrigatórias
 
@@ -114,6 +114,23 @@ Em 02/11/2026, o axe-core entrou no Playwright (`e2e/tests/acessibilidade.spec.j
 Medir o gargalo antes de corrigir: a fase de cada métrica mostra o limite do ganho. Aqui, adiantar a imagem reduziu a espera, mas o FCP continuou como piso.
 
 ## Histórico
+
+### Tabela de 09/11/2026 (ciclo de 09/11/2026; critério 10 revisto em 10/11/2026)
+
+| # | Critério | Como verificar | Situação em 10/11/2026, antes do ciclo da faixa de 90% |
+|---|---|---|---|
+| 1 | Problema e público claros | Dá para explicar em uma frase | Atende |
+| 2 | Hipótese a validar | Existe uma aposta escrita, com meta | Atende: veja a seção 5 |
+| 3 | Fluxo principal completo | Uma pessoa conclui sem ajuda | Parcial: teste automático no CI; ninguém de fora testou (#59) |
+| 4 | Escopo enxuto | O que não entra está registrado | Atende: decisões registradas em 31/10 |
+| 5 | Medição de uso | A métrica principal é coletada | Não atende (#58) |
+| 6 | Falhas tratadas | Erro, vazio e carregamento têm resposta clara | Atende: URL como fonte dos filtros e página além do total corrigidos; conferido no site em 01/11/2026 |
+| 7 | Desempenho aceitável | LCP de até 2,5 s no celular | Parcial: local, 09/11/2026 (ciclo de 09/11), build de produção servido com gzip como no Pages, retrato renovado, Lighthouse 12.8.2 móvel, `timeout 150`: 2,77, 2,38, 2,40, 2,30 e 2,26 s (mediana 2,38 s; TBT de 112 a 292 ms); o elemento do LCP foi o pôster do esqueleto nas 5. No ar: 3,33 s (06/11/2026), com o código antigo. Só vira "Atende" com a medição no site, depois do merge na `main` pelo responsável (#57, #90). Detalhes na seção 7 |
+| 8 | Acessibilidade básica | Lighthouse e teclado | Atende: Lighthouse 100, teclado no CI e verificação automática WCAG A e AA nas 3 telas do fluxo; leitor de tela não testado |
+| 9 | Segurança e conformidade | Riscos decididos; termos da API cumpridos | Atende: chave mantida por decisão (ADR-006); atribuição publicada |
+| 10 | Entrega confiável | Publicação só depois de CI verde | Atende (10/11/2026): `gh api repos/douglasabnovato/movies/rulesets`, ruleset `principal-protegida` ativo (exige PR, bloqueia force push e exclusão); o workflow `CI` roda nos PRs para `main` e `developer/**`, e a publicação no Pages só sai dele, depois de testes e e2e (#73) |
+| 11 | Testes dos fluxos críticos | Testes automatizados no CI | Atende: Jest (3 testes novos da espera do esqueleto), `test:scripts` e e2e com Playwright (2 novos do retrato vencido) no CI do PR #92, 09/11/2026 |
+| 12 | Documentação honesta | Qualquer pessoa roda o projeto, e os números estão certos | Atende com este documento |
 
 ### Tabela de 09/11/2026 (ciclo de 07/11/2026)
 
