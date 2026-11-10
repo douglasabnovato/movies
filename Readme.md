@@ -71,7 +71,7 @@ Sem a chave, a aplicação abre e mostra uma mensagem explicando como configurá
 
 ## Estado e próximos passos (ciclo de 09/11/2026)
 
-Nível: Vitrine (N2). **8 de 12** critérios do MVP atendidos; finalizado do lado do código: o que falta depende do responsável (merge na `main` e medição no ar do critério 7, teste com pessoas, medição de uso e proteção da `main`). Site publicado respondendo com HTTP 200 em 09/11/2026: https://douglasabnovato.github.io/movies/ (o retrato da Home publicado era de 06/11/2026 e já tinha vencido, #83).
+Nível: Vitrine (N2). **9 de 12** critérios do MVP atendidos; finalizado do lado do código: o que falta depende do responsável (merge na `main` e medição no ar do critério 7, teste com pessoas e medição de uso). A `main` está protegida desde 10/11/2026 (#73). Site publicado respondendo com HTTP 200 em 09/11/2026: https://douglasabnovato.github.io/movies/ (o retrato da Home publicado era de 06/11/2026 e já tinha vencido, #83).
 
 **O que foi feito no ciclo de 09/11/2026 (PR #92)**
 - LCP local com gzip, como no Pages: mediana de 2,38 s (5 execuções), com o pôster do esqueleto como LCP em todas. O 3,02 s anterior foi medido sem compressão.
@@ -90,7 +90,6 @@ Nível: Vitrine (N2). **8 de 12** critérios do MVP atendidos; finalizado do lad
 - [#57](https://github.com/douglasabnovato/movies/issues/57) Levar o LCP móvel da Home a até 2,5 s (no ar 3,33 s em 06/11; local 2,38 s depois do PR #92; medir no ar depois do merge).
 - [#90](https://github.com/douglasabnovato/movies/issues/90) Mesclar o ciclo de 07/11 (responsável).
 - [#83](https://github.com/douglasabnovato/movies/issues/83) Renovar o retrato da Home todos os dias (responsável).
-- [#73](https://github.com/douglasabnovato/movies/issues/73) Proteger a `main` e exigir CI verde (responsável).
 - [#59](https://github.com/douglasabnovato/movies/issues/59) Testar o fluxo principal com 5 pessoas (responsável).
 - [#58](https://github.com/douglasabnovato/movies/issues/58) Medir a chegada ao detalhe do filme (responsável).
 - [#84](https://github.com/douglasabnovato/movies/issues/84) Mostrar onde assistir, com crédito à JustWatch.
@@ -128,7 +127,7 @@ Principais mudanças deste ciclo: chave só por variável de ambiente, erros tip
 
 | Ação | Como fazer | Issue |
 |---|---|---|
-| Proteger a `main` | Settings → Branches → Add rule para `main`; marcar "Require a pull request" e "Require status checks" com `build-and-test` e `e2e` | #73 |
+| Exigir CI verde no merge (opcional) | A `main` já está protegida (ruleset `principal-protegida`, 10/11/2026); falta só acrescentar ao ruleset a regra de status checks com `build-and-test` e `e2e` | #73 |
 | Medir o uso | Criar conta em uma ferramenta sem cookies e informar o código do site | #58 |
 | Testar com 5 pessoas | Aplicar [`docs/TESTE-USUARIOS.md`](docs/TESTE-USUARIOS.md) | #59 |
 | Conferir a largura de 768 px | Abrir o site em um aparelho real | #57 |

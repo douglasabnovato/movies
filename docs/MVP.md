@@ -4,11 +4,11 @@
 
 **Nível:** Vitrine (N2). Valem os 12 critérios.
 
-**Resumo:** 8 de 12 aplicáveis atendidos
+**Resumo:** 9 de 12 aplicáveis atendidos
 
 **Finalizado:** sim
 
-O que o código resolve está feito. O critério 7 passou da meta localmente (mediana de 2,38 s em 09/11/2026), mas no nível N2 só conta a medição no site, que só muda depois do merge na `main` pelo responsável (#90, PR #91); a #57 tem o passo a passo. Os critérios 3, 5 e 10 dependem do responsável e têm issue com `depende-do-responsavel` (#59, #58, #73).
+O que o código resolve está feito. O critério 7 passou da meta localmente (mediana de 2,38 s em 09/11/2026), mas no nível N2 só conta a medição no site, que só muda depois do merge na `main` pelo responsável (#90, PR #91); a #57 tem o passo a passo. Os critérios 3 e 5 dependem do responsável e têm issue com `depende-do-responsavel` (#59, #58). O 10 passou a "Atende" em 10/11/2026, com a `main` protegida (#73).
 
 ## 1. Critérios
 
@@ -23,7 +23,7 @@ O que o código resolve está feito. O critério 7 passou da meta localmente (me
 | 7 | Desempenho aceitável | LCP de até 2,5 s no celular | Parcial: local, 09/11/2026 (ciclo de 09/11), build de produção servido com gzip como no Pages, retrato renovado, Lighthouse 12.8.2 móvel, `timeout 150`: 2,77, 2,38, 2,40, 2,30 e 2,26 s (mediana 2,38 s; TBT de 112 a 292 ms); o elemento do LCP foi o pôster do esqueleto nas 5. No ar: 3,33 s (06/11/2026), com o código antigo. Só vira "Atende" com a medição no site, depois do merge na `main` pelo responsável (#57, #90). Detalhes na seção 7 |
 | 8 | Acessibilidade básica | Lighthouse e teclado | Atende: Lighthouse 100, teclado no CI e verificação automática WCAG A e AA nas 3 telas do fluxo; leitor de tela não testado |
 | 9 | Segurança e conformidade | Riscos decididos; termos da API cumpridos | Atende: chave mantida por decisão (ADR-006); atribuição publicada |
-| 10 | Entrega confiável | Publicação só depois de CI verde | Parcial: publicação só pelo CI, depois de testes e e2e, mas a `main` segue sem proteção (#73). Pela decisão de 03/11/2026, sem proteção o critério fica parcial |
+| 10 | Entrega confiável | Publicação só depois de CI verde | Atende (10/11/2026): `gh api repos/douglasabnovato/movies/rulesets`, ruleset `principal-protegida` ativo (exige PR, bloqueia force push e exclusão); o workflow `CI` roda nos PRs para `main` e `developer/**`, e a publicação no Pages só sai dele, depois de testes e e2e (#73) |
 | 11 | Testes dos fluxos críticos | Testes automatizados no CI | Atende: Jest (3 testes novos da espera do esqueleto), `test:scripts` e e2e com Playwright (2 novos do retrato vencido) no CI do PR #92, 09/11/2026 |
 | 12 | Documentação honesta | Qualquer pessoa roda o projeto, e os números estão certos | Atende com este documento |
 
