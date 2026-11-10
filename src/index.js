@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
 import ErrorBoundary from "./components/ErrorBoundary";
 import Footer from "./components/Footer";
+import Medicao from "./components/Medicao";
 import { esperarPosterDoEsqueleto } from "./utils/shellPoster";
 
 /* A tela de detalhes só é baixada quando aberta, para aliviar a primeira carga da Home. */
@@ -24,6 +25,7 @@ esperarPosterDoEsqueleto()
             v7_relativeSplatPath: true,
           }}
         >
+          <Medicao />
           <div className="app-container">
             <ErrorBoundary>
               <Suspense fallback={null}>
