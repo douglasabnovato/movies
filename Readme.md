@@ -71,7 +71,11 @@ Sem a chave, a aplicação abre e mostra uma mensagem explicando como configurá
 
 ## Estado e próximos passos (ciclo de 16/11/2026)
 
-Nível: Vitrine (N2). **9 de 12** critérios do MVP atendidos; **Finalizado: sim**. Os 3 que faltam dependem do responsável: a conta do GoatCounter (critério 5, #58), o deploy negado na `main` (critério 7, #98; depois, medir de novo na #102) e os alertas do Dependabot (critério 9, #99). Site publicado respondendo com HTTP 200 em 16/11/2026, mas ainda com o build de 06/11/2026: https://douglasabnovato.github.io/movies/
+Nível: Vitrine (N2). **10 de 12** critérios do MVP atendidos; **Finalizado: não**. Faltam a conta do GoatCounter (critério 5, #58, com o responsável) e a nova medição do LCP no ar (critério 7, #102), possível agora que o deploy voltou (#98). O critério 9 passou a "Atende" em 16/11/2026 (14:39): dos 61 alertas do Dependabot abertos, 38 têm correção na sprint-19 (PR #108) e fecham com o merge na `main`, 2 do `react-router` têm risco aceito na [ADR-008](docs/adr/ADR-008-react-router-6-risco-aceito.md) e 21, só de desenvolvimento e presos ao Create React App, foram aceitos na [ADR-009](docs/adr/ADR-009-alertas-de-desenvolvimento-aceitos.md). Site publicado respondendo com HTTP 200 e com o build de 16/11/2026: https://douglasabnovato.github.io/movies/
+
+**Alertas do Dependabot, 16/11/2026 (PR #108)**
+- 38 dos 61 alertas corrigidos só no `package-lock.json` e no `e2e/package-lock.json`, sem troca de versão maior (`npm audit fix` e `npm update express`).
+- Os 21 que restam só saem com versão maior ou trocando o Create React App. Nenhum vai para o site (`npm ls --omit=dev` vazio); pela regra geral do responsável, ficam aceitos na [ADR-009](docs/adr/ADR-009-alertas-de-desenvolvimento-aceitos.md) até a migração para o Vite.
 
 **O que foi feito no ciclo de 16/11/2026 (PR #103)**
 - Onde assistir no Brasil no detalhe do filme (assinatura, aluguel e compra), com crédito à JustWatch, na mesma requisição do detalhe (#84). O axe achou um link sem sublinhado no crédito, corrigido.
@@ -99,7 +103,8 @@ Nível: Vitrine (N2). **9 de 12** critérios do MVP atendidos; **Finalizado: sim
 **O que queremos fazer**
 - [#98](https://github.com/douglasabnovato/movies/issues/98) Fazer o deploy na `main` voltar a passar (responsável; passo a passo no `docs/DEPLOY.md`, seção 4).
 - [#102](https://github.com/douglasabnovato/movies/issues/102) Medir o LCP no ar depois do deploy; [#57](https://github.com/douglasabnovato/movies/issues/57) fecha com a mediana até 2,5 s.
-- [#99](https://github.com/douglasabnovato/movies/issues/99) Ligar os alertas do Dependabot (responsável).
+- [#107](https://github.com/douglasabnovato/movies/issues/107) Resolver os 21 alertas do Dependabot que restam (migrar do Create React App, trocar pacotes ou aceitar o risco em ADR, decisão do responsável).
+- [#99](https://github.com/douglasabnovato/movies/issues/99) Ligar os alertas do Dependabot (feito pelo responsável em 16/11/2026; evidência comentada na issue).
 - [#58](https://github.com/douglasabnovato/movies/issues/58) Criar a conta do GoatCounter com o código `douglasabnovato` (responsável; o código já está pronto).
 - [#59](https://github.com/douglasabnovato/movies/issues/59) Validar com pessoas de fora (responsável).
 - [#83](https://github.com/douglasabnovato/movies/issues/83) Renovar o retrato da Home todos os dias (responsável).
@@ -141,7 +146,8 @@ Principais mudanças deste ciclo: chave só por variável de ambiente, erros tip
 | Ação | Como fazer | Issue |
 |---|---|---|
 | Fazer o deploy voltar | Seguir o caminho 1 ou 2 da seção 4 do [`docs/DEPLOY.md`](docs/DEPLOY.md) | #98 |
-| Ligar os alertas do Dependabot | Settings → Advanced Security → Dependabot alerts → Enable | #99 |
+| Fechar a issue dos alertas | Os alertas foram ligados em 16/11/2026 (61 abertos às 12:00; evidência na issue) | #99 |
+| Decidir os 21 alertas que restam | Escolher entre migrar do Create React App, trocar pacotes ou aceitar o risco em ADR | #107 |
 | Fechar a issue da proteção | O ruleset já exige `build-and-test` e `e2e` (conferido em 16/11/2026) | #73 |
 | Medir o uso | Criar a conta do GoatCounter com o código `douglasabnovato` | #58 |
 | Testar com 5 pessoas | Aplicar [`docs/TESTE-USUARIOS.md`](docs/TESTE-USUARIOS.md) | #59 |
