@@ -184,3 +184,57 @@ Sem mudança no problema, no público e na hipótese. Foco: o critério 7 (#57) 
 **Segue em issue.** #57 até a medição no site depois do merge na `main` (#90). #89 fecha depois do merge, com o site conferido. #83, #73, #59 e #58 com o responsável.
 
 **Revisão independente (09/11/2026).** Um subagente leu só o diff. Corrigido: o `load` do pôster vencido, ainda oculto, fazia a folga começar por ele (agora é ignorado, com teste); o e2e passou a conferir que o pôster antigo nunca aparece. Aceito sem mudança: pôster novo que falha mostra o espaço vazio até o React montar.
+
+## Ciclo de 16/11/2026
+
+> Branch `feature/2026-11-16`, criada da `developer/sprint-2026-11-19` (nova, a partir da `main`, porque o PR #91 foi mesclado em 16/11/2026). PR para a sprint e PR sprint → `main` com `revisao-responsavel`.
+
+### Produto
+
+**Problema e público.** Quem quer escolher um filme para ver hoje e precisa descobrir, filtrar e abrir a ficha sem ajuda. Sem mudança.
+
+**Hipótese e meta.** Acreditamos que buscar ou filtrar por gênero basta para achar um filme que valha abrir. Saberemos quando, com no mínimo 100 visitas à Home no GoatCounter, os eventos `abriu-filme` somarem ao menos 50% dessas visitas (seção 5 do `MVP.md`).
+
+**O que a pesquisa trouxe.**
+- A TMDB entrega "onde assistir" por país em `/movie/{id}/watch/providers` (assinatura, aluguel e compra, com logo, nome e ordem de destaque) e exige o crédito à JustWatch onde os dados aparecem. Fonte: [TMDB, Watch Providers](https://developer.themoviedb.org/reference/movie-watch-providers). Conferido em 16/11/2026 que o `append_to_response` aceita `watch/providers`: a resposta do filme 550 trouxe a chave `watch/providers` com o país `BR`.
+- O Pages também publica por Actions, sem push de branch: `actions/upload-pages-artifact` e `actions/deploy-pages`, com `pages: write` e `id-token: write` e a fonte do Pages em "GitHub Actions". É a saída da #98 se o push na `gh-pages` seguir negado. Fonte: [GitHub Docs, usar workflows próprios com o Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages).
+- O LCP mede quando o maior elemento da primeira dobra pinta, com meta de 2,5 s no percentil 75. Fonte: [web.dev, Largest Contentful Paint](https://web.dev/articles/lcp).
+
+**Backlog (impacto × esforço).**
+
+| Item | Impacto | Esforço | Neste ciclo |
+|---|---|---|---|
+| Onde assistir no detalhe (#84) | Alto: é o passo seguinte de quem achou o filme | Baixo: vem na mesma requisição | Sim |
+| Honestidade do `MVP.md` (critérios 7 e 9, seção 5) | Alto | Baixo | Sim |
+| Deploy pelo Actions, preparado para a #98 | Alto | Médio | Só o passo a passo (mexer na fonte do Pages é do responsável) |
+| Setas na grade (#96) | Médio | Médio | Não: o roteiro do vídeo 10 grava essa mudança ao vivo |
+| Favoritos (#85) | Médio | Médio | Não |
+| react-router 7 (alerta moderado do audit) | Baixo hoje | Médio | Vira issue |
+
+**Fora do escopo.** Link direto para cada serviço de streaming, outros países, conta de usuário.
+
+### Engenharia
+
+**Arquitetura.** O detalhe continua em uma requisição: `getMovieFull` pede também `watch/providers`. O componente `WatchProviders` separa o país `BR` em assinatura, aluguel e compra, na ordem de destaque da TMDB, e mostra o crédito à JustWatch. Sem dados do Brasil, mostra um aviso.
+
+**Riscos.**
+- A seção depende da mesma resposta do detalhe: se a API cair, a tela inteira mostra o erro com "Tentar novamente", como já fazia.
+- O site no ar roda o build de 06/11/2026, porque o deploy de 16/11 falhou com 403 (#98). Nada deste ciclo chega ao site até o responsável resolver a #98.
+- `npm audit --omit=dev` (16/11/2026): 2 alertas moderados no `react-router` 6.30.6; a correção só existe na versão 7 (troca maior). O app não usa SSR e só gera links internos, então o risco fica registrado numa issue.
+
+**Qualidade.** Jest: testes do mapeamento e da tela (com dados, sem dados, API fora). Playwright: o fluxo principal confere a seção, e o axe roda no detalhe com ela. O axe achou `link-in-text-block` no crédito; o link ganhou sublinhado. O app não tem tema escuro próprio (sem `prefers-color-scheme` no CSS), então o axe roda só no claro.
+
+**Pronto.** Lint, Jest, `test:scripts`, build e e2e verdes no CI; `MVP.md` com evidência de cada "Atende".
+
+### Plano de ação
+
+**Este ciclo executa.**
+1. Onde assistir no detalhe (#84), com testes.
+2. Porta do e2e por `E2E_PORT`, para rodar local sem cair no servidor de outro processo.
+3. `MVP.md`: critério 7 com a medição no site de 16/11/2026; critério 9 em "Parcial" (Dependabot desligado); seção 5 com o GoatCounter e o "saberemos quando".
+4. `DEPLOY.md`: diagnóstico da #98 e o passo a passo do deploy pelo Actions.
+5. README: "Estado e próximos passos".
+
+**Medição no site (16/11/2026, 03h53 a 03h58).** Lighthouse 12.8.2 móvel, `timeout 180`, `--headless --no-sandbox`, 5 execuções: a 1ª foi descartada (FCP observado de 11,3 s, máquina ocupada); as válidas deram 3,22, 3,07, 3,32 e 3,47 s. Regra: a mediana usa as 3 primeiras execuções válidas: **3,22 s** (com as 4, seria 3,27 s); TBT de 196 a 255 ms; elemento do LCP: `article.film > a > div.card > img` (o pôster do React). O site serve o retrato de 06/11/2026 (`geradoEm` no HTML), ou seja, o código antigo.
+
+**Vira issue.** Ligar os alertas do Dependabot (responsável); migrar para o react-router 7; deploy pelo Actions se a #98 não se resolver no Settings; medir de novo no ar depois da #98.

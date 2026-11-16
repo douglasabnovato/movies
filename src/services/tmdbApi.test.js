@@ -127,7 +127,7 @@ describe("Services / tmdbApi", () => {
     await tmdbService.getMovieFull(1);
     expect(global.fetch).toHaveBeenCalledTimes(1);
     expect(global.fetch.mock.calls[0][0]).toContain(
-      "append_to_response=credits%2Cvideos%2Crecommendations",
+      "append_to_response=credits%2Cvideos%2Crecommendations%2Cwatch%2Fproviders",
     );
   });
 });

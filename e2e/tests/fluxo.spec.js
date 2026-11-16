@@ -15,6 +15,10 @@ test("filtra por gênero, abre o detalhe e volta com o filtro", async ({ page })
 
   await page.getByRole("link", { name: "Ver detalhes do filme Filme de Ação" }).click();
   await expect(page.getByRole("heading", { name: "Detalhe 3" })).toBeVisible();
+  await expect(page.getByRole("list", { name: "Assinatura" }).getByRole("listitem")).toHaveText([
+    "Serviço Simulado",
+  ]);
+  await expect(page.getByRole("link", { name: "JustWatch" })).toBeVisible();
 
   await page.getByRole("link", { name: "Voltar para a lista de filmes", exact: true }).click();
   await expect(page).toHaveURL(/genres=28/);

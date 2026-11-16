@@ -12,11 +12,14 @@ jest.mock("../../services/tmdbApi", () => {
 /* Renderiza a página na rota /movie/:id. */
 function renderAt(path, state) {
   return render(
-    <MemoryRouter initialEntries={[{ pathname: path, state }]} future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+    <MemoryRouter
+      initialEntries={[{ pathname: path, state }]}
+      future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
+    >
       <Routes>
         <Route path="/movie/:id" element={<Details />} />
       </Routes>
-    </MemoryRouter>
+    </MemoryRouter>,
   );
 }
 
@@ -29,7 +32,12 @@ describe("Pages / Details", () => {
     const mapped = mapMovieResponse({
       id: 1,
       credits: { cast: Array.from({ length: 12 }, (_, i) => ({ id: i })), crew: [{ id: 1 }] },
-      videos: { results: [{ type: "Teaser", site: "YouTube", key: "x" }, { type: "Trailer", site: "YouTube", key: "abc" }] },
+      videos: {
+        results: [
+          { type: "Teaser", site: "YouTube", key: "x" },
+          { type: "Trailer", site: "YouTube", key: "abc" },
+        ],
+      },
       recommendations: { results: [{ id: 9 }] },
     });
     expect(mapped.cast).toHaveLength(10);
@@ -38,7 +46,12 @@ describe("Pages / Details", () => {
   });
 
   it("mostra o filme e atualiza o título da aba", async () => {
-    tmdbService.getMovieFull.mockResolvedValue({ id: 5, title: "Filme C", vote_average: 7.5, release_date: "2020-01-02" });
+    tmdbService.getMovieFull.mockResolvedValue({
+      id: 5,
+      title: "Filme C",
+      vote_average: 7.5,
+      release_date: "2020-01-02",
+    });
     renderAt("/movie/5");
     expect(await screen.findByRole("heading", { name: "Filme C" })).toBeInTheDocument();
     expect(screen.getByRole("img", { name: "Avaliação dos usuários: 75%" })).toBeInTheDocument();
@@ -47,21 +60,71 @@ describe("Pages / Details", () => {
   });
 
   it("volta para a listagem mantendo os filtros de origem", async () => {
-    tmdbService.getMovieFull.mockResolvedValue({ id: 5, title: "Filme C", release_date: "2020-01-02" });
+    tmdbService.getMovieFull.mockResolvedValue({
+      id: 5,
+      title: "Filme C",
+      release_date: "2020-01-02",
+    });
     renderAt("/movie/5", { listSearch: "?genres=28,12&page=2" });
     await screen.findByRole("heading", { name: "Filme C" });
-    expect(screen.getByRole("link", { name: "Voltar para a lista de filmes" })).toHaveAttribute("href", "/?genres=28,12&page=2");
+    expect(screen.getByRole("link", { name: "Voltar para a lista de filmes" })).toHaveAttribute(
+      "href",
+      "/?genres=28,12&page=2",
+    );
   });
 
   it("sem origem conhecida, volta para a listagem inicial", async () => {
-    tmdbService.getMovieFull.mockResolvedValue({ id: 5, title: "Filme C", release_date: "2020-01-02" });
+    tmdbService.getMovieFull.mockResolvedValue({
+      id: 5,
+      title: "Filme C",
+      release_date: "2020-01-02",
+    });
     renderAt("/movie/5");
     await screen.findByRole("heading", { name: "Filme C" });
-    expect(screen.getByRole("link", { name: "Voltar para a lista de filmes" })).toHaveAttribute("href", "/");
+    expect(screen.getByRole("link", { name: "Voltar para a lista de filmes" })).toHaveAttribute(
+      "href",
+      "/",
+    );
+  });
+
+  it("mostra onde assistir no Brasil, vindo da mesma resposta", async () => {
+    tmdbService.getMovieFull.mockResolvedValue({
+      id: 5,
+      title: "Filme C",
+      release_date: "2020-01-02",
+      "watch/providers": {
+        results: { BR: { flatrate: [{ provider_id: 8, provider_name: "Serviço X" }] } },
+      },
+    });
+    renderAt("/movie/5");
+    expect(await screen.findByRole("list", { name: "Assinatura" })).toHaveTextContent("Serviço X");
+    expect(screen.getByRole("link", { name: "JustWatch" })).toBeInTheDocument();
+  });
+
+  it("sem dados de onde assistir, a página abre com o aviso", async () => {
+    tmdbService.getMovieFull.mockResolvedValue({
+      id: 5,
+      title: "Filme C",
+      release_date: "2020-01-02",
+    });
+    renderAt("/movie/5");
+    await screen.findByRole("heading", { name: "Filme C" });
+    expect(
+      screen.getByText("Ainda não há informação de onde assistir este filme no Brasil."),
+    ).toBeInTheDocument();
+  });
+
+  it("com a API fora, mostra o erro com Tentar novamente", async () => {
+    tmdbService.getMovieFull.mockRejectedValue(new TmdbError("network", "Sem conexão com a TMDB."));
+    renderAt("/movie/5");
+    expect(await screen.findByRole("alert")).toHaveTextContent("Não foi possível carregar o filme");
+    expect(screen.getByRole("button", { name: "Tentar novamente" })).toBeInTheDocument();
   });
 
   it("diferencia filme inexistente de falha de rede", async () => {
-    tmdbService.getMovieFull.mockRejectedValue(new TmdbError("not_found", "Conteúdo não encontrado.", 404));
+    tmdbService.getMovieFull.mockRejectedValue(
+      new TmdbError("not_found", "Conteúdo não encontrado.", 404),
+    );
     renderAt("/movie/0");
     expect(await screen.findByRole("alert")).toHaveTextContent("Filme não encontrado");
     expect(screen.queryByRole("button", { name: "Tentar novamente" })).not.toBeInTheDocument();

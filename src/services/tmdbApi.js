@@ -110,11 +110,11 @@ export const tmdbService = {
   searchMovies: (query, page = 1, options) =>
     fetchFromTMDB("/search/movie", { query, page }, options),
 
-  /* Detalhe completo em uma única requisição (elenco, vídeos e recomendações). */
+  /* Detalhe completo em uma única requisição (elenco, vídeos, recomendações e onde assistir). */
   getMovieFull: (id, options) =>
     fetchFromTMDB(
       `/movie/${encodeURIComponent(id)}`,
-      { append_to_response: "credits,videos,recommendations" },
+      { append_to_response: "credits,videos,recommendations,watch/providers" },
       options,
     ),
 };
