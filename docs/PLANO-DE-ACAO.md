@@ -96,3 +96,91 @@ Priorização por **MoSCoW** e ordenação por **ganho ÷ esforço** (esforço e
 4. README com a seção do ciclo.
 
 **Vira issue.** #83 (responsável), #84 e #85 (agente). Seguem abertas: #57 (agente; o celular real é do responsável), #58, #59 e #73 (responsável).
+
+## Ciclo de 07/11/2026
+
+> Branch `feature/2026-11-07` → `developer/sprint-2026-11-12` → `main` (o PR para a `main` fica aberto para revisão do responsável). Nível: Vitrine (N2), 12 critérios.
+
+### Produto
+
+**Problema e público.** Sem mudança: quem chega quer descobrir um filme e abrir a ficha. A Home é a primeira tela, e o critério 7 (LCP de até 2,5 s no celular) segue aberto (#57).
+
+**Hipótese e meta.** Sem mudança (seção 5 do `MVP.md`).
+
+**O que a pesquisa trouxe.**
+
+| Ideia | O que levamos para o projeto | Fonte |
+|---|---|---|
+| Um elemento removido do DOM continua candidato a LCP, mas um elemento novo só vira LCP se for maior | O pôster do esqueleto (182 × 273 px no celular) é maior que o do React (176 × 264 px). Se ele pinta antes de o React montar, continua sendo o LCP | [Chromium: mudança do LCP no M88](https://chromium.googlesource.com/chromium/src/+/main/docs/speed/metrics_changelog/2020_11_lcp_2.md), [W3C: Largest Contentful Paint](https://www.w3.org/TR/largest-contentful-paint/) |
+| Quando o framework troca o HTML inicial por nós novos, o LCP passa para o momento em que o framework termina | É o que acontecia: o `createRoot` apagava o esqueleto antes de a imagem pintar | [3perf: custo escondido do hydration mismatch](https://3perf.com/blog/hydration-mismatch/) |
+| O atraso de renderização é o tempo entre a imagem pronta e a pintura; em renderização no cliente, o tempo de espera do JS aparece ali | O atraso de 2,3 a 2,8 s medido em 06/11 era o React montando | [web.dev: optimize LCP](https://web.dev/optimize-lcp/), [web.dev: common misconceptions about LCP](https://web.dev/blog/common-misconceptions-lcp) |
+
+**Backlog priorizado (impacto × esforço).**
+
+| Prioridade | Item | Impacto | Esforço | Destino |
+|---|---|---|---|---|
+| 1 | React espera o pôster do esqueleto virar LCP (até 2,5 s) | Alto | Baixo | Este ciclo (#57) |
+| 2 | Renovar o retrato da Home todos os dias | Alto | Baixo | Responsável (#83) |
+| 3 | Trocar o pôster do esqueleto quando o retrato venceu | Médio | Baixo | Issue #89 |
+| 4 | Onde assistir (JustWatch) e favoritos | Médio | Médio | Issues #84 e #85 |
+
+**Fora do escopo.** Renderização no servidor, troca de hospedagem.
+
+### Engenharia
+
+**Arquitetura.** `src/utils/shellPoster.js` observa `largest-contentful-paint` e resolve quando a entrada é a própria imagem do esqueleto (`#shell-first img`); desiste 400 ms depois do load (o pôster pode não ser o maior elemento, como no desktop), na primeira interação, com a aba oculta, se a imagem falhar, se o navegador não tiver a API ou depois de 2,5 s. `src/index.js` só chama `root.render` depois disso. Sem pôster no HTML (outras rotas ou build sem retrato), não há espera.
+
+**Riscos.**
+- A espera atrasa a montagem do React até 2,5 s no pior caso (rede lenta). Nesse caso a tela mostra o esqueleto com o pôster, como hoje, e o React assume em seguida.
+- Com o retrato vencido (mais de 48 h, #83), o esqueleto mostra o pôster antigo e o React troca pela lista nova. A espera continua valendo; o pôster antigo é a #89.
+- No ar, em 09/11/2026, o retrato publicado era de 06/11/2026 e já tinha vencido.
+
+**Qualidade.**
+- Testes: 10 novos no Jest para a espera (sem pôster, sem suporte, LCP de outro elemento, erro, imagem já quebrada, limite, folga depois do load, interação, aba oculta e falha do PerformanceObserver).
+- Desempenho: medido localmente com o build de produção e o retrato renovado (ver `MVP.md`), e com o navegador real: o LCP passou a ser o pôster do esqueleto (49.140 px²) em vez do pôster do React (46.464 px²).
+
+**Definição de pronto.** Lint, Jest, `test:scripts`, build e e2e passam no CI; `docs/MVP.md` com uma tabela só; README com o ciclo.
+
+### Plano de ação
+
+**Este ciclo executa.**
+1. Espera pelo LCP do pôster do esqueleto antes de montar o React, com testes.
+2. Medição local antes e depois com o build de produção.
+3. `docs/MVP.md` com uma tabela só e histórico; README com o ciclo.
+
+**Vira issue ou segue em issue.** #57 segue aberta até a medição no ar (depois do merge e com o retrato renovado). #83, #73, #59 e #58 (responsável). #84, #85 e #89 (pôster vencido) (agente).
+
+**Medição (09/11/2026).** Local, build de produção com o retrato renovado, Lighthouse 12.8.2 móvel: mediana de 3,93 s antes e 3,02 s depois; detalhes no `MVP.md`, seção 7. A meta de 2,5 s não foi atingida localmente; o resto é o download do pôster na rede simulada.
+
+**Revisão independente (09/11/2026).** Um subagente que não viu o código leu só o diff e esta seção. Corrigido: no desktop o pôster não é o maior elemento e a espera ia até 2,5 s (agora desiste 400 ms depois do load; conferido no navegador em 1350 × 940: React montou 430 ms depois do load); imagem que falhou antes do JavaScript; interação e aba oculta; falha do `PerformanceObserver` que impediria a montagem (`index.js` monta mesmo com rejeição).
+
+## Ciclo de 09/11/2026
+
+> Branch `feature/2026-11-09`, criada da `developer/sprint-2026-11-12`; PR #92 para a sprint. A `main` fica com o responsável (PR #91). Decisão: `decisao-2026-11-09.md`, opção C.
+
+### Produto
+
+Sem mudança no problema, no público e na hipótese. Foco: o critério 7 (#57) e o pôster vencido (#89).
+
+### Engenharia
+
+**O que as fases do LCP mostraram.** No JSON do PR #88, o `main.js` chegava com 181 KB: o servidor local não comprimia. O Pages comprime. Com gzip, a sprint já dava mediana de 2,28 s; o problema restante era de robustez: com a CPU ocupada, o esqueleto saía antes de o pôster pintar, e o LCP voltava a ser o pôster do React (3,4 a 4,0 s).
+
+**O que mudou.**
+- `src/utils/shellPoster.js`: a folga depois do `load` conta depois de `img.decode()` e de dois `requestAnimationFrame`; enquanto o pôster vencido está oculto (estilo `#shell-stale`), o `load` dele não conta.
+- `public/index.html`: com retrato de mais de 48 h, o pôster gravado fica oculto até a resposta da API; depois é trocado pelo primeiro da lista nova ou, sem pôster, volta o bloco cinza (#89).
+- Testado e desfeito: baixar o `main.js` só depois do pôster. A mediana não mudou (2,29 s) e a aplicação ficava interativa mais tarde.
+
+**Qualidade.** Jest: 3 testes novos na espera. Playwright: `e2e/tests/retrato.spec.js` injeta o retrato no HTML servido e confere a troca do pôster vencido (o antigo nunca fica visível) e o bloco cinza com a API fora.
+
+**Riscos.** Na aba em segundo plano a espera já desiste ("oculta"). Se o pôster novo falhar (404), a espera desiste por erro e o React monta.
+
+### Plano de ação
+
+**Este ciclo executa.** Espera robusta, pôster vencido, testes, medição local com gzip e documentação.
+
+**Medição (09/11/2026).** Lighthouse 12.8.2 móvel, `timeout 150`, build servido com `serve` (gzip): 2,77, 2,38, 2,40, 2,30 e 2,26 s (mediana 2,38 s), pôster do esqueleto como LCP nas 5. Detalhes no `MVP.md`, seção 7.
+
+**Segue em issue.** #57 até a medição no site depois do merge na `main` (#90). #89 fecha depois do merge, com o site conferido. #83, #73, #59 e #58 com o responsável.
+
+**Revisão independente (09/11/2026).** Um subagente leu só o diff. Corrigido: o `load` do pôster vencido, ainda oculto, fazia a folga começar por ele (agora é ignorado, com teste); o e2e passou a conferir que o pôster antigo nunca aparece. Aceito sem mudança: pôster novo que falha mostra o espaço vazio até o React montar.

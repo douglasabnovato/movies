@@ -90,3 +90,40 @@ test("respeita a preferência por menos movimento", async ({ page }) => {
   });
   expect(animation).toBe("none");
 });
+
+test("o GoatCounter não carrega nos testes nem em localhost", async ({ page }) => {
+  const pedidos = [];
+  page.on("request", (r) => pedidos.push(r.url()));
+  await page.goto("/");
+  await page.getByRole("link", { name: "Ver detalhes do filme Filme Popular" }).click();
+  await expect(page.getByRole("heading", { name: "Detalhe 1" })).toBeVisible();
+  await expect(page.locator("script[data-goatcounter]")).toHaveCount(0);
+  expect(pedidos.filter((u) => /goatcounter|gc\.zgo\.at/.test(u))).toEqual([]);
+});
+
+test("no site publicado, abrir um filme conta a rota e o evento abriu-filme", async ({ page }) => {
+  // Simula o navegador de um visitante: sem a marca de automação e fora de localhost.
+  await page.addInitScript(() => Object.defineProperty(navigator, "webdriver", { get: () => false }));
+  await page.route("https://douglasabnovato.github.io/**", async (route) => {
+    const caminho = new URL(route.request().url()).pathname.replace(/^\/movies/, "") || "/";
+    const local = await page.request.get(caminho);
+    await route.fulfill({ response: local });
+  });
+  // Um GoatCounter falso guarda as contagens para o teste conferir.
+  await page.route("https://gc.zgo.at/**", (route) =>
+    route.fulfill({
+      contentType: "text/javascript",
+      body: "window.contagens = []; window.goatcounter = { count: (v) => window.contagens.push(v) };",
+    })
+  );
+  await page.goto("https://douglasabnovato.github.io/movies/");
+  await expect(page.locator("script[data-goatcounter]")).toHaveAttribute(
+    "data-goatcounter",
+    "https://douglasabnovato.goatcounter.com/count"
+  );
+  await page.getByRole("link", { name: "Ver detalhes do filme Filme Popular" }).click();
+  await expect(page.getByRole("heading", { name: "Detalhe 1" })).toBeVisible();
+  await expect
+    .poll(() => page.evaluate(() => window.contagens || []))
+    .toContainEqual({ path: "abriu-filme", title: "abriu-filme", event: true });
+});
