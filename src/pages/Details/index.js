@@ -1,5 +1,5 @@
 /*
- * Details · página do filme com ficha, avaliação, elenco, trailer e recomendações.
+ * Details · página do filme com ficha, avaliação, onde assistir, elenco, trailer e recomendações.
  * Carrega tudo em uma requisição (append_to_response) e trata 404, erro e carregando.
  */
 import React, { useEffect } from "react";
@@ -8,6 +8,7 @@ import { tmdbService } from "../../services/tmdbApi";
 import { useFetch } from "../../hooks/useFetch";
 import { DetailsSkeleton } from "../../components/Skeleton";
 import ErrorState from "../../components/ErrorState";
+import WatchProviders, { mapWatchProviders } from "../../components/WatchProviders";
 import { formatDate, formatRuntime } from "../../utils/formatters";
 import { imageUrl, handleImageError } from "../../utils/images";
 import "../../components/Skeleton/styles.css";
@@ -17,7 +18,7 @@ import "./styles.css";
 /* Separa a resposta única da TMDB nos blocos usados pela tela. */
 export function mapMovieResponse(data) {
   const trailer = data.videos?.results?.find(
-    (video) => video.type === "Trailer" && video.site === "YouTube"
+    (video) => video.type === "Trailer" && video.site === "YouTube",
   );
   return {
     movie: data,
@@ -25,6 +26,7 @@ export function mapMovieResponse(data) {
     crew: data.credits?.crew?.slice(0, 5) || [],
     trailerKey: trailer ? trailer.key : null,
     recommendations: data.recommendations?.results?.slice(0, 6) || [],
+    watchProviders: mapWatchProviders(data["watch/providers"]),
   };
 }
 
@@ -33,7 +35,11 @@ function Brand({ listPath }) {
   return (
     <div className="navbar">
       <div className="title-site">
-        <Link to={listPath} className="title-text" aria-label="Movies, voltar para a lista de filmes">
+        <Link
+          to={listPath}
+          className="title-text"
+          aria-label="Movies, voltar para a lista de filmes"
+        >
           Movies
           <span className="title-obj" aria-hidden="true"></span>
         </Link>
@@ -50,7 +56,7 @@ function Details() {
   const listPath = `/${location.state?.listSearch || ""}`;
   const { data, loading, error, retry } = useFetch(
     (options) => tmdbService.getMovieFull(id, options).then(mapMovieResponse),
-    [id]
+    [id],
   );
 
   useEffect(() => {
@@ -81,7 +87,9 @@ function Details() {
         </div>
         <ErrorState
           title={notFound ? "Filme não encontrado" : "Não foi possível carregar o filme"}
-          message={notFound ? "O endereço pode estar errado ou o filme foi removido." : error.message}
+          message={
+            notFound ? "O endereço pode estar errado ou o filme foi removido." : error.message
+          }
           onRetry={notFound || error.kind === "config" ? undefined : retry}
         >
           <Link to={listPath} className="error-state-link">
@@ -92,7 +100,7 @@ function Details() {
     );
   }
 
-  const { movie, cast, crew, trailerKey, recommendations } = data;
+  const { movie, cast, crew, trailerKey, recommendations, watchProviders } = data;
   const ratingPercentage = Math.round((movie.vote_average || 0) * 10);
 
   return (
@@ -160,9 +168,13 @@ function Details() {
         </div>
       </div>
 
+      <WatchProviders groups={watchProviders} />
+
       {cast.length > 0 && (
         <section className="casts" aria-labelledby="cast-title">
-          <h2 className="title-casts" id="cast-title">Elenco principal</h2>
+          <h2 className="title-casts" id="cast-title">
+            Elenco principal
+          </h2>
           <div className="list-casts">
             {cast.map((actor) => (
               <div key={actor.id} className="item-cast">
@@ -186,7 +198,9 @@ function Details() {
 
       {trailerKey && (
         <section className="trailer" aria-labelledby="trailer-title">
-          <h2 className="title-trailer" id="trailer-title">Trailer oficial</h2>
+          <h2 className="title-trailer" id="trailer-title">
+            Trailer oficial
+          </h2>
           <div className="trailer-container">
             <iframe
               src={`https://www.youtube-nocookie.com/embed/${trailerKey}`}
@@ -202,11 +216,17 @@ function Details() {
 
       {recommendations.length > 0 && (
         <section className="recommendations" aria-labelledby="recommendations-title">
-          <h2 className="title-recommendations" id="recommendations-title">Recomendações</h2>
+          <h2 className="title-recommendations" id="recommendations-title">
+            Recomendações
+          </h2>
           <div className="list-recommendations">
             {recommendations.map((item) => (
               <div key={item.id} className="item-recommendation">
-                <Link to={`/movie/${item.id}`} state={location.state} aria-label={`Ver detalhes do filme ${item.title}`}>
+                <Link
+                  to={`/movie/${item.id}`}
+                  state={location.state}
+                  aria-label={`Ver detalhes do filme ${item.title}`}
+                >
                   <img
                     src={imageUrl(item.poster_path, "w185")}
                     alt=""

@@ -1,0 +1,62 @@
+.watch-providers {
+  max-width: 1100px;
+  width: 100%;
+  margin: 60px auto;
+  padding: 0 20px;
+  font-family: "Roboto", sans-serif;
+  color: #131313;
+}
+
+.title-watch-providers {
+  font-weight: 700;
+  font-size: 2.8rem;
+  margin-bottom: 24px;
+}
+
+.watch-providers-group + .watch-providers-group {
+  margin-top: 20px;
+}
+
+.watch-providers-label {
+  font-weight: 700;
+  font-size: 1.8rem;
+  margin-bottom: 12px;
+}
+
+.watch-providers-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  list-style: none;
+}
+
+.watch-provider {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.6rem;
+  padding: 6px 12px 6px 6px;
+  border: 1px solid #d9d9d9;
+  border-radius: 8px;
+}
+
+.watch-provider img {
+  border-radius: 6px;
+}
+
+.watch-providers-empty,
+.watch-providers-credit {
+  font-size: 1.6rem;
+  line-height: 2.4rem;
+}
+
+.watch-providers-credit {
+  margin-top: 20px;
+  color: #4d4d4d;
+}
+
+/* Sublinhado: o link precisa se distinguir do texto em volta além da cor (axe link-in-text-block). */
+.watch-providers-credit a {
+  color: #5c16c5;
+  text-decoration: underline;
+}
