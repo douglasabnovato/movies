@@ -24,6 +24,13 @@ function detail(id) {
     credits: { cast: [], crew: [] },
     videos: { results: [] },
     recommendations: { results: [] },
+    "watch/providers": {
+      results: {
+        BR: {
+          flatrate: [{ provider_id: 8, provider_name: "Serviço Simulado", logo_path: "/logo.png", display_priority: 0 }],
+        },
+      },
+    },
   };
 }
 
