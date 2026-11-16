@@ -1,6 +1,7 @@
 # ADR-008 — Manter o react-router 6 até a migração para a 7
 
 - **Situação:** aceita em 16/11/2026, até a #100 ser concluída.
+- **Aceite do responsável:** em 16/11/2026, ele aceitou o risco com as palavras "aceito o risco.", no chat da sessão DG líder. A migração para o react-router 7 segue na #100, no próximo ciclo.
 - **Numeração:** continua a série ADR-001 a ADR-007 de [`ARQUITETURA.md`](../ARQUITETURA.md), seção 5.
 
 ## Contexto
