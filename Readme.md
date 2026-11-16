@@ -16,7 +16,7 @@
 ## 📌 Sumário
 - [Sobre o Projeto](#-sobre-o-projeto)
 - [Como executar](#-como-executar)
-- [Estado e próximos passos (ciclo de 09/11/2026)](#estado-e-próximos-passos-ciclo-de-09112026)
+- [Estado e próximos passos (ciclo de 16/11/2026)](#estado-e-próximos-passos-ciclo-de-16112026)
 - [Estado do MVP & Documentação](#-estado-do-mvp--documentação)
 - [Próximos passos que dependem do responsável](#-próximos-passos-que-dependem-do-responsável)
 - [Estrutura de Branches & Git Workflow](#-estrutura-de-branches--git-workflow)
@@ -64,14 +64,20 @@ Sem a chave, a aplicação abre e mostra uma mensagem explicando como configurá
 
 **Demonstração:** https://douglasabnovato.github.io/movies/
 
-- GitHub Pages servindo a branch `gh-pages`, gerada pelo workflow `.github/workflows/ci.yml` a cada push na `main` (testes → build → publicação).
+- GitHub Pages servindo a branch `gh-pages`, gerada pelo workflow `.github/workflows/ci.yml` a cada push na `main` (testes → build → publicação). Em 16/11/2026, a publicação falhou com 403, e o site segue com o build de 06/11/2026 (#98).
 - A chave da TMDB entra no build pelo segredo `REACT_APP_TMDB_KEY` do repositório; nunca pelo código.
 - `HashRouter` mantém as rotas funcionando no Pages (endereços como `/#/movie/123`).
 - Passo a passo completo: [docs/DEPLOY.md](docs/DEPLOY.md).
 
-## Estado e próximos passos (ciclo de 10/11/2026)
+## Estado e próximos passos (ciclo de 16/11/2026)
 
-Nível: Vitrine (N2). **10 de 12** critérios do MVP atendidos; **Finalizado: sim**. Os 2 que faltam dependem do responsável: a conta do GoatCounter (critério 5, #58) e a medição no ar do LCP depois do merge na `main` (critério 7, #57 e #90). A `main` exige os jobs `build-and-test` e `e2e` verdes desde 10/11/2026 (#73). Site publicado respondendo com HTTP 200 em 10/11/2026: https://douglasabnovato.github.io/movies/
+Nível: Vitrine (N2). **9 de 12** critérios do MVP atendidos; **Finalizado: sim**. Os 3 que faltam dependem do responsável: a conta do GoatCounter (critério 5, #58), o deploy negado na `main` (critério 7, #98; depois, medir de novo na #102) e os alertas do Dependabot (critério 9, #99). Site publicado respondendo com HTTP 200 em 16/11/2026, mas ainda com o build de 06/11/2026: https://douglasabnovato.github.io/movies/
+
+**O que foi feito no ciclo de 16/11/2026**
+- Onde assistir no Brasil no detalhe do filme (assinatura, aluguel e compra), com crédito à JustWatch, na mesma requisição do detalhe (#84). O axe achou um link sem sublinhado no crédito, corrigido.
+- LCP medido no site: mediana de 3,22 s (3 execuções, 16/11/2026), ainda com o build de 06/11. O código que baixa o LCP está na `main`, mas o deploy falhou com 403 (#98).
+- `docs/MVP.md` revisto: critério 9 em "Parcial" (Dependabot desligado), hipótese com o "saberemos quando"; `docs/DEPLOY.md` com o diagnóstico da #98 e dois caminhos para o responsável.
+- O e2e aceita `E2E_PORT` para rodar local numa porta própria.
 
 **O que foi feito no ciclo de 10/11/2026**
 - Medição com GoatCounter pronta no código, sem cookie e só no site publicado: conta cada rota e o evento `abriu-filme`; falta a conta.
@@ -91,14 +97,16 @@ Nível: Vitrine (N2). **10 de 12** critérios do MVP atendidos; **Finalizado: si
 **Ciclo de 03/11/2026:** retrato da Home no build, com `preload` e prioridade alta (PR #81); CI nos PRs para `developer/**`; integração com CI e deploy verdes (PR #82).
 
 **O que queremos fazer**
-- [#57](https://github.com/douglasabnovato/movies/issues/57) Levar o LCP móvel da Home a até 2,5 s (no ar 3,33 s em 06/11; local 2,38 s depois do PR #92; medir no ar depois do merge).
-- [#90](https://github.com/douglasabnovato/movies/issues/90) Mesclar o ciclo de 07/11 (responsável).
-- [#83](https://github.com/douglasabnovato/movies/issues/83) Renovar o retrato da Home todos os dias (responsável).
+- [#98](https://github.com/douglasabnovato/movies/issues/98) Fazer o deploy na `main` voltar a passar (responsável; passo a passo no `docs/DEPLOY.md`, seção 4).
+- [#102](https://github.com/douglasabnovato/movies/issues/102) Medir o LCP no ar depois do deploy; [#57](https://github.com/douglasabnovato/movies/issues/57) fecha com a mediana até 2,5 s.
+- [#99](https://github.com/douglasabnovato/movies/issues/99) Ligar os alertas do Dependabot (responsável).
+- [#58](https://github.com/douglasabnovato/movies/issues/58) Criar a conta do GoatCounter com o código `douglasabnovato` (responsável; o código já está pronto).
 - [#59](https://github.com/douglasabnovato/movies/issues/59) Validar com pessoas de fora (responsável).
-- [#58](https://github.com/douglasabnovato/movies/issues/58) Criar a conta do GoatCounter com o código `douglasabnovato` para medir a chegada ao detalhe (responsável; o código já está pronto).
-- [#84](https://github.com/douglasabnovato/movies/issues/84) Mostrar onde assistir, com crédito à JustWatch.
+- [#83](https://github.com/douglasabnovato/movies/issues/83) Renovar o retrato da Home todos os dias (responsável).
+- [#100](https://github.com/douglasabnovato/movies/issues/100) Atualizar o react-router para a versão 7 (alerta moderado do `npm audit`).
+- [#101](https://github.com/douglasabnovato/movies/issues/101) Alinhar a versão do Node do `package.json` com a do CI.
 - [#85](https://github.com/douglasabnovato/movies/issues/85) Salvar filmes favoritos no navegador.
-- [#89](https://github.com/douglasabnovato/movies/issues/89) Trocar o pôster do esqueleto quando o retrato venceu (feito no PR #92; fecha depois do merge na `main`).
+- [#96](https://github.com/douglasabnovato/movies/issues/96) Navegação por setas na grade (fica para a gravação do vídeo 10).
 
 **Onde está a documentação**
 - Estado e critérios: [`docs/MVP.md`](docs/MVP.md).
@@ -112,10 +120,11 @@ Nível: Vitrine (N2). **10 de 12** critérios do MVP atendidos; **Finalizado: si
 |---|---|
 | [docs/ANALISE.md](./docs/ANALISE.md) | Requisitos (RF/RNF/RN), diagnóstico, rubrica de MVP e critérios de aceite em BDD |
 | [docs/ARQUITETURA.md](./docs/ARQUITETURA.md) | C4, estrutura de pastas, contratos da TMDB, tratamento de erros e ADRs |
-| [docs/PLANO-DE-ACAO.md](./docs/PLANO-DE-ACAO.md) | Tarefas do ciclo de 27/09/2026 e plano do ciclo de 03/11/2026 |
+| [docs/PLANO-DE-ACAO.md](./docs/PLANO-DE-ACAO.md) | Plano de cada ciclo, de 27/09/2026 a 16/11/2026, com pesquisa e backlog |
 | [docs/AVALIACAO.md](./docs/AVALIACAO.md) | Avaliação de arquitetura e engenharia |
 | [docs/PLANO-ESTRATEGICO.md](./docs/PLANO-ESTRATEGICO.md) | Plano vigente, resultados e próximos passos |
 | [docs/MVP.md](./docs/MVP.md) | Critérios de um bom MVP e tarefas que faltam |
+| [docs/DEPLOY.md](./docs/DEPLOY.md) | Publicação no Pages e o diagnóstico do deploy negado (#98) |
 
 | Momento | Nota MVP | Situação |
 |---|---|---|
@@ -131,8 +140,10 @@ Principais mudanças deste ciclo: chave só por variável de ambiente, erros tip
 
 | Ação | Como fazer | Issue |
 |---|---|---|
-| Exigir CI verde no merge (opcional) | A `main` já está protegida (ruleset `principal-protegida`, 10/11/2026); falta só acrescentar ao ruleset a regra de status checks com `build-and-test` e `e2e` | #73 |
-| Medir o uso | Criar conta em uma ferramenta sem cookies e informar o código do site | #58 |
+| Fazer o deploy voltar | Seguir o caminho 1 ou 2 da seção 4 do [`docs/DEPLOY.md`](docs/DEPLOY.md) | #98 |
+| Ligar os alertas do Dependabot | Settings → Advanced Security → Dependabot alerts → Enable | #99 |
+| Fechar a issue da proteção | O ruleset já exige `build-and-test` e `e2e` (conferido em 16/11/2026) | #73 |
+| Medir o uso | Criar a conta do GoatCounter com o código `douglasabnovato` | #58 |
 | Testar com 5 pessoas | Aplicar [`docs/TESTE-USUARIOS.md`](docs/TESTE-USUARIOS.md) | #59 |
 | Conferir a largura de 768 px | Abrir o site em um aparelho real | #57 |
 | Renovar o retrato da Home | Decidir se o workflow publica de novo todo dia | #83 |
