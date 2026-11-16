@@ -14,17 +14,17 @@ Revisão de 16/11/2026. O PR #91 entrou na `main` em 16/11/2026, mas o deploy fa
 
 | # | Critério | Como verificar | Situação em 16/11/2026 (ciclo de 16/11/2026) |
 |---|---|---|---|
-| 1 | Problema e público claros | Dá para explicar em uma frase | Atende: "quem quer escolher um filme para ver hoje descobre, filtra e abre a ficha sem ajuda" (seção 5 e `PLANO-DE-ACAO.md`) |
+| 1 | Problema e público claros | Dá para explicar em uma frase | Atende: "quem quer escolher um filme para ver hoje precisa descobrir, filtrar e abrir a ficha sem ajuda" (seção 5, revista em 16/11/2026) |
 | 2 | Hipótese a validar | Existe uma aposta escrita, com meta | Atende: aposta, meta e "saberemos quando" na seção 5 (revista em 16/11/2026) |
 | 3 | Fluxo principal completo | Uma pessoa conclui sem ajuda | Atende: `cd e2e && E2E_PORT=4391 npx playwright test`, 16/11/2026: 12 testes, 0 falhas, com o teste `filtra por gênero, abre o detalhe e volta com o filtro` (agora confere também onde assistir); no CI, job `e2e` do PR deste ciclo. No ar, 16/11/2026: `curl` no site deu HTTP 200. O teste com pessoas é validação de produto (#59) |
 | 4 | Escopo enxuto | O que não entra está registrado | Atende: seção 4 e "Fora do escopo" no `PLANO-DE-ACAO.md` (16/11/2026) |
 | 5 | Medição de uso | A métrica principal é coletada | Parcial: código do GoatCounter pronto (sem cookie, só no site publicado; rotas e evento `abriu-filme`), com testes no Jest e no e2e. Falta a conta (#58), e o site no ar ainda não tem o código (#98). Sem painel com visitas, não atende |
-| 6 | Falhas tratadas | Erro, vazio e carregamento têm resposta clara | Atende: `npx react-scripts test --watchAll=false`, 16/11/2026: 81 testes, 0 falhas, entre eles falha de rede (`Home.test.js` e `Details.test.js`), filme inexistente (`Details.test.js`), lista vazia e página além do total (`Home.test.js`) e o estado de carregando (`useFetch.test.js`); e2e `com retrato vencido e a API fora, o esqueleto volta ao bloco cinza` |
-| 7 | Desempenho aceitável | LCP de até 2,5 s no celular | Não atende no ar: `npx lighthouse@12.8.2 https://douglasabnovato.github.io/movies/ --only-categories=performance --chrome-flags="--headless --no-sandbox"`, 16/11/2026 (03h53 a 03h58): 3,22, 3,07 e 3,32 s (mediana 3,22 s; TBT de 196 a 255 ms; elemento `article.film > a > div.card > img`). O site serve o build de 06/11/2026: o deploy do PR #91 falhou com 403 (#98). Local, com o código da `main`: mediana de 2,38 s (09/11/2026). Medir de novo depois da #98 (#102, #57). Detalhes na seção 7 |
-| 8 | Acessibilidade básica | axe e teclado | Atende: `e2e/tests/acessibilidade.spec.js` (axe WCAG A e AA na Home, na lista filtrada e no detalhe, largura de desktop) e o teste `conclui o fluxo só com o teclado, com o foco visível`, 16/11/2026: 12 testes, 0 falhas. O axe achou `link-in-text-block` no crédito à JustWatch, corrigido neste ciclo. O app não tem tema escuro próprio (sem `prefers-color-scheme` no CSS); o axe roda só no claro. Leitor de tela não testado |
+| 6 | Falhas tratadas | Erro, vazio e carregamento têm resposta clara | Atende: `npx react-scripts test --watchAll=false`, 16/11/2026: 82 testes, 0 falhas, entre eles falha de rede (`Home.test.js` e `Details.test.js`), filme inexistente (`Details.test.js`), lista vazia e página além do total (`Home.test.js`) e o estado de carregando (`useFetch.test.js`); e2e `com retrato vencido e a API fora, o esqueleto volta ao bloco cinza` |
+| 7 | Desempenho aceitável | LCP de até 2,5 s no celular | Não atende no ar: `npx lighthouse@12.8.2 https://douglasabnovato.github.io/movies/ --only-categories=performance --chrome-flags="--headless --no-sandbox"`, 16/11/2026 (03h53 a 03h58): 3,22, 3,07 e 3,32 s, as 3 primeiras execuções válidas (mediana 3,22 s; uma 4ª válida deu 3,47 s, e a mediana das 4 seria 3,27 s; TBT de 196 a 255 ms; elemento `article.film > a > div.card > img`). O site serve o build de 06/11/2026: o deploy do PR #91 falhou com 403 (#98). Local, com o código da `main`: mediana de 2,38 s (09/11/2026). Medir de novo depois da #98 (#102, #57). Detalhes na seção 7 |
+| 8 | Acessibilidade básica | axe e teclado | Atende: `cd e2e && E2E_PORT=4391 npx playwright test`, 16/11/2026, com `e2e/tests/acessibilidade.spec.js` (axe WCAG A e AA na Home, na lista filtrada e no detalhe, largura de desktop) e o teste `conclui o fluxo só com o teclado, com o foco visível`: 12 testes, 0 falhas. O axe achou `link-in-text-block` no crédito à JustWatch, corrigido neste ciclo. O app não tem tema escuro próprio (sem `prefers-color-scheme` no CSS); o axe roda só no claro. Leitor de tela não testado |
 | 9 | Segurança e conformidade | Riscos decididos; termos da API cumpridos | Parcial: `gh api "repos/douglasabnovato/movies/dependabot/alerts?state=open&per_page=100"`, 16/11/2026: 403 (alertas desligados; regra em decisão na engenharia#33; ligar na #99). `npm audit --omit=dev`, 16/11/2026: 2 moderados no `react-router` 6.30.6, sem correção na linha 6 (#100). Chave da TMDB mantida por decisão (ADR-006); atribuição à TMDB e crédito à JustWatch publicados no código |
 | 10 | Entrega confiável | Publicação só depois de CI verde | Atende: `gh api repos/douglasabnovato/movies/rulesets/26932548`, 16/11/2026: `principal-protegida` ativo na principal, com `deletion`, `non_fast_forward`, `pull_request` e `required_status_checks` (`build-and-test` e `e2e`); a publicação só sai do job `deploy`, depois dos dois |
-| 11 | Testes dos fluxos críticos | Testes automatizados no CI | Atende: 16/11/2026, local: Jest com 81 testes, 0 falhas; `npm run test:scripts` com 7 testes, 0 `skipped`; e2e com 12 testes, 0 falhas. No CI, jobs `build-and-test` e `e2e` do PR deste ciclo |
+| 11 | Testes dos fluxos críticos | Testes automatizados no CI | Atende: 16/11/2026, local: Jest com 82 testes, 0 falhas; `npm run test:scripts` com 7 testes, 0 `skipped`; e2e com 12 testes, 0 falhas. No CI, jobs `build-and-test` e `e2e` do PR deste ciclo |
 | 12 | Documentação honesta | Qualquer pessoa roda o projeto, e os números estão certos | Atende: README ("Como executar") conferido contra o `package.json` em 16/11/2026 (`npm ci`, `npm start`, `npm test`, `npm run build`); a diferença do `engines` (Node 20) com o CI (Node 22) está na #101 |
 
 ## 2. Tarefas obrigatórias
@@ -55,16 +55,18 @@ Tema 007, pixel perfect, cartão por filme e SEO com outra hospedagem, proxy da 
 
 ## 5. Hipótese e meta
 
+**Problema e público:** quem quer escolher um filme para ver hoje precisa descobrir, filtrar e abrir a ficha sem ajuda.
+
 **Hipótese:** acreditamos que quem chega ao site quer descobrir um filme, e que buscar ou filtrar por gênero basta para encontrar um que valha abrir.
 
-**Saberemos quando:** com no mínimo 100 visitas à Home no GoatCounter, ao menos 50% delas tiverem o evento `abriu-filme`.
+**Saberemos quando:** com no mínimo 100 visitas à Home no GoatCounter, os eventos `abriu-filme` somarem ao menos 50% dessas visitas (eventos ÷ visitas à Home; o GoatCounter conta os dois em separado).
 
 **Métrica:** chegada ao detalhe = visitas com o evento `abriu-filme` ÷ visitas à Home. É a leitura proposta no roteiro do vídeo 12 (#97). Limite: quem entra direto pela ficha de um filme infla a razão.
 
 | Teste | Meta | Se não atingir |
 |---|---|---|
 | 5 pessoas, sem ajuda: "encontre um filme para ver hoje e abra a ficha" (#59) | Ao menos 4 concluem em até 2 minutos | Rever a busca e o filtro antes de qualquer função nova |
-| Uso real, no GoatCounter | Ao menos 50%, com no mínimo 100 visitas à Home | Olhar onde as pessoas param |
+| Uso real, no GoatCounter | Eventos `abriu-filme` ÷ visitas à Home de ao menos 50%, com no mínimo 100 visitas à Home | Olhar onde as pessoas param |
 
 As metas são um ponto de partida escolhido por julgamento, sem dados anteriores, e devem ser revistas depois da primeira medição.
 

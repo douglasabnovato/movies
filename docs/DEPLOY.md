@@ -67,7 +67,6 @@ No GitHub, **Settings → Secrets and variables → Actions**: o segredo `REACT_
 
 1. No GitHub, **About → Website**: colar a URL.
 
-
 ## 4. Deploy negado em 16/11/2026 (#98)
 
 ### O que aconteceu

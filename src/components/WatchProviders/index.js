@@ -23,11 +23,20 @@ export function mapWatchProviders(watchProviders) {
     const providers = (Array.isArray(country[key]) ? country[key] : [])
       .filter(
         (item) =>
-          item && item.provider_name && !seen.has(item.provider_id) && seen.add(item.provider_id),
+          item &&
+          item.provider_id != null &&
+          item.provider_name &&
+          !seen.has(item.provider_id) &&
+          seen.add(item.provider_id),
       )
       .sort((a, b) => (a.display_priority ?? 0) - (b.display_priority ?? 0));
     return { key, label, providers };
   }).filter((group) => group.providers.length > 0);
+}
+
+/* Logo que não carrega some, e o nome do serviço continua visível. */
+function hideImage(event) {
+  event.currentTarget.hidden = true;
 }
 
 /* Seção do detalhe; sem dados para o Brasil, avisa em vez de esconder. */
@@ -57,6 +66,7 @@ function WatchProviders({ groups }) {
                       width="40"
                       height="40"
                       loading="lazy"
+                      onError={hideImage}
                     />
                   )}
                   <span>{provider.provider_name}</span>

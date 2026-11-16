@@ -1,5 +1,5 @@
 /* WatchProviders.test.js · onde assistir no Brasil, com e sem dados, e o crédito à JustWatch. */
-import { render, screen, within } from "@testing-library/react";
+import { fireEvent, render, screen, within } from "@testing-library/react";
 import WatchProviders, { mapWatchProviders } from "./index";
 
 const RESPOSTA = {
@@ -23,6 +23,26 @@ describe("Components / WatchProviders", () => {
     const grupos = mapWatchProviders(RESPOSTA);
     expect(grupos.map((g) => g.label)).toEqual(["Assinatura", "Aluguel"]);
     expect(grupos[0].providers.map((p) => p.provider_name)).toEqual(["Serviço A", "Serviço B"]);
+  });
+
+  it("ignora serviço sem provider_id e esconde o logo que não carrega", () => {
+    const grupos = mapWatchProviders({
+      results: {
+        BR: {
+          flatrate: [
+            { provider_name: "Sem id" },
+            { provider_id: 7, provider_name: "Com id", logo_path: "/c.png" },
+          ],
+        },
+      },
+    });
+    expect(grupos[0].providers.map((p) => p.provider_name)).toEqual(["Com id"]);
+    render(<WatchProviders groups={grupos} />);
+    /* alt vazio: o logo é decorativo, o nome está ao lado. */
+    const logo = screen.getByRole("img");
+    fireEvent.error(logo);
+    expect(logo).not.toBeVisible();
+    expect(screen.getByText("Com id")).toBeVisible();
   });
 
   it("sem dados do Brasil ou sem a chave na resposta, devolve lista vazia", () => {

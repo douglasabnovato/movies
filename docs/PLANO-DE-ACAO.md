@@ -193,7 +193,7 @@ Sem mudança no problema, no público e na hipótese. Foco: o critério 7 (#57) 
 
 **Problema e público.** Quem quer escolher um filme para ver hoje e precisa descobrir, filtrar e abrir a ficha sem ajuda. Sem mudança.
 
-**Hipótese e meta.** Acreditamos que buscar ou filtrar por gênero basta para achar um filme que valha abrir. Saberemos quando, com no mínimo 100 visitas à Home no GoatCounter, ao menos 50% delas tiverem o evento `abriu-filme` (seção 5 do `MVP.md`).
+**Hipótese e meta.** Acreditamos que buscar ou filtrar por gênero basta para achar um filme que valha abrir. Saberemos quando, com no mínimo 100 visitas à Home no GoatCounter, os eventos `abriu-filme` somarem ao menos 50% dessas visitas (seção 5 do `MVP.md`).
 
 **O que a pesquisa trouxe.**
 - A TMDB entrega "onde assistir" por país em `/movie/{id}/watch/providers` (assinatura, aluguel e compra, com logo, nome e ordem de destaque) e exige o crédito à JustWatch onde os dados aparecem. Fonte: [TMDB, Watch Providers](https://developer.themoviedb.org/reference/movie-watch-providers). Conferido em 16/11/2026 que o `append_to_response` aceita `watch/providers`: a resposta do filme 550 trouxe a chave `watch/providers` com o país `BR`.
@@ -235,6 +235,6 @@ Sem mudança no problema, no público e na hipótese. Foco: o critério 7 (#57) 
 4. `DEPLOY.md`: diagnóstico da #98 e o passo a passo do deploy pelo Actions.
 5. README: "Estado e próximos passos".
 
-**Medição no site (16/11/2026, 03h53 a 03h58).** Lighthouse 12.8.2 móvel, `timeout 180`, `--headless --no-sandbox`, 5 execuções: a 1ª foi descartada (FCP observado de 11,3 s, máquina ocupada); as válidas deram 3,22, 3,07, 3,32 e 3,47 s. Mediana das 3 primeiras válidas: **3,22 s**; TBT de 196 a 255 ms; elemento do LCP: `article.film > a > div.card > img` (o pôster do React). O site serve o retrato de 06/11/2026 (`geradoEm` no HTML), ou seja, o código antigo.
+**Medição no site (16/11/2026, 03h53 a 03h58).** Lighthouse 12.8.2 móvel, `timeout 180`, `--headless --no-sandbox`, 5 execuções: a 1ª foi descartada (FCP observado de 11,3 s, máquina ocupada); as válidas deram 3,22, 3,07, 3,32 e 3,47 s. Regra: a mediana usa as 3 primeiras execuções válidas: **3,22 s** (com as 4, seria 3,27 s); TBT de 196 a 255 ms; elemento do LCP: `article.film > a > div.card > img` (o pôster do React). O site serve o retrato de 06/11/2026 (`geradoEm` no HTML), ou seja, o código antigo.
 
 **Vira issue.** Ligar os alertas do Dependabot (responsável); migrar para o react-router 7; deploy pelo Actions se a #98 não se resolver no Settings; medir de novo no ar depois da #98.

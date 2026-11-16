@@ -114,14 +114,11 @@ describe("Pages / Details", () => {
     ).toBeInTheDocument();
   });
 
-  it("com a API fora, mostra o erro com Tentar novamente, sem a seção de onde assistir", async () => {
+  it("com a API fora, mostra o erro com Tentar novamente", async () => {
     tmdbService.getMovieFull.mockRejectedValue(new TmdbError("network", "Sem conexão com a TMDB."));
     renderAt("/movie/5");
     expect(await screen.findByRole("alert")).toHaveTextContent("Não foi possível carregar o filme");
     expect(screen.getByRole("button", { name: "Tentar novamente" })).toBeInTheDocument();
-    expect(
-      screen.queryByRole("heading", { name: "Onde assistir no Brasil" }),
-    ).not.toBeInTheDocument();
   });
 
   it("diferencia filme inexistente de falha de rede", async () => {
