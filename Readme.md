@@ -73,13 +73,13 @@ Sem a chave, a aplicação abre e mostra uma mensagem explicando como configurá
 
 Nível: Vitrine (N2). **9 de 12** critérios do MVP atendidos; **Finalizado: sim**. Os 3 que faltam dependem do responsável: a conta do GoatCounter (critério 5, #58), o deploy negado na `main` (critério 7, #98; depois, medir de novo na #102) e os alertas do Dependabot (critério 9, #99). Site publicado respondendo com HTTP 200 em 16/11/2026, mas ainda com o build de 06/11/2026: https://douglasabnovato.github.io/movies/
 
-**O que foi feito no ciclo de 16/11/2026**
+**O que foi feito no ciclo de 16/11/2026 (PR #103)**
 - Onde assistir no Brasil no detalhe do filme (assinatura, aluguel e compra), com crédito à JustWatch, na mesma requisição do detalhe (#84). O axe achou um link sem sublinhado no crédito, corrigido.
 - LCP medido no site: mediana de 3,22 s (3 execuções, 16/11/2026), ainda com o build de 06/11. O código que baixa o LCP está na `main`, mas o deploy falhou com 403 (#98).
 - `docs/MVP.md` revisto: critério 9 em "Parcial" (Dependabot desligado), hipótese com o "saberemos quando"; `docs/DEPLOY.md` com o diagnóstico da #98 e dois caminhos para o responsável.
 - O e2e aceita `E2E_PORT` para rodar local numa porta própria.
 
-**O que foi feito no ciclo de 10/11/2026**
+**O que foi feito no ciclo de 10/11/2026 (PRs #93 e #94; na `main` pelo PR #91, em 16/11/2026)**
 - Medição com GoatCounter pronta no código, sem cookie e só no site publicado: conta cada rota e o evento `abriu-filme`; falta a conta.
 - Critério 3 em "Atende" pelo e2e do fluxo no CI e pelo site no ar com a TMDB respondendo (decisão D2); o teste com pessoas segue na #59.
 
