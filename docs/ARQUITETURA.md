@@ -149,6 +149,10 @@ Erros normalizados pela classe `TmdbError`:
 - **Decisão:** o job `build-and-test` roda lint, testes com cobertura mínima e build, com permissão de leitura e sem a chave. O job `deploy` só roda em push na `main`, depois da verificação, e é o único com permissão de escrita e acesso ao secret.
 - **Consequência:** só a `main` publica, e avisos de lint ou build bloqueiam a entrega. O build é feito duas vezes, um custo aceito pela separação do secret.
 
+### ADR-008 — Manter o react-router 6 até a migração para a 7
+
+Registrada em arquivo próprio: [`adr/ADR-008-react-router-6-risco-aceito.md`](adr/ADR-008-react-router-6-risco-aceito.md).
+
 ## 6. Fora do escopo deste ciclo
 
 Favoritos, PWA/offline, Open Graph, TanStack Query, testes E2E e a migração do Create React App para Vite. A ordem está em `docs/PLANO-ESTRATEGICO.md`.
