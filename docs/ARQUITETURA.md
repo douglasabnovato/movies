@@ -153,6 +153,10 @@ Erros normalizados pela classe `TmdbError`:
 
 Registrada em arquivo próprio: [`adr/ADR-008-react-router-6-risco-aceito.md`](adr/ADR-008-react-router-6-risco-aceito.md).
 
+### ADR-009 — Aceitar os alertas de desenvolvimento do Dependabot
+
+Registrada em arquivo próprio: [`adr/ADR-009-alertas-de-desenvolvimento-aceitos.md`](adr/ADR-009-alertas-de-desenvolvimento-aceitos.md). Os 21 alertas presos ao `react-scripts` 5.0.1 não chegam ao site (16/11/2026).
+
 ## 6. Fora do escopo deste ciclo
 
 Favoritos, PWA/offline, Open Graph, TanStack Query, testes E2E e a migração do Create React App para Vite. A ordem está em `docs/PLANO-ESTRATEGICO.md`.

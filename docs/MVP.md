@@ -1,14 +1,14 @@
 # MVP — critérios e tarefas
 
-> Fonte única do estado. Criado em 30/10/2026 e revisto em 16/11/2026 (ciclo de 16/11/2026 e, às 12:00, critério 9 com os alertas do Dependabot ligados; plano em [`PLANO-DE-ACAO.md`](PLANO-DE-ACAO.md)). As tabelas anteriores estão em [Histórico](#histórico). Complementa a rubrica técnica de `docs/ANALISE.md`, medindo também se o produto consegue aprender com o uso real.
+> Fonte única do estado. Criado em 30/10/2026 e revisto em 16/11/2026 (ciclo de 16/11/2026; às 12:00, critério 9 com os alertas do Dependabot ligados; às 14:39, alertas de desenvolvimento aceitos na ADR-009; plano em [`PLANO-DE-ACAO.md`](PLANO-DE-ACAO.md)). As tabelas anteriores estão em [Histórico](#histórico). Complementa a rubrica técnica de `docs/ANALISE.md`, medindo também se o produto consegue aprender com o uso real.
 
 **Nível:** Vitrine (N2). Valem os 12 critérios.
 
-**Resumo:** 9 de 12 aplicáveis atendidos
+**Resumo:** 10 de 12 aplicáveis atendidos
 
-**Finalizado:** não
+**Finalizado:** sim
 
-Revisão de 16/11/2026, 12:00 (alertas do Dependabot). Faltam três critérios. O 5 (conta do GoatCounter, #58) e o 7 (deploy da #98; depois, nova medição na #102 e na #57) dependem do responsável, cada um com issue `depende-do-responsavel`. O 9 não: o responsável ligou os alertas às 11h de 16/11/2026, e dos 61 abertos 38 têm correção na sprint-19 (PR #108), que fecham com o merge na `main`; 2 têm risco aceito na ADR-008 (#100); 21 seguem sem correção nem decisão escrita (#107). Por isso o Finalizado voltou de "sim" para "não": só volta a "sim" quando cada alerta tiver correção ou decisão. O PR #91 entrou na `main` em 16/11/2026, mas o deploy falhou com 403 (#98), e o site segue com o build de 06/11/2026.
+Revisão de 16/11/2026, 14:39 (regra geral por ADR para os alertas). Faltam dois critérios, e os dois dependem do responsável, cada um com issue `depende-do-responsavel`: o 5 (conta do GoatCounter, #58) e o 7 (deploy da #98; depois, nova medição na #102 e na #57). O 9 passou a "Atende": dos 61 alertas abertos, 38 têm correção na sprint-19 (PR #108) e fecham com o merge na `main`, 2 do `react-router` têm risco aceito na ADR-008 (#100) e 21, só de desenvolvimento, foram aceitos na [ADR-009](adr/ADR-009-alertas-de-desenvolvimento-aceitos.md), pela ordem do responsável de 16/11/2026. Por isso o Finalizado volta a "sim". O PR #91 entrou na `main` em 16/11/2026, mas o deploy falhou com 403 (#98), e o site segue com o build de 06/11/2026.
 
 ## 1. Critérios
 
@@ -22,7 +22,7 @@ Revisão de 16/11/2026, 12:00 (alertas do Dependabot). Faltam três critérios. 
 | 6 | Falhas tratadas | Erro, vazio e carregamento têm resposta clara | Atende: `npx react-scripts test --watchAll=false`, 16/11/2026: 82 testes, 0 falhas, entre eles falha de rede (`Home.test.js` e `Details.test.js`), filme inexistente (`Details.test.js`), lista vazia e página além do total (`Home.test.js`) e o estado de carregando (`useFetch.test.js`); e2e `com retrato vencido e a API fora, o esqueleto volta ao bloco cinza` |
 | 7 | Desempenho aceitável | LCP de até 2,5 s no celular | Não atende no ar: `npx lighthouse@12.8.2 https://douglasabnovato.github.io/movies/ --only-categories=performance --chrome-flags="--headless --no-sandbox"`, 16/11/2026 (03h53 a 03h58): 3,22, 3,07 e 3,32 s, as 3 primeiras execuções válidas (mediana 3,22 s; uma 4ª válida deu 3,47 s, e a mediana das 4 seria 3,27 s; TBT de 196 a 255 ms; elemento `article.film > a > div.card > img`). O site serve o build de 06/11/2026: o deploy do PR #91 falhou com 403 (#98). Local, com o código da `main`: mediana de 2,38 s (09/11/2026). Medir de novo depois da #98 (#102, #57). Detalhes na seção 7 |
 | 8 | Acessibilidade básica | axe e teclado | Atende: `cd e2e && E2E_PORT=4391 npx playwright test`, 16/11/2026, com `e2e/tests/acessibilidade.spec.js` (axe WCAG A e AA na Home, na lista filtrada e no detalhe, largura de desktop) e o teste `conclui o fluxo só com o teclado, com o foco visível`: 12 testes, 0 falhas. O axe achou `link-in-text-block` no crédito à JustWatch, corrigido neste ciclo. O app não tem tema escuro próprio (sem `prefers-color-scheme` no CSS); o axe roda só no claro. Leitor de tela não testado |
-| 9 | Segurança e conformidade | Riscos decididos; termos da API cumpridos | Parcial: `gh api "repos/douglasabnovato/movies/dependabot/alerts?state=open&per_page=100"`, 16/11/2026, 12:00: 61 alertas abertos (60 no `package-lock.json`, 1 no `e2e/package-lock.json`; 2 críticos, 20 altos, 29 médios, 10 baixos). 38 alertas corrigidos na sprint-19 (PR #108); fecham com o merge na principal; 21 restam (#107), todos de desenvolvimento e presos ao `react-scripts` 5.0.1 (só saem com versão maior ou com a troca do Create React App). Os 2 do `react-router` 6.30.6 (runtime) têm risco aceito na [ADR-008](adr/ADR-008-react-router-6-risco-aceito.md) até a #100: o app não usa SSR e só gera links internos. `npm audit --omit=dev`, 16/11/2026: só esses 2 moderados. Chave da TMDB mantida por decisão (ADR-006); atribuição à TMDB e crédito à JustWatch publicados no código |
+| 9 | Segurança e conformidade | Riscos decididos; termos da API cumpridos | Atende: `gh api "repos/douglasabnovato/movies/dependabot/alerts?state=open&per_page=100"`, 16/11/2026, 14:39: 61 alertas abertos (60 no `package-lock.json`, 1 no `e2e/package-lock.json`). 38 corrigidos na sprint-19 (PR #108); fecham no merge na principal (conferido contra o lockfile da sprint: nenhuma versão vulnerável restante nesses 38). 2 do `react-router` 6.30.6 (runtime) com risco aceito na [ADR-008](adr/ADR-008-react-router-6-risco-aceito.md) até a #100: o app não usa SSR e só gera links internos. 21 de desenvolvimento, presos ao `react-scripts` 5.0.1, aceitos na [ADR-009](adr/ADR-009-alertas-de-desenvolvimento-aceitos.md): `npm ls` desses pacotes com `--omit=dev` deu `(empty)`. 0 sem decisão. `npm audit --omit=dev`, 16/11/2026: só os 2 moderados do `react-router` (ADR-008); `cd e2e && npm audit`: 0 vulnerabilidades. Chave da TMDB mantida por decisão (ADR-006); atribuição à TMDB e crédito à JustWatch publicados no código |
 | 10 | Entrega confiável | Publicação só depois de CI verde | Atende: `gh api repos/douglasabnovato/movies/rulesets/26932548`, 16/11/2026: `principal-protegida` ativo na principal, com `deletion`, `non_fast_forward`, `pull_request` e `required_status_checks` (`build-and-test` e `e2e`); a publicação só sai do job `deploy`, depois dos dois |
 | 11 | Testes dos fluxos críticos | Testes automatizados no CI | Atende: 16/11/2026, local: Jest com 82 testes, 0 falhas; `npm run test:scripts` com 7 testes, 0 `skipped`; e2e com 12 testes, 0 falhas. No CI, jobs `build-and-test` e `e2e` verdes no run [43823541888](https://github.com/douglasabnovato/movies/actions/runs/43823541888) do PR #103 (16/11/2026) |
 | 12 | Documentação honesta | Qualquer pessoa roda o projeto, e os números estão certos | Atende: README ("Como executar") conferido contra o `package.json` em 16/11/2026 (`npm ci`, `npm start`, `npm test`, `npm run build`); a diferença do `engines` (Node 20) com o CI (Node 22) está na #101 |
@@ -121,6 +121,10 @@ Em 02/11/2026, o axe-core entrou no Playwright (`e2e/tests/acessibilidade.spec.j
 Medir o gargalo antes de corrigir: a fase de cada métrica mostra o limite do ganho. Aqui, adiantar a imagem reduziu a espera, mas o FCP continuou como piso.
 
 ## Histórico
+
+### Revisão de 16/11/2026, 14:39 (regra geral por ADR)
+
+Só o critério 9 mudou. Antes: "Parcial" por 21 alertas sem correção nem decisão (#107); **Finalizado: não** (9 de 12). Depois: "Atende", com os 21 aceitos na ADR-009 (só desenvolvimento), 2 na ADR-008 e 38 corrigidos na sprint-19 (PR #108); **Finalizado: sim** (10 de 12).
 
 ### Revisão de 16/11/2026, 12:00 (alertas do Dependabot)
 
