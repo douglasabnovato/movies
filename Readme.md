@@ -71,11 +71,11 @@ Sem a chave, a aplicação abre e mostra uma mensagem explicando como configurá
 
 ## Estado e próximos passos (ciclo de 16/11/2026)
 
-Nível: Vitrine (N2). **9 de 12** critérios do MVP atendidos; **Finalizado: não**. Dois dos 3 que faltam dependem do responsável: a conta do GoatCounter (critério 5, #58) e o deploy negado na `main` (critério 7, #98; depois, medir de novo na #102). O terceiro é o critério 9: dos 61 alertas do Dependabot abertos em 16/11/2026 (12:00), 38 têm correção na sprint-19 (PR #108) e fecham com o merge na `main`, 2 do `react-router` têm risco aceito na ADR-008 e 21 seguem sem correção nem decisão (#107), todos de desenvolvimento e presos ao Create React App. Site publicado respondendo com HTTP 200 em 16/11/2026, mas ainda com o build de 06/11/2026: https://douglasabnovato.github.io/movies/
+Nível: Vitrine (N2). **10 de 12** critérios do MVP atendidos; **Finalizado: não**. Faltam a conta do GoatCounter (critério 5, #58, com o responsável) e a nova medição do LCP no ar (critério 7, #102), possível agora que o deploy voltou (#98). O critério 9 passou a "Atende" em 16/11/2026 (14:39): dos 61 alertas do Dependabot abertos, 38 têm correção na sprint-19 (PR #108) e fecham com o merge na `main`, 2 do `react-router` têm risco aceito na [ADR-008](docs/adr/ADR-008-react-router-6-risco-aceito.md) e 21, só de desenvolvimento e presos ao Create React App, foram aceitos na [ADR-009](docs/adr/ADR-009-alertas-de-desenvolvimento-aceitos.md). Site publicado respondendo com HTTP 200 e com o build de 16/11/2026: https://douglasabnovato.github.io/movies/
 
 **Alertas do Dependabot, 16/11/2026 (PR #108)**
 - 38 dos 61 alertas corrigidos só no `package-lock.json` e no `e2e/package-lock.json`, sem troca de versão maior (`npm audit fix` e `npm update express`).
-- Os 21 que restam só saem com versão maior ou trocando o Create React App: opções na #107.
+- Os 21 que restam só saem com versão maior ou trocando o Create React App. Nenhum vai para o site (`npm ls --omit=dev` vazio); pela regra geral do responsável, ficam aceitos na [ADR-009](docs/adr/ADR-009-alertas-de-desenvolvimento-aceitos.md) até a migração para o Vite.
 
 **O que foi feito no ciclo de 16/11/2026 (PR #103)**
 - Onde assistir no Brasil no detalhe do filme (assinatura, aluguel e compra), com crédito à JustWatch, na mesma requisição do detalhe (#84). O axe achou um link sem sublinhado no crédito, corrigido.
