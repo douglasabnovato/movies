@@ -6,9 +6,9 @@
 
 **Resumo:** 10 de 12 aplicáveis atendidos
 
-**Finalizado:** sim
+**Finalizado:** não
 
-Revisão de 16/11/2026, 14:39 (regra geral por ADR para os alertas). Faltam dois critérios, e os dois dependem do responsável, cada um com issue `depende-do-responsavel`: o 5 (conta do GoatCounter, #58) e o 7 (deploy da #98; depois, nova medição na #102 e na #57). O 9 passou a "Atende": dos 61 alertas abertos, 38 têm correção na sprint-19 (PR #108) e fecham com o merge na `main`, 2 do `react-router` têm risco aceito na ADR-008 (#100) e 21, só de desenvolvimento, foram aceitos na [ADR-009](adr/ADR-009-alertas-de-desenvolvimento-aceitos.md), pela ordem do responsável de 16/11/2026. Por isso o Finalizado volta a "sim". O PR #91 entrou na `main` em 16/11/2026, mas o deploy falhou com 403 (#98), e o site segue com o build de 06/11/2026.
+Revisão de 16/11/2026, 14:39 (regra geral por ADR para os alertas). Faltam dois critérios. O 5 depende do responsável (conta do GoatCounter, #58, com `depende-do-responsavel`). O 7 não depende mais: o deploy voltou (#98, fechada em 16/11/2026), e `curl` no site às 14:40 de 16/11/2026 mostrou `"geradoEm":"2026-11-16T14:38:57.695Z"`; falta medir o LCP no ar de novo (#102, sem `depende-do-responsavel`). O 9 passou a "Atende": dos 61 alertas abertos, 38 têm correção na sprint-19 (PR #108) e fecham com o merge na `main`, 2 do `react-router` têm risco aceito na ADR-008 (#100) e 21, só de desenvolvimento, foram aceitos na [ADR-009](adr/ADR-009-alertas-de-desenvolvimento-aceitos.md), pela ordem do responsável de 16/11/2026. O Finalizado segue "não" até o critério 7 ser medido de novo no ar (#102).
 
 ## 1. Critérios
 
@@ -124,7 +124,7 @@ Medir o gargalo antes de corrigir: a fase de cada métrica mostra o limite do ga
 
 ### Revisão de 16/11/2026, 14:39 (regra geral por ADR)
 
-Só o critério 9 mudou. Antes: "Parcial" por 21 alertas sem correção nem decisão (#107); **Finalizado: não** (9 de 12). Depois: "Atende", com os 21 aceitos na ADR-009 (só desenvolvimento), 2 na ADR-008 e 38 corrigidos na sprint-19 (PR #108); **Finalizado: sim** (10 de 12).
+Só o critério 9 mudou. Antes: "Parcial" por 21 alertas sem correção nem decisão (#107); **Finalizado: não** (9 de 12). Depois: "Atende", com os 21 aceitos na ADR-009 (só desenvolvimento), 2 na ADR-008 e 38 corrigidos na sprint-19 (PR #108); **Finalizado: não** (10 de 12), agora só pelo critério 7, que espera a nova medição da #102 depois da volta do deploy (#98).
 
 ### Revisão de 16/11/2026, 12:00 (alertas do Dependabot)
 
