@@ -24,7 +24,8 @@ Publicar uma SPA em Create React App que consome a API da TMDB, sem deixar a cha
 ### O que está pronto no projeto
 
 - `HashRouter` (rotas funcionam no Pages sem configuração extra) e `"homepage"` apontando para o Pages.
-- Workflow com testes, build e publicação.
+- Workflow com testes, build e publicação, no Node 22 (`node-version: 22` no `ci.yml`).
+- Versão do Node: 22.12 ou superior, a mesma faixa do `engines` no `package.json` e do README. O `@axe-core/playwright` do e2e exige o Node 22.12.
 - Verificação: `npm ci` limpo, `npm run lint`, `npm run test:ci` e `npm run build`.
 
 ### Regra de publicação
