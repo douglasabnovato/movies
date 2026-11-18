@@ -45,7 +45,7 @@ O projeto foi originalmente concebido como um desafio técnico da **Promobit**, 
 
 ## ▶️ Como executar
 
-Pré-requisitos: Node.js 22.12 ou superior (o mesmo do CI e do `engines` no `package.json`; o e2e com axe exige essa versão) e uma chave v3 gratuita da TMDB ([criar chave](https://www.themoviedb.org/settings/api)).
+Pré-requisitos: Node.js 22.12 ou superior (a mesma faixa do CI e do `engines` no `package.json`) e uma chave v3 gratuita da TMDB ([criar chave](https://www.themoviedb.org/settings/api)).
 
 ```bash
 npm ci
@@ -106,6 +106,8 @@ Nível: Vitrine (N2). **11 de 12** critérios do MVP atendidos; **Finalizado: si
 
 **O que queremos fazer**
 - [#102](https://github.com/douglasabnovato/movies/issues/102) LCP no ar registrado no `docs/MVP.md` (fecha no merge na `main`); [#57](https://github.com/douglasabnovato/movies/issues/57) fica com o responsável, para o celular real.
+- [#101](https://github.com/douglasabnovato/movies/issues/101) Node alinhado ao CI (fecha no merge na `main`).
+- [#89](https://github.com/douglasabnovato/movies/issues/89) Pôster do retrato vencido, conferido no ar em 18/11/2026 (fecha no merge na `main`).
 - [#58](https://github.com/douglasabnovato/movies/issues/58) Criar a conta do GoatCounter com o código `douglasabnovato` (responsável; o código já está pronto).
 - [#59](https://github.com/douglasabnovato/movies/issues/59) Validar com pessoas de fora (responsável).
 - [#83](https://github.com/douglasabnovato/movies/issues/83) Renovar o retrato da Home todos os dias (responsável).

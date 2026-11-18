@@ -25,7 +25,7 @@ Publicar uma SPA em Create React App que consome a API da TMDB, sem deixar a cha
 
 - `HashRouter` (rotas funcionam no Pages sem configuração extra) e `"homepage"` apontando para o Pages.
 - Workflow com testes, build e publicação, no Node 22 (`node-version: 22` no `ci.yml`).
-- Versão do Node: 22.12 ou superior, a mesma faixa do `engines` no `package.json` e do README. O `@axe-core/playwright` do e2e exige o Node 22.12.
+- Versão do Node: 22.12 ou superior, a mesma faixa do `engines` no `package.json`, do README e do CI.
 - Verificação: `npm ci` limpo, `npm run lint`, `npm run test:ci` e `npm run build`.
 
 ### Regra de publicação
@@ -79,7 +79,9 @@ remote: Permission to douglasabnovato/movies.git denied to github-actions[bot].
 fatal: unable to access 'https://github.com/douglasabnovato/movies.git/': The requested URL returned error: 403
 ```
 
-O site continua no ar com o build de 06/11/2026 (`"geradoEm":"2026-11-06T11:16:32.968Z"` no HTML, conferido em 16/11/2026).
+O site continuou no ar com o build de 06/11/2026 (`"geradoEm":"2026-11-06T11:16:32.968Z"` no HTML, conferido em 16/11/2026).
+
+**Desfecho:** a #98 foi fechada em 16/11/2026. Em 18/11/2026, o site servia o build de 16/11/2026 (`"geradoEm":"2026-11-16T18:13:30.266Z"`, `main.f917feb2.js`, deploy do PR #109).
 
 ### O que já foi conferido (16/11/2026, só leitura)
 
