@@ -1,14 +1,14 @@
 # MVP — critérios e tarefas
 
-> Fonte única do estado. Criado em 30/10/2026 e revisto em 16/11/2026 (ciclo de 16/11/2026; às 12:00, critério 9 com os alertas do Dependabot ligados; às 14:39, alertas de desenvolvimento aceitos na ADR-009; plano em [`PLANO-DE-ACAO.md`](PLANO-DE-ACAO.md)). As tabelas anteriores estão em [Histórico](#histórico). Complementa a rubrica técnica de `docs/ANALISE.md`, medindo também se o produto consegue aprender com o uso real.
+> Fonte única do estado. Criado em 30/10/2026 e revisto em 18/11/2026 (ciclo de 18/11/2026: critério 7 medido no ar; antes, ciclo de 16/11/2026; às 12:00, critério 9 com os alertas do Dependabot ligados; às 14:39, alertas de desenvolvimento aceitos na ADR-009; plano em [`PLANO-DE-ACAO.md`](PLANO-DE-ACAO.md)). As tabelas anteriores estão em [Histórico](#histórico). Complementa a rubrica técnica de `docs/ANALISE.md`, medindo também se o produto consegue aprender com o uso real.
 
 **Nível:** Vitrine (N2). Valem os 12 critérios.
 
-**Resumo:** 10 de 12 aplicáveis atendidos
+**Resumo:** 11 de 12 aplicáveis atendidos
 
-**Finalizado:** não
+**Finalizado:** sim — falta só o critério 5, que depende do responsável (conta do GoatCounter, #58, com `depende-do-responsavel`)
 
-Revisão de 16/11/2026, 14:39 (regra geral por ADR para os alertas). Faltam dois critérios. O 5 depende do responsável (conta do GoatCounter, #58, com `depende-do-responsavel`). O 7 não depende mais: o deploy voltou (#98, fechada em 16/11/2026), e `curl` no site às 14:40 de 16/11/2026 mostrou `"geradoEm":"2026-11-16T14:38:57.695Z"`; falta medir o LCP no ar de novo (#102, sem `depende-do-responsavel`). O 9 passou a "Atende": dos 61 alertas abertos, 38 têm correção na sprint-19 (PR #108) e fecham com o merge na `main`, 2 do `react-router` têm risco aceito na ADR-008 (#100) e 21, só de desenvolvimento, foram aceitos na [ADR-009](adr/ADR-009-alertas-de-desenvolvimento-aceitos.md), pela ordem do responsável de 16/11/2026. O Finalizado segue "não" até o critério 7 ser medido de novo no ar (#102).
+Revisão de 18/11/2026, 20:30 (regra das issues). O critério 7 passou a "Atende": o site serve o build de 16/11/2026 (`"geradoEm":"2026-11-16T18:13:30.266Z"`, `main.f917feb2.js`, run 43926283234 do PR #109), e o Lighthouse móvel no ar deu mediana de 2,49 s nas 3 primeiras execuções válidas (2,35 s nas 5), com o pôster do esqueleto como LCP (#102). Falta só o critério 5, que depende do responsável (#58). Pela definição de pronto do portfólio (critério que só depende do responsável, com issue aberta), isso dá **Finalizado: sim**. O critério 9 segue "Atende" com 23 alertas abertos, todos decididos: 21 na ADR-009 e 2 na ADR-008; os 38 do PR #108 fecharam com o merge na `main`.
 
 ## 1. Critérios
 
@@ -18,14 +18,14 @@ Revisão de 16/11/2026, 14:39 (regra geral por ADR para os alertas). Faltam dois
 | 2 | Hipótese a validar | Existe uma aposta escrita, com meta | Atende: aposta, meta e "saberemos quando" na seção 5 (revista em 16/11/2026) |
 | 3 | Fluxo principal completo | Uma pessoa conclui sem ajuda | Atende: `cd e2e && E2E_PORT=4391 npx playwright test`, 16/11/2026: 12 testes, 0 falhas, com o teste `filtra por gênero, abre o detalhe e volta com o filtro` (agora confere também onde assistir); no CI, job `e2e` verde no run [43823541888](https://github.com/douglasabnovato/movies/actions/runs/43823541888) do PR #103 (16/11/2026). No ar, 16/11/2026: `curl` no site deu HTTP 200. O teste com pessoas é validação de produto (#59) |
 | 4 | Escopo enxuto | O que não entra está registrado | Atende: seção 4 e "Fora do escopo" no `PLANO-DE-ACAO.md` (16/11/2026) |
-| 5 | Medição de uso | A métrica principal é coletada | Parcial: código do GoatCounter pronto (sem cookie, só no site publicado; rotas e evento `abriu-filme`), com testes no Jest e no e2e. Falta a conta (#58), e o site no ar ainda não tem o código (#98). Sem painel com visitas, não atende |
+| 5 | Medição de uso | A métrica principal é coletada | Parcial: código do GoatCounter pronto (sem cookie, só no site publicado; rotas e evento `abriu-filme`), com testes no Jest e no e2e. O site no ar já tem o código (18/11/2026: `goatcounter.com/count` no `main.f917feb2.js` publicado), mas a conta não existe (`curl` em `douglasabnovato.goatcounter.com` deu 400, 18/11/2026; #58). Sem painel com visitas, não atende |
 | 6 | Falhas tratadas | Erro, vazio e carregamento têm resposta clara | Atende: `npx react-scripts test --watchAll=false`, 16/11/2026: 82 testes, 0 falhas, entre eles falha de rede (`Home.test.js` e `Details.test.js`), filme inexistente (`Details.test.js`), lista vazia e página além do total (`Home.test.js`) e o estado de carregando (`useFetch.test.js`); e2e `com retrato vencido e a API fora, o esqueleto volta ao bloco cinza` |
-| 7 | Desempenho aceitável | LCP de até 2,5 s no celular | Não atende no ar: `npx lighthouse@12.8.2 https://douglasabnovato.github.io/movies/ --only-categories=performance --chrome-flags="--headless --no-sandbox"`, 16/11/2026 (03h53 a 03h58): 3,22, 3,07 e 3,32 s, as 3 primeiras execuções válidas (mediana 3,22 s; uma 4ª válida deu 3,47 s, e a mediana das 4 seria 3,27 s; TBT de 196 a 255 ms; elemento `article.film > a > div.card > img`). O site serve o build de 06/11/2026: o deploy do PR #91 falhou com 403 (#98). Local, com o código da `main`: mediana de 2,38 s (09/11/2026). Medir de novo depois da #98 (#102, #57). Detalhes na seção 7 |
+| 7 | Desempenho aceitável | LCP de até 2,5 s no celular | Atende no ar: `npx lighthouse@12.8.2 https://douglasabnovato.github.io/movies/ --only-categories=performance --chrome-flags="--headless --no-sandbox"`, 18/11/2026 (20h30 a 20h33): 2,49, 2,34 e 2,53 s nas 3 primeiras execuções válidas (mediana 2,49 s); mais 2 válidas deram 2,35 e 2,32 s (mediana das 5: 2,35 s). TBT de 5 a 62 ms; FCP observado de 210 a 352 ms. Elemento do LCP: `div#shell-first > img`, o pôster do esqueleto (Lighthouse na 5ª execução; `PerformanceObserver` no Playwright, Pixel 5, no site: 676 ms). Build medido: `main.f917feb2.js`, retrato de 16/11/2026 18:13 UTC (já vencido, com 53 h: a lista veio da API). A margem é pequena; o confronto em celular real segue com o responsável (#57). Detalhes na seção 7 |
 | 8 | Acessibilidade básica | axe e teclado | Atende: `cd e2e && E2E_PORT=4391 npx playwright test`, 16/11/2026, com `e2e/tests/acessibilidade.spec.js` (axe WCAG A e AA na Home, na lista filtrada e no detalhe, largura de desktop) e o teste `conclui o fluxo só com o teclado, com o foco visível`: 12 testes, 0 falhas. O axe achou `link-in-text-block` no crédito à JustWatch, corrigido neste ciclo. O app não tem tema escuro próprio (sem `prefers-color-scheme` no CSS); o axe roda só no claro. Leitor de tela não testado |
-| 9 | Segurança e conformidade | Riscos decididos; termos da API cumpridos | Atende: `gh api "repos/douglasabnovato/movies/dependabot/alerts?state=open&per_page=100"`, 16/11/2026, 14:39: 61 alertas abertos (60 no `package-lock.json`, 1 no `e2e/package-lock.json`). 38 corrigidos na sprint-19 (PR #108); fecham no merge na principal (conferido contra o lockfile da sprint: nenhuma versão vulnerável restante nesses 38). 2 do `react-router` 6.30.6 (runtime) com risco aceito na [ADR-008](adr/ADR-008-react-router-6-risco-aceito.md) até a #100: o app não usa SSR e só gera links internos. 21 de desenvolvimento, presos ao `react-scripts` 5.0.1, aceitos na [ADR-009](adr/ADR-009-alertas-de-desenvolvimento-aceitos.md): `npm ls` desses pacotes com `--omit=dev` deu `(empty)`. 0 sem decisão. `npm audit --omit=dev`, 16/11/2026: só os 2 moderados do `react-router` (ADR-008); `cd e2e && npm audit`: 0 vulnerabilidades. Chave da TMDB mantida por decisão (ADR-006); atribuição à TMDB e crédito à JustWatch publicados no código |
+| 9 | Segurança e conformidade | Riscos decididos; termos da API cumpridos | Atende: `gh api "repos/douglasabnovato/movies/dependabot/alerts?state=open&per_page=100"`, 18/11/2026: 23 alertas abertos, todos no `package-lock.json` (6 altos, 14 médios, 3 baixos). 2 do `react-router` 6.30.6 (runtime) com risco aceito na [ADR-008](adr/ADR-008-react-router-6-risco-aceito.md) até a #100: o app não usa SSR e só gera links internos. 21 de desenvolvimento, presos ao `react-scripts` 5.0.1, aceitos na [ADR-009](adr/ADR-009-alertas-de-desenvolvimento-aceitos.md) (os mesmos números de alerta da ADR). 0 sem decisão. Os 38 corrigidos no PR #108 fecharam com o merge na `main` (16/11/2026). `npm audit --omit=dev`, 18/11/2026: só os 2 moderados do `react-router` (ADR-008); `cd e2e && npm audit`: 0 vulnerabilidades. Chave da TMDB mantida por decisão (ADR-006); atribuição à TMDB e crédito à JustWatch publicados (crédito conferido no detalhe do site em 18/11/2026) |
 | 10 | Entrega confiável | Publicação só depois de CI verde | Atende: `gh api repos/douglasabnovato/movies/rulesets/26932548`, 16/11/2026: `principal-protegida` ativo na principal, com `deletion`, `non_fast_forward`, `pull_request` e `required_status_checks` (`build-and-test` e `e2e`); a publicação só sai do job `deploy`, depois dos dois |
 | 11 | Testes dos fluxos críticos | Testes automatizados no CI | Atende: 16/11/2026, local: Jest com 82 testes, 0 falhas; `npm run test:scripts` com 7 testes, 0 `skipped`; e2e com 12 testes, 0 falhas. No CI, jobs `build-and-test` e `e2e` verdes no run [43823541888](https://github.com/douglasabnovato/movies/actions/runs/43823541888) do PR #103 (16/11/2026) |
-| 12 | Documentação honesta | Qualquer pessoa roda o projeto, e os números estão certos | Atende: README ("Como executar") conferido contra o `package.json` em 16/11/2026 (`npm ci`, `npm start`, `npm test`, `npm run build`); a diferença do `engines` (Node 20) com o CI (Node 22) está na #101 |
+| 12 | Documentação honesta | Qualquer pessoa roda o projeto, e os números estão certos | Atende: README ("Como executar") conferido contra o `package.json` em 16/11/2026 (`npm ci`, `npm start`, `npm test`, `npm run build`); o `engines` (`>=22.12`), o README, o `docs/DEPLOY.md` e o CI (Node 22) citam a mesma versão desde 18/11/2026 (#101) |
 
 ## 2. Tarefas obrigatórias
 
@@ -35,8 +35,8 @@ Revisão de 16/11/2026, 14:39 (regra geral por ADR para os alertas). Faltam dois
 | 2 | Tratar página além do total | Feito |
 | 3 | Proteger a `main` e exigir CI verde | Feito pelo responsável: ruleset com `build-and-test` e `e2e` (conferido em 16/11/2026; a #73 fecha com ele) |
 | 4 | Adicionar a atribuição exigida pela TMDB e trocar a marca principal | Feito |
-| 5 | Reduzir o LCP no celular para até 2,5 s | Em andamento: retrato da Home no build (#81); veja a seção 7 e a #57 |
-| 6 | Definir a hipótese e medir a chegada ao detalhe | Hipótese e meta definidas; GoatCounter no código; falta a conta (#58) e o deploy (#98) |
+| 5 | Reduzir o LCP no celular para até 2,5 s | Feito no ar: mediana de 2,49 s em 18/11/2026 (#102); falta só o celular real, com o responsável (#57) |
+| 6 | Definir a hipótese e medir a chegada ao detalhe | Hipótese e meta definidas; GoatCounter no código e no site; falta a conta (#58) |
 | 7 | Corrigir README e planos | Feito |
 | 8 | Decidir as issues #14, #18, #37 e #44 | Decidido: #14, #18 e #37 fechadas; #44 no PR #54 |
 | 9 | Testar com 5 pessoas e registrar o aprendizado | Com o responsável: roteiro em `docs/TESTE-USUARIOS.md` (#59) |
@@ -70,7 +70,7 @@ Tema 007, pixel perfect, cartão por filme e SEO com outra hospedagem, proxy da 
 
 As metas são um ponto de partida escolhido por julgamento, sem dados anteriores, e devem ser revistas depois da primeira medição.
 
-**Ferramenta:** GoatCounter, sem cookie, com o código `douglasabnovato` (decisão D5 de 10/11/2026). O código está na `main` desde 16/11/2026. Ainda não há dado: a conta não existe (#58) e o site no ar ainda não tem o código (#98).
+**Ferramenta:** GoatCounter, sem cookie, com o código `douglasabnovato` (decisão D5 de 10/11/2026). O código está na `main` e no site desde 16/11/2026. Ainda não há dado: a conta não existe (#58).
 
 ## 6. Cobertura dos testes
 
@@ -101,6 +101,7 @@ Lighthouse 12.8.2 local, sem ambiente controlado, no site publicado. O resultado
 | Local, PR #88 (09/11) | 3,02 s | 2,93 s | 3,51 s | 3,02 s | 0,59 a 0,92 |
 | Local com gzip, PR #92 (09/11) | 2,77 s | 2,38 s | 2,40 s | 2,38 s (5 execuções; as outras: 2,30 e 2,26 s) | 0,92 a 0,98 |
 | No ar, build de 06/11 (16/11) | 3,22 s | 3,07 s | 3,32 s | 3,22 s (uma 4ª válida: 3,47 s; a 1ª execução, com FCP observado de 11,3 s, foi descartada) | 0,87 a 0,91 |
+| No ar, build de 16/11 (18/11) | 2,49 s | 2,34 s | 2,53 s | 2,49 s (mais 2 válidas: 2,35 e 2,32 s; mediana das 5: 2,35 s) | 0,97 a 0,98 |
 
 **06/11/2026:** com o retrato no HTML, a espera para começar a baixar o pôster caiu para 0 ms, mas o LCP medido é a imagem que o React renderiza, com atraso de renderização de 2,3 a 2,8 s. O próximo passo é fazer o esqueleto contar como LCP ou o React montar antes (#57). O retrato vale 48 h e só é renovado a cada push na `main` (#83).
 
@@ -109,6 +110,8 @@ A meta de 2,5 s não foi atingida. Com o esqueleto no HTML, o CLS caiu de 0,10 a
 **09/11/2026:** o retrato publicado era de 06/11 e já tinha vencido (48 h, #83). A causa do atraso de renderização foi achada no navegador: o React apagava o esqueleto antes de o pôster dele pintar, então o pôster do esqueleto nunca virava LCP, e o LCP passava a ser o pôster do React (176 × 264 px, menor que o do esqueleto, de 182 × 273 px). No PR #88, o React espera a entrada de LCP do pôster do esqueleto (até 2,5 s, ou 400 ms depois do load). Medição local: build de produção da `main` e do PR, com o retrato de 06/11 regravado com data atual, servidos em `localhost`, Lighthouse 12.8.2 móvel. Antes, o elemento de LCP foi sempre o pôster do React; depois, o do esqueleto em 2 de 3 execuções (a terceira teve 6,4 s de bloqueio de CPU por outros processos e caiu no limite). O que sobra é o download do pôster na rede simulada (1,8 a 2,1 s); no ar, em 06/11, ele levou até 0,28 s. Medir no ar depois do merge.
 
 **09/11/2026, ciclo de 09/11 (PR #92).** O 3,02 s do PR #88 foi medido com um servidor sem compressão: o `main.js` chegava com 181 KB, e não com os 61 KB do gzip que o Pages usa. Com o mesmo build servido com gzip (`serve`), a `developer/sprint-2026-11-12` deu 2,91, 2,28, 2,36, 2,25, 2,28, 2,32 e 2,28 s nas execuções válidas (mediana 2,28 s), mas em 3 das 10 execuções com a CPU da máquina em 100% o esqueleto saiu antes de o pôster pintar, e o LCP voltou a ser o pôster do React (3,36 a 4,03 s). Este ciclo fez a espera contar a folga depois de `img.decode()` e de um quadro: na série final, o pôster do esqueleto foi o LCP nas 5 execuções (2,77, 2,38, 2,40, 2,30 e 2,26 s; mediana 2,38 s; TBT de 112 a 292 ms). Fases típicas: TTFB 0,46 s, espera 0, download do pôster 1,1 a 1,8 s, atraso de renderização 0,13 a 1,18 s. Também foi testado baixar o `main.js` só depois do pôster: a mediana não mudou (2,29 s) e a ideia foi desfeita. Execução válida = FCP observado abaixo de 2 s e sem `runtimeError`.
+
+**18/11/2026, no ar (#102).** Primeira medição no site com o código do PR #92: `curl` mostrou `"geradoEm":"2026-11-16T18:13:30.266Z"` e o `main.f917feb2.js` do deploy do PR #109 (run 43926283234). Lighthouse 12.8.2 móvel, `--headless --no-sandbox`, `timeout 150`, 5 execuções seguidas, todas válidas: 2,49, 2,34, 2,53, 2,35 e 2,32 s. Fases: TTFB de 95 a 231 ms, espera de 8 a 50 ms, download do pôster de 560 a 588 ms, atraso de renderização de 59 a 65 ms. O retrato já tinha 53 h, então a Home buscou a lista na API, como manda o caminho do retrato vencido (#89). Mesmo assim, o LCP foi o pôster do esqueleto: no Playwright (Pixel 5), o `PerformanceObserver` registrou `#shell-first img` aos 676 ms, com o mesmo pôster do primeiro filme que o React mostrou. A meta de 2,5 s foi atingida, com pouca margem.
 
 ## 8. Verificação de acessibilidade
 
@@ -121,6 +124,10 @@ Em 02/11/2026, o axe-core entrou no Playwright (`e2e/tests/acessibilidade.spec.j
 Medir o gargalo antes de corrigir: a fase de cada métrica mostra o limite do ganho. Aqui, adiantar a imagem reduziu a espera, mas o FCP continuou como piso.
 
 ## Histórico
+
+### Revisão de 18/11/2026, 20:30 (critério 7 no ar)
+
+Só o critério 7 mudou. Antes: "Não atende no ar", com 3,22 s no build de 06/11/2026; **Finalizado: não** (10 de 12). Depois: "Atende", com mediana de 2,49 s no build de 16/11/2026 (#102); **Finalizado: sim** (11 de 12), com o critério 5 dependendo do responsável (#58). O critério 9 só teve a contagem atualizada: 23 alertas abertos, todos decididos.
 
 ### Revisão de 16/11/2026, 14:39 (regra geral por ADR)
 
