@@ -45,7 +45,7 @@ O projeto foi originalmente concebido como um desafio técnico da **Promobit**, 
 
 ## ▶️ Como executar
 
-Pré-requisitos: Node.js 22 e uma chave v3 gratuita da TMDB ([criar chave](https://www.themoviedb.org/settings/api)).
+Pré-requisitos: Node.js 22.12 ou superior (a mesma faixa do CI e do `engines` no `package.json`) e uma chave v3 gratuita da TMDB ([criar chave](https://www.themoviedb.org/settings/api)).
 
 ```bash
 npm ci
@@ -64,14 +64,18 @@ Sem a chave, a aplicação abre e mostra uma mensagem explicando como configurá
 
 **Demonstração:** https://douglasabnovato.github.io/movies/
 
-- GitHub Pages servindo a branch `gh-pages`, gerada pelo workflow `.github/workflows/ci.yml` a cada push na `main` (testes → build → publicação). Em 16/11/2026, a publicação falhou com 403, e o site segue com o build de 06/11/2026 (#98).
+- GitHub Pages servindo a branch `gh-pages`, gerada pelo workflow `.github/workflows/ci.yml` a cada push na `main` (testes → build → publicação). Em 18/11/2026, o site servia o build de 16/11/2026 (`main.f917feb2.js`, deploy do PR #109).
 - A chave da TMDB entra no build pelo segredo `REACT_APP_TMDB_KEY` do repositório; nunca pelo código.
 - `HashRouter` mantém as rotas funcionando no Pages (endereços como `/#/movie/123`).
 - Passo a passo completo: [docs/DEPLOY.md](docs/DEPLOY.md).
 
-## Estado e próximos passos (ciclo de 16/11/2026)
+## Estado e próximos passos (ciclo de 18/11/2026)
 
-Nível: Vitrine (N2). **10 de 12** critérios do MVP atendidos; **Finalizado: não**. Faltam a conta do GoatCounter (critério 5, #58, com o responsável) e a nova medição do LCP no ar (critério 7, #102), possível agora que o deploy voltou (#98). O critério 9 passou a "Atende" em 16/11/2026 (14:39): dos 61 alertas do Dependabot abertos, 38 têm correção na sprint-19 (PR #108) e fecham com o merge na `main`, 2 do `react-router` têm risco aceito na [ADR-008](docs/adr/ADR-008-react-router-6-risco-aceito.md) e 21, só de desenvolvimento e presos ao Create React App, foram aceitos na [ADR-009](docs/adr/ADR-009-alertas-de-desenvolvimento-aceitos.md). Site publicado respondendo com HTTP 200 e com o build de 16/11/2026: https://douglasabnovato.github.io/movies/
+Nível: Vitrine (N2). **11 de 12** critérios do MVP atendidos; **Finalizado: sim**. Falta só a conta do GoatCounter (critério 5, #58), que depende do responsável. O critério 7 passou a "Atende" em 18/11/2026: LCP móvel no site publicado com mediana de 2,49 s (3 execuções; 2,35 s em 5), com o pôster do esqueleto como LCP (#102). O critério 9 segue "Atende": os 23 alertas do Dependabot abertos têm risco aceito, 2 do `react-router` na [ADR-008](docs/adr/ADR-008-react-router-6-risco-aceito.md) e 21, só de desenvolvimento e presos ao Create React App, na [ADR-009](docs/adr/ADR-009-alertas-de-desenvolvimento-aceitos.md). Site publicado respondendo com HTTP 200: https://douglasabnovato.github.io/movies/
+
+**O que foi feito no ciclo de 18/11/2026**
+- LCP medido no ar com o build de 16/11/2026: 2,49, 2,34, 2,53, 2,35 e 2,32 s (#102), mesmo com o retrato da Home vencido.
+- Versão do Node alinhada: `engines` `>=22.12`, como o CI e este README (#101).
 
 **Alertas do Dependabot, 16/11/2026 (PR #108)**
 - 38 dos 61 alertas corrigidos só no `package-lock.json` e no `e2e/package-lock.json`, sem troca de versão maior (`npm audit fix` e `npm update express`).
@@ -101,16 +105,13 @@ Nível: Vitrine (N2). **10 de 12** critérios do MVP atendidos; **Finalizado: n�
 **Ciclo de 03/11/2026:** retrato da Home no build, com `preload` e prioridade alta (PR #81); CI nos PRs para `developer/**`; integração com CI e deploy verdes (PR #82).
 
 **O que queremos fazer**
-- [#98](https://github.com/douglasabnovato/movies/issues/98) Fazer o deploy na `main` voltar a passar (responsável; passo a passo no `docs/DEPLOY.md`, seção 4).
-- [#102](https://github.com/douglasabnovato/movies/issues/102) Medir o LCP no ar depois do deploy; [#57](https://github.com/douglasabnovato/movies/issues/57) fecha com a mediana até 2,5 s.
-- [#107](https://github.com/douglasabnovato/movies/issues/107) Resolver os 21 alertas do Dependabot que restam (migrar do Create React App, trocar pacotes ou aceitar o risco em ADR, decisão do responsável).
-- [#99](https://github.com/douglasabnovato/movies/issues/99) Ligar os alertas do Dependabot (feito pelo responsável em 16/11/2026; evidência comentada na issue).
+- [#102](https://github.com/douglasabnovato/movies/issues/102) LCP no ar registrado no `docs/MVP.md` (fecha no merge na `main`); [#57](https://github.com/douglasabnovato/movies/issues/57) fica com o responsável, para o celular real.
+- [#101](https://github.com/douglasabnovato/movies/issues/101) Node alinhado ao CI (fecha no merge na `main`).
+- [#89](https://github.com/douglasabnovato/movies/issues/89) Pôster do retrato vencido, conferido no ar em 18/11/2026 (fecha no merge na `main`).
 - [#58](https://github.com/douglasabnovato/movies/issues/58) Criar a conta do GoatCounter com o código `douglasabnovato` (responsável; o código já está pronto).
 - [#59](https://github.com/douglasabnovato/movies/issues/59) Validar com pessoas de fora (responsável).
 - [#83](https://github.com/douglasabnovato/movies/issues/83) Renovar o retrato da Home todos os dias (responsável).
 - [#100](https://github.com/douglasabnovato/movies/issues/100) Atualizar o react-router para a versão 7 (alerta moderado do `npm audit`).
-- [#101](https://github.com/douglasabnovato/movies/issues/101) Alinhar a versão do Node do `package.json` com a do CI.
-- [#85](https://github.com/douglasabnovato/movies/issues/85) Salvar filmes favoritos no navegador.
 - [#96](https://github.com/douglasabnovato/movies/issues/96) Navegação por setas na grade (fica para a gravação do vídeo 10).
 
 **Onde está a documentação**
@@ -145,10 +146,9 @@ Principais mudanças deste ciclo: chave só por variável de ambiente, erros tip
 
 | Ação | Como fazer | Issue |
 |---|---|---|
-| Fazer o deploy voltar | Seguir o caminho 1 ou 2 da seção 4 do [`docs/DEPLOY.md`](docs/DEPLOY.md) | #98 |
-| Fechar a issue dos alertas | Os alertas foram ligados em 16/11/2026 (61 abertos às 12:00; evidência na issue) | #99 |
-| Decidir os 21 alertas que restam | Escolher entre migrar do Create React App, trocar pacotes ou aceitar o risco em ADR | #107 |
-| Fechar a issue da proteção | O ruleset já exige `build-and-test` e `e2e` (conferido em 16/11/2026) | #73 |
+| Fechar a issue dos alertas | Os alertas estão ligados (23 abertos em 18/11/2026, todos com ADR) | #99 |
+| Fechar a issue do ciclo de 07/11 | PRs #88 e #91 mesclados; o deploy publicou o build de 16/11/2026 | #90 |
+| Fechar a issue da proteção | O ruleset já exige `build-and-test` e `e2e` (conferido em 18/11/2026) | #73 |
 | Medir o uso | Criar a conta do GoatCounter com o código `douglasabnovato` | #58 |
 | Testar com 5 pessoas | Aplicar [`docs/TESTE-USUARIOS.md`](docs/TESTE-USUARIOS.md) | #59 |
 | Conferir a largura de 768 px | Abrir o site em um aparelho real | #57 |
