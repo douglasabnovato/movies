@@ -10,6 +10,13 @@
 
 Revisão de 18/11/2026, 20:30 (regra das issues). O critério 7 passou a "Atende": o site serve o build de 16/11/2026 (`"geradoEm":"2026-11-16T18:13:30.266Z"`, `main.f917feb2.js`, run 43926283234 do PR #109), e o Lighthouse móvel no ar deu mediana de 2,49 s nas 3 primeiras execuções válidas (2,35 s nas 5), com o pôster do esqueleto como LCP (#102). Falta só o critério 5, que depende do responsável (#58). Pela definição de pronto do portfólio (critério que só depende do responsável, com issue aberta), isso dá **Finalizado: sim**. O critério 9 segue "Atende" com 23 alertas abertos, todos decididos: 21 na ADR-009 e 2 na ADR-008; os 38 do PR #108 fecharam com o merge na `main`.
 
+## Produto
+
+- **Problema:** escolher um filme para ver hoje exige descobrir, filtrar e abrir a ficha sem ajuda.
+- **Público:** quem quer escolher um filme para ver hoje.
+- **Hipótese:** acreditamos que quem chega ao site quer descobrir um filme, e que buscar ou filtrar por gênero basta para encontrar um que valha abrir. Saberemos quando, com no mínimo 100 visitas à Home, os eventos `abriu-filme` somarem ao menos 50% dessas visitas.
+- **Métrica:** chegada ao detalhe (eventos `abriu-filme` ÷ visitas à Home), medido por GoatCounter (falta a conta, #58) — meta: 50% ou mais, com no mínimo 100 visitas à Home. Em sessão observada com 5 pessoas (#59), a meta é ao menos 4 concluírem em até 2 minutos. Metas escolhidas por julgamento, a rever depois da primeira medição (seção 5).
+
 ## 1. Critérios
 
 | # | Critério | Como verificar | Situação em 16/11/2026 (ciclo de 16/11/2026) |
@@ -124,6 +131,8 @@ Em 02/11/2026, o axe-core entrou no Playwright (`e2e/tests/acessibilidade.spec.j
 Medir o gargalo antes de corrigir: a fase de cada métrica mostra o limite do ganho. Aqui, adiantar a imagem reduziu a espera, mas o FCP continuou como piso.
 
 ## Histórico
+
+- 20/11/2026: bloco Produto padronizado, sem mudar critérios.
 
 ### Revisão de 18/11/2026, 20:30 (critério 7 no ar)
 
