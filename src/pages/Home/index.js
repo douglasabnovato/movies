@@ -56,7 +56,11 @@ function loadMovies(query, genres, page, options) {
 function Home() {
   const [searchParams, setSearchParams] = useSearchParams();
   /* A URL é a fonte única do estado; só o texto em digitação fica no componente. */
-  const { search: debouncedQuery, genres: selectedGenres, page: currentPage } = readUrlState(searchParams);
+  const {
+    search: debouncedQuery,
+    genres: selectedGenres,
+    page: currentPage,
+  } = readUrlState(searchParams);
   const canonicalParams = buildUrlParams({
     search: debouncedQuery,
     genres: selectedGenres,
@@ -68,7 +72,7 @@ function Home() {
   const genresRequest = useFetch((options) => tmdbService.getGenres(options), []);
   const moviesRequest = useFetch(
     (options) => loadMovies(debouncedQuery, selectedGenres, currentPage, options),
-    [debouncedQuery, selectedGenres.join(","), currentPage]
+    [debouncedQuery, selectedGenres.join(","), currentPage],
   );
 
   useEffect(() => {
@@ -170,7 +174,6 @@ function Home() {
           <Link
             to={`/movie/${movie.id}`}
             state={{ listSearch: searchParams.toString() ? `?${searchParams}` : "" }}
-            aria-label={`Ver detalhes do filme ${title}`}
           >
             <div className="card">
               <img
@@ -247,7 +250,12 @@ function Home() {
                     aria-pressed={isSelected}
                   >
                     <span>{genre.name}</span>
-                    {isSelected && <span className="remove-icon" aria-hidden="true"> ✕</span>}
+                    {isSelected && (
+                      <span className="remove-icon" aria-hidden="true">
+                        {" "}
+                        ✕
+                      </span>
+                    )}
                   </button>
                 );
               })}
