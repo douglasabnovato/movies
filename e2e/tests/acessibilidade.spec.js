@@ -30,7 +30,7 @@ test("a lista filtrada não tem violações", async ({ page }) => {
 test("o detalhe do filme não tem violações", async ({ page }) => {
   await page.goto("/");
   await page.getByRole("button", { name: "Ação" }).click();
-  await page.getByRole("link", { name: "Ver detalhes do filme Filme de Ação" }).click();
+  await page.getByRole("link", { name: /^Filme de Ação/ }).click();
   await expect(page.getByRole("heading", { name: "Detalhe 3" })).toBeVisible();
   expect(await violacoes(page)).toEqual([]);
 });

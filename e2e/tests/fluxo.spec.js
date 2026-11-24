@@ -13,7 +13,7 @@ test("filtra por gênero, abre o detalhe e volta com o filtro", async ({ page })
   await expect(page.getByText("Filme de Ação")).toBeVisible();
   await expect(page).toHaveURL(/genres=28/);
 
-  await page.getByRole("link", { name: "Ver detalhes do filme Filme de Ação" }).click();
+  await page.getByRole("link", { name: /^Filme de Ação/ }).click();
   await expect(page.getByRole("heading", { name: "Detalhe 3" })).toBeVisible();
   await expect(page.getByRole("list", { name: "Assinatura" }).getByRole("listitem")).toHaveText([
     "Serviço Simulado",
@@ -45,7 +45,7 @@ test("conclui o fluxo só com o teclado, com o foco visível", async ({ page }) 
 
   const search = page.getByLabel("Buscar filme pelo nome");
   const genre = page.getByRole("button", { name: "Ação" });
-  const card = page.getByRole("link", { name: "Ver detalhes do filme Filme de Ação" });
+  const card = page.getByRole("link", { name: /^Filme de Ação/ });
 
   await page.keyboard.press("Tab");
   await expect(search).toBeFocused();
@@ -99,7 +99,7 @@ test("o GoatCounter não carrega nos testes nem em localhost", async ({ page }) 
   const pedidos = [];
   page.on("request", (r) => pedidos.push(r.url()));
   await page.goto("/");
-  await page.getByRole("link", { name: "Ver detalhes do filme Filme Popular" }).click();
+  await page.getByRole("link", { name: /^Filme Popular/ }).click();
   await expect(page.getByRole("heading", { name: "Detalhe 1" })).toBeVisible();
   await expect(page.locator("script[data-goatcounter]")).toHaveCount(0);
   expect(pedidos.filter((u) => /goatcounter|gc\.zgo\.at/.test(u))).toEqual([]);
@@ -125,7 +125,7 @@ test("no site publicado, abrir um filme conta a rota e o evento abriu-filme", as
     "data-goatcounter",
     "https://douglasabnovato.goatcounter.com/count"
   );
-  await page.getByRole("link", { name: "Ver detalhes do filme Filme Popular" }).click();
+  await page.getByRole("link", { name: /^Filme Popular/ }).click();
   await expect(page.getByRole("heading", { name: "Detalhe 1" })).toBeVisible();
   await expect
     .poll(() => page.evaluate(() => window.contagens || []))
