@@ -222,11 +222,7 @@ function Details() {
           <div className="list-recommendations">
             {recommendations.map((item) => (
               <div key={item.id} className="item-recommendation">
-                <Link
-                  to={`/movie/${item.id}`}
-                  state={location.state}
-                  aria-label={`Ver detalhes do filme ${item.title}`}
-                >
+                <Link to={`/movie/${item.id}`} state={location.state}>
                   <img
                     src={imageUrl(item.poster_path, "w185")}
                     alt=""

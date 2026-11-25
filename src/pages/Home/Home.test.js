@@ -33,10 +33,13 @@ function UrlProbe() {
 /* Renderiza a Home dentro de um roteador em memória. */
 function renderHome(entry = "/") {
   return render(
-    <MemoryRouter initialEntries={[entry]} future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+    <MemoryRouter
+      initialEntries={[entry]}
+      future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
+    >
       <Home />
       <UrlProbe />
-    </MemoryRouter>
+    </MemoryRouter>,
   );
 }
 
@@ -54,7 +57,7 @@ describe("Pages / Home", () => {
     renderHome();
     expect(await screen.findByText("Filme A")).toBeInTheDocument();
     expect(screen.getByText("01/05/2024")).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Ver detalhes do filme Filme A" })).toHaveAttribute("href", "/movie/1");
+    expect(screen.getByRole("link", { name: /^Filme A/ })).toHaveAttribute("href", "/movie/1");
   });
 
   it("prioriza só os primeiros pôsteres", async () => {
@@ -93,14 +96,20 @@ describe("Pages / Home", () => {
       .mockRejectedValueOnce(new TmdbError("network", "Sem conexão com a TMDB."))
       .mockResolvedValueOnce({ results: [{ id: 2, title: "Filme B" }], total_pages: 1 });
     renderHome();
-    expect(await screen.findByRole("alert")).toHaveTextContent("Não foi possível carregar os filmes");
+    expect(await screen.findByRole("alert")).toHaveTextContent(
+      "Não foi possível carregar os filmes",
+    );
     fireEvent.click(screen.getByRole("button", { name: "Tentar novamente" }));
     expect(await screen.findByText("Filme B")).toBeInTheDocument();
   });
 
   it("explica a falta de chave sem oferecer retry", async () => {
-    tmdbService.getGenres.mockRejectedValue(new TmdbError("config", "Chave da TMDB não configurada."));
-    tmdbService.getPopularMovies.mockRejectedValue(new TmdbError("config", "Chave da TMDB não configurada."));
+    tmdbService.getGenres.mockRejectedValue(
+      new TmdbError("config", "Chave da TMDB não configurada."),
+    );
+    tmdbService.getPopularMovies.mockRejectedValue(
+      new TmdbError("config", "Chave da TMDB não configurada."),
+    );
     renderHome();
     expect(await screen.findByRole("alert")).toHaveTextContent("Problema com a chave da TMDB");
     expect(screen.queryByRole("button", { name: "Tentar novamente" })).not.toBeInTheDocument();
@@ -108,7 +117,10 @@ describe("Pages / Home", () => {
 
   it("filtra por gênero usando o endpoint discover", async () => {
     tmdbService.getPopularMovies.mockResolvedValue({ results: [], total_pages: 1 });
-    tmdbService.getDiscoverMovies.mockResolvedValue({ results: [{ id: 3, title: "Ação 1" }], total_pages: 1 });
+    tmdbService.getDiscoverMovies.mockResolvedValue({
+      results: [{ id: 3, title: "Ação 1" }],
+      total_pages: 1,
+    });
     renderHome();
     fireEvent.click(await screen.findByRole("button", { name: "Ação" }));
     expect(await screen.findByText("Ação 1")).toBeInTheDocument();
@@ -117,18 +129,32 @@ describe("Pages / Home", () => {
   });
 
   it("segue a página quando o endereço muda com a Home aberta", async () => {
-    tmdbService.getPopularMovies.mockResolvedValue({ results: [{ id: 4, title: "Filme D" }], total_pages: 5 });
+    tmdbService.getPopularMovies.mockResolvedValue({
+      results: [{ id: 4, title: "Filme D" }],
+      total_pages: 5,
+    });
     renderHome();
     await screen.findByText("Filme D");
     fireEvent.click(screen.getByRole("link", { name: "ir para a página 3" }));
-    await waitFor(() => expect(tmdbService.getPopularMovies).toHaveBeenCalledWith(3, expect.any(Object)));
+    await waitFor(() =>
+      expect(tmdbService.getPopularMovies).toHaveBeenCalledWith(3, expect.any(Object)),
+    );
     expect(screen.getByTestId("url")).toHaveTextContent("?page=3");
-    expect(await screen.findByRole("button", { name: "Página 3" })).toHaveAttribute("aria-current", "page");
+    expect(await screen.findByRole("button", { name: "Página 3" })).toHaveAttribute(
+      "aria-current",
+      "page",
+    );
   });
 
   it("segue os gêneros quando o endereço muda com a Home aberta", async () => {
-    tmdbService.getPopularMovies.mockResolvedValue({ results: [{ id: 4, title: "Filme D" }], total_pages: 1 });
-    tmdbService.getDiscoverMovies.mockResolvedValue({ results: [{ id: 3, title: "Ação 1" }], total_pages: 1 });
+    tmdbService.getPopularMovies.mockResolvedValue({
+      results: [{ id: 4, title: "Filme D" }],
+      total_pages: 1,
+    });
+    tmdbService.getDiscoverMovies.mockResolvedValue({
+      results: [{ id: 3, title: "Ação 1" }],
+      total_pages: 1,
+    });
     renderHome();
     await screen.findByText("Filme D");
     fireEvent.click(screen.getByRole("link", { name: "ir para o gênero" }));
@@ -137,8 +163,14 @@ describe("Pages / Home", () => {
   });
 
   it("mostra no campo a busca que chega pelo endereço", async () => {
-    tmdbService.getPopularMovies.mockResolvedValue({ results: [{ id: 4, title: "Filme D" }], total_pages: 1 });
-    tmdbService.searchMovies.mockResolvedValue({ results: [{ id: 5, title: "Matrix" }], total_pages: 1 });
+    tmdbService.getPopularMovies.mockResolvedValue({
+      results: [{ id: 4, title: "Filme D" }],
+      total_pages: 1,
+    });
+    tmdbService.searchMovies.mockResolvedValue({
+      results: [{ id: 5, title: "Matrix" }],
+      total_pages: 1,
+    });
     renderHome();
     await screen.findByText("Filme D");
     fireEvent.click(screen.getByRole("link", { name: "ir para a busca" }));
@@ -147,8 +179,14 @@ describe("Pages / Home", () => {
   });
 
   it("busca depois do debounce, limpa os gêneros e faz uma só chamada", async () => {
-    tmdbService.getDiscoverMovies.mockResolvedValue({ results: [{ id: 3, title: "Ação 1" }], total_pages: 1 });
-    tmdbService.searchMovies.mockResolvedValue({ results: [{ id: 5, title: "Matrix" }], total_pages: 1 });
+    tmdbService.getDiscoverMovies.mockResolvedValue({
+      results: [{ id: 3, title: "Ação 1" }],
+      total_pages: 1,
+    });
+    tmdbService.searchMovies.mockResolvedValue({
+      results: [{ id: 5, title: "Matrix" }],
+      total_pages: 1,
+    });
     renderHome("/?genres=28&page=2");
     await screen.findByText("Ação 1");
     fireEvent.change(screen.getByRole("searchbox"), { target: { value: "mat" } });
@@ -160,7 +198,10 @@ describe("Pages / Home", () => {
   });
 
   it("normaliza a página inválida no endereço", async () => {
-    tmdbService.getPopularMovies.mockResolvedValue({ results: [{ id: 4, title: "Filme D" }], total_pages: 1 });
+    tmdbService.getPopularMovies.mockResolvedValue({
+      results: [{ id: 4, title: "Filme D" }],
+      total_pages: 1,
+    });
     renderHome("/?page=-1");
     await screen.findByText("Filme D");
     await waitFor(() => expect(screen.getByTestId("url")).toBeEmptyDOMElement());
@@ -168,7 +209,11 @@ describe("Pages / Home", () => {
 
   it("oferece a volta quando a página passa do total", async () => {
     tmdbService.getPopularMovies.mockImplementation((page) =>
-      Promise.resolve(page === 400 ? { results: [], total_pages: 3 } : { results: [{ id: 4, title: "Filme D" }], total_pages: 3 })
+      Promise.resolve(
+        page === 400
+          ? { results: [], total_pages: 3 }
+          : { results: [{ id: 4, title: "Filme D" }], total_pages: 3 },
+      ),
     );
     window.scrollTo = jest.fn();
     renderHome("/?page=400");
